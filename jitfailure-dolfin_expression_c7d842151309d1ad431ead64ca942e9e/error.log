@@ -1,7 +1,0 @@
-/tmp/tmpiwxo4mf7/dolfin_expression_c7d842151309d1ad431ead64ca942e9e.cpp: In member function ‘virtual void dolfin::dolfin_expression_c7d842151309d1ad431ead64ca942e9e::eval(Eigen::Ref<Eigen::Matrix<double, -1, 1> >, Eigen::Ref<const Eigen::Matrix<double, -1, 1> >) const’:
-/tmp/tmpiwxo4mf7/dolfin_expression_c7d842151309d1ad431ead64ca942e9e.cpp:61:37: error: ‘Pe’ was not declared in this scope
-           values[0] = x[1]  +  (exp(Pe*b_vel*x[1])-1)/(1- exp(Pe*b_vel));
-                                     ^~
-/tmp/tmpiwxo4mf7/dolfin_expression_c7d842151309d1ad431ead64ca942e9e.cpp:61:40: error: ‘b_vel’ was not declared in this scope
-           values[0] = x[1]  +  (exp(Pe*b_vel*x[1])-1)/(1- exp(Pe*b_vel));
-                                        ^~~~~

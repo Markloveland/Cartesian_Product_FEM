@@ -1,4 +1,0 @@
-/tmp/tmpeuza3ukv/dolfin_expression_de75fa5b2ba407d0d0771892c51e5e13.cpp: In member function ‘virtual void dolfin::dolfin_expression_de75fa5b2ba407d0d0771892c51e5e13::eval(Eigen::Ref<Eigen::Matrix<double, -1, 1> >, Eigen::Ref<const Eigen::Matrix<double, -1, 1> >) const’:
-/tmp/tmpeuza3ukv/dolfin_expression_de75fa5b2ba407d0d0771892c51e5e13.cpp:61:37: error: expected ‘;’ before ‘exp’
-           values[0] = 1  + exp(x[0])exp(x[1]);
-                                     ^~~
