@@ -203,35 +203,103 @@ def S_pointwise(x,y):
     #case 2 homogeneous boundaries
     #S = np.sin(x)*np.sin(y) + np.cos(x)*np.sin(y) + np.sin(x)*np.cos(y)
     return S
+def row_to_row_ind(rows):
+    #designed to transform output in csr to a vector with row number for each value
+    row_ind = np.zeros(rows[-1],dtype=np.int32)
+    for i in range(len(rows)-1):
+        row_ind[rows[i]:rows[i+1]]=i
+    return row_ind
+def get_nnz_vec(rows):
+    #takes rows output from csr and gives nnz at each row
+    nnz = rows[1:]-rows[:-1]
+    return nnz
 
 def kron_PETSC(K1,K2):
     #takes in to AIJ sparse matrices and gives sparse KRON of K1,K2
-    K1_size = K1.getSize()
-    K2_size = K2.getSize()
-    Big_K = PETSc.Mat().createAIJ(K1_size[0]*K2_size[0],K1_size[1]*K2_size[1])
+    # WARNING: assumes square matrices so be careful!!!
+    K1_size = K1.getSize()[0]
+    K2_size = K2.getSize()[0]
+     
+    # CSR arrays from K2 matrix
+    rows_2,cols_2,vals_2 = K2.getValuesCSR()
+    
+    # CSR arrrays in K1 matrix
+    rows_1,cols_1,vals_1 = K1.getValuesCSR()
+    
+    
+    #from this info formulate nnz vector
+    nnz1 = get_nnz_vec(rows_1)
+    nnz2 = get_nnz_vec(rows_2)
+    nnz = np.kron(nnz1,nnz2)
+    print(nnz) 
+
+    #establish large matrix to output
+    Big_K = PETSc.Mat().create()
+    Big_K.setSizes(K1_size*K2_size,K1_size*K2_size)
+    Big_K.setType('aij')
+    Big_K.setPreallocationNNZ(nnz)
     Big_K.setUp()
-    K2 = K2.getValues(range(K2_size[0]),range(K2_size[1]))
-    for i in range(K1_size[0]):
-        for j in range(K1_size[1]):
-            Big_K.setValues(range(K2_size[0]*i,K2_size[0]*(i+1)), range(K2_size[1]*j, K2_size[1]*(j+1)), K2*K1.getValues(i,j))
+    
+    row_num = 0 
+    for i in range(K1_size):
+        #extract first ith row of first sparse matrix
+        a_cols = cols_1[rows_1[i]:rows_1[i+1]]
+        a_vals = vals_1[rows_1[i]:rows_1[i+1]]
+        for j in range(K2_size):
+            #extract jth row of second sparse matrix
+            b_cols = cols_2[rows_2[j]:rows_2[j+1]]
+            b_vals = vals_2[rows_2[j]:rows_2[j+1]]
+            #now compute global values and column numbers
+            vals = np.kron(a_vals,b_vals)
+            cols = np.zeros(len(vals),dtype=np.int32)
+            ctr = 0
+            num_b_cols=len(b_cols)
+            for acol in a_cols:
+                offset=acol*K2_size
+                cols[ctr*num_b_cols:(ctr+1)*num_b_cols]=b_cols+offset
+                ctr=ctr+1
+            Big_K.setValues(row_num,cols,vals)
+            row_num=row_num+1
+
     #Big_K.assemble()
     return Big_K
 
-def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24):
+def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
     #specific to this problem
     # all matrices must be same size
     #np.kron(K11,K21)-np.kron(K12,K21)-np.kron(K11,K22) + \
     #+np.kron(K14,K21) + \
     #+ np.kron(K11,K24)
-    K_size = K11.getSize()
-    Big_K = PETSc.Mat().createAIJ(K_size[0]*K_size[0],K_size[1]*K_size[1])
-    Big_K.setUp()
-    K21 = K21.getValues(range(K_size[0]),range(K_size[1]))
-    K22 = K22.getValues(range(K_size[0]),range(K_size[1]))
-    K24 = K24.getValues(range(K_size[0]),range(K_size[1]))
-   
-    for i in range(K_size[0]):
-        for j in range(K_size[1]):
-            Big_K.setValues(range(K_size[0]*i,K_size[0]*(i+1)), range(K_size[1]*j, K_size[1]*(j+1)), K21*(K11.getValues(i,j) - K12.getValues(i,j) + K14.getValues(i,j)) + (-K22+K24)*K11.getValues(i,j)   )
+    
+    #the above assembly gives
+    #np.kron(K11,K21-K22+K24) - np.kron(K12-K14,K21)
+    # we will relabel kron(K1,K2) - kron(K3,K4)
+    #first, get global sparsity pattern    
+    #assumes all matrices are square and same size within respective subdomain
+    K1_size = K11.getSize()[0]
+    K2_size = K21.getSize()[0]
+    
+    K1 = K11
+    K2 = K21-K22+K24
+    K3 = K12-K24
+    K4 = K21
+
+    #get sparsity pattern for all smaller matrices
+    rows_1,cols_1,vals_1 = K1.getValuesCSR()
+    rows_2,cols_2,vals_2 = K2.getValuesCSR()
+    rows_3,cols_3,vals_3 = K3.getValuesCSR()
+    rows_4,cols_4,vals_4 = K4.getValuesCSR()
+
+    row_num = 0
+    ctr=0
+    for i in range(K1_size):
+
+        for j in range(K2_size):
+            if boundary_dofs[ctr] == row_num:
+                Big_K.setValues(row_num,row_num,1)
+                ctr=ctr+1
+            else:
+                Big_K.setValues(row_num,cols,vals)
+            row_num=row_num+1       
     #Big_K.assemble()
     return Big_K
