@@ -231,7 +231,7 @@ def kron_PETSC(K1,K2):
     nnz1 = get_nnz_vec(rows_1)
     nnz2 = get_nnz_vec(rows_2)
     nnz = np.kron(nnz1,nnz2)
-    print(nnz) 
+     
 
     #establish large matrix to output
     Big_K = PETSc.Mat().create()
@@ -273,15 +273,15 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
     
     #the above assembly gives
     #np.kron(K11,K21-K22+K24) - np.kron(K12-K14,K21)
-    # we will relabel kron(K1,K2) - kron(K3,K4)
+    # we will relabel kron(K1,K2) + kron(K3,K4)
     #first, get global sparsity pattern    
     #assumes all matrices are square and same size within respective subdomain
     K1_size = K11.getSize()[0]
     K2_size = K21.getSize()[0]
-    
+    N_dof = K1_size*K2_size
     K1 = K11
     K2 = K21-K22+K24
-    K3 = K12-K24
+    K3 = -K12+K24
     K4 = K21
 
     #get sparsity pattern for all smaller matrices
@@ -289,17 +289,111 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
     rows_2,cols_2,vals_2 = K2.getValuesCSR()
     rows_3,cols_3,vals_3 = K3.getValuesCSR()
     rows_4,cols_4,vals_4 = K4.getValuesCSR()
+    
+    #this loop will get the nnz, may be just as expensive as constructing the matrix but lets see
+    #we know that sparsity of one set of kronecker bois is just kron(nnz1,nnz2) but that won't cut it since we're adding 2 guys
+    nnz=np.zeros(N_dof,dtype=np.int32)
+    ctr=0
+    bc_ctr=0
+    for i in range(K1_size):
 
-    row_num = 0
+        a1_cols = cols_1[rows_1[i]:rows_1[i+1]]
+        a2_cols = cols_3[rows_3[i]:rows_3[i+1]]
+        for j in range(K2_size):
+            b1_cols = cols_2[rows_2[j]:rows_2[j+1]]
+            b2_cols = cols_4[rows_4[j]:rows_4[j+1]]
+           
+            ab1_cols = np.zeros(len(a1_cols)*len(b1_cols),dtype=np.int32)
+            num_a1_col = len(a1_cols)
+            num_b1_col = len(b1_cols)
+            for k in range(num_a1_col):
+                offset=a1_cols[k]*K2_size
+                ab1_cols[k*num_b1_col:(k+1)*num_b1_col]=b1_cols+offset 
+            ab2_cols = np.zeros(len(a2_cols)*len(b2_cols),dtype=np.int32)
+            num_a2_col = len(a2_cols)
+            num_b2_col = len(b2_cols)
+            for k in range(num_a2_col):
+                offset=a2_cols[k]*K2_size
+                ab2_cols[k*num_b2_col:(k+1)*num_b2_col]=b2_cols+offset
+            
+            if np.isin(ctr,boundary_dofs[bc_ctr]):
+                nnz[ctr]=1
+                bc_ctr=bc_ctr+1
+            else:
+                nnz[ctr]=len(np.unique(np.concatenate((ab1_cols,ab2_cols),0)))    
+            ctr=ctr+1
+    print(nnz)    
+    #initialize global stiffness matrix
+      
+    Big_K = PETSc.Mat().create()
+    Big_K.setSizes(K1_size*K2_size,K1_size*K2_size)
+    Big_K.setType('aij')
+    Big_K.setPreallocationNNZ(nnz)
+    Big_K.setUp()
+    
+    #now in similar way, loop through and construct matrix
+    bc_ctr = 0
     ctr=0
     for i in range(K1_size):
 
+        a1_cols = cols_1[rows_1[i]:rows_1[i+1]]
+        a2_cols = cols_3[rows_3[i]:rows_3[i+1]]
+        a1_vals = vals_1[rows_1[i]:rows_1[i+1]]
+        a2_vals = vals_3[rows_3[i]:rows_3[i+1]]
         for j in range(K2_size):
-            if boundary_dofs[ctr] == row_num:
-                Big_K.setValues(row_num,row_num,1)
-                ctr=ctr+1
-            else:
-                Big_K.setValues(row_num,cols,vals)
-            row_num=row_num+1       
+            b1_cols = cols_2[rows_2[j]:rows_2[j+1]]
+            b2_cols = cols_4[rows_4[j]:rows_4[j+1]]
+            b1_vals = vals_2[rows_2[j]:rows_2[j+1]]
+            b2_vals = vals_4[rows_4[j]:rows_4[j+1]]
+           
+            ab1_cols = np.zeros(len(a1_cols)*len(b1_cols),dtype=np.int32)
+            vals_ab1 = np.kron(a1_vals,b1_vals)
+            num_a1_col = len(a1_cols)
+            num_b1_col = len(b1_cols)
+            for k in range(num_a1_col):
+                offset=a1_cols[k]*K2_size
+                ab1_cols[k*num_b1_col:(k+1)*num_b1_col]=b1_cols+offset
+
+            
+            ab2_cols = np.zeros(len(a2_cols)*len(b2_cols),dtype=np.int32)
+            vals_ab2 = np.kron(a2_vals,b2_vals)
+            num_a2_col = len(a2_cols)
+            num_b2_col = len(b2_cols)
+            for k in range(num_a2_col):
+                offset=a2_cols[k]*K2_size
+                ab2_cols[k*num_b2_col:(k+1)*num_b2_col]=b2_cols+offset
+            
+            #create a final vals that has overlapping parts added, non overlapping parts as is
+            #first find the intersect and add the two
+            #int_locs=np.intersect1d(ab1_cols,ab2_cols)
+            
+            #probably a more efficient way but for now do:
+            cols=np.union1d(ab1_cols,ab2_cols)
+            vals = np.zeros(len(cols))
+
+            aa=0
+            bb=0
+            cc=0
+            for colnum in cols:
+                #see which one is what
+                val1=0
+                val2=0
+                if np.isin(colnum,ab1_cols):
+                    val1=vals_ab1[aa]
+                    aa=aa+1 
+                if np.isin(colnum,ab1_cols):
+                    val2=vals_ab2[bb]
+                    bb=bb+1
+                vals[cc]=val1+val2
+                cc=cc+1
+            
+            if np.isin(ctr,boundary_dofs):
+                vals = 1
+                cols = ctr
+                bc_ctr=bc_ctr+1
+
+            Big_K.setValues(ctr,cols,vals)
+            ctr=ctr+1
+
     #Big_K.assemble()
     return Big_K
