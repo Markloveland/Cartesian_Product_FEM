@@ -9,6 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import petsc4py
 petsc4py.init()
 from petsc4py import PETSc
+import time
 
 #all functions necessary to run Test Case 4
 #this expression requires sigma to be in second index
@@ -296,6 +297,7 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
     nnz=np.zeros(N_dof,dtype=np.int32)
     ctr=0
     bc_ctr=0
+    t0=time.time()
     for i in range(K1_size):
 
         a1_cols = cols_1[rows_1[i]:rows_1[i+1]]
@@ -323,7 +325,8 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
             else:
                 nnz[ctr]=len(np.unique(np.concatenate((ab1_cols,ab2_cols),0)))    
             ctr=ctr+1
-    print(nnz)    
+    t1=time.time()
+    #print(nnz)    
     #initialize global stiffness matrix
     #'''
 
@@ -337,7 +340,8 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
     #now in similar way, loop through and construct matrix
     bc_ctr = 0
     ctr=0
-    nnz_save=np.zeros(K1_size*K2_size,dtype=np.int32)
+    #nnz_save=np.zeros(K1_size*K2_size,dtype=np.int32)
+    t2=time.time()
     for i in range(K1_size):
 
         a1_cols = cols_1[rows_1[i]:rows_1[i+1]]
@@ -397,10 +401,15 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
                 bc_ctr=bc_ctr+1
             #print('row',i*j)
             #print(len(vals))
-            nnz_save[ctr] = len(vals) 
+            #nnz_save[ctr] = len(vals) 
             Big_K.setValues(ctr,cols,vals)
             ctr=ctr+1
-    print(nnz_save)
-    print(nnz-nnz_save)
+    t3=time.time()
+    print('nnz estinmation time')
+    print(t1-t0)
+    print('Matrix value assignment time')
+    print(t3-t2)
+    #print(repr(nnz_save))
+    #print(nnz-nnz_save)
     #Big_K.assemble()
     return Big_K
