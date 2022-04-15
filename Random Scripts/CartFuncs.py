@@ -264,7 +264,7 @@ def kron_PETSC(K1,K2):
     #Big_K.assemble()
     return Big_K
 
-def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
+def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
     #specific to this problem
     # all matrices must be same size
     #np.kron(K11,K21)-np.kron(K12,K21)-np.kron(K11,K22) + \
@@ -292,6 +292,7 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
     
     #this loop will get the nnz, may be just as expensive as constructing the matrix but lets see
     #we know that sparsity of one set of kronecker bois is just kron(nnz1,nnz2) but that won't cut it since we're adding 2 guys
+    #'''
     nnz=np.zeros(N_dof,dtype=np.int32)
     ctr=0
     bc_ctr=0
@@ -324,7 +325,9 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
             ctr=ctr+1
     print(nnz)    
     #initialize global stiffness matrix
-      
+    #'''
+
+  
     Big_K = PETSc.Mat().create()
     Big_K.setSizes(K1_size*K2_size,K1_size*K2_size)
     Big_K.setType('aij')
@@ -334,6 +337,7 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
     #now in similar way, loop through and construct matrix
     bc_ctr = 0
     ctr=0
+    nnz_save=np.zeros(K1_size*K2_size,dtype=np.int32)
     for i in range(K1_size):
 
         a1_cols = cols_1[rows_1[i]:rows_1[i+1]]
@@ -388,12 +392,15 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs):
                 cc=cc+1
             
             if np.isin(ctr,boundary_dofs):
-                vals = 1
-                cols = ctr
+                vals = [1]
+                cols = [ctr]
                 bc_ctr=bc_ctr+1
-
+            #print('row',i*j)
+            #print(len(vals))
+            nnz_save[ctr] = len(vals) 
             Big_K.setValues(ctr,cols,vals)
             ctr=ctr+1
-
+    print(nnz_save)
+    print(nnz-nnz_save)
     #Big_K.assemble()
     return Big_K
