@@ -339,7 +339,7 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
     
     #now in similar way, loop through and construct matrix
     bc_ctr = 0
-    ctr=0
+    row_num=0
     #nnz_save=np.zeros(K1_size*K2_size,dtype=np.int32)
     t2=time.time()
     for i in range(K1_size):
@@ -349,61 +349,74 @@ def Mass_assemble_PETSC(K11,K12,K14,K21,K22,K24,boundary_dofs,nnz=0):
         a1_vals = vals_1[rows_1[i]:rows_1[i+1]]
         a2_vals = vals_3[rows_3[i]:rows_3[i+1]]
         for j in range(K2_size):
-            b1_cols = cols_2[rows_2[j]:rows_2[j+1]]
-            b2_cols = cols_4[rows_4[j]:rows_4[j+1]]
-            b1_vals = vals_2[rows_2[j]:rows_2[j+1]]
-            b2_vals = vals_4[rows_4[j]:rows_4[j+1]]
-           
-            ab1_cols = np.zeros(len(a1_cols)*len(b1_cols),dtype=np.int32)
-            vals_ab1 = np.kron(a1_vals,b1_vals)
-            num_a1_col = len(a1_cols)
-            num_b1_col = len(b1_cols)
-            for k in range(num_a1_col):
-                offset=a1_cols[k]*K2_size
-                ab1_cols[k*num_b1_col:(k+1)*num_b1_col]=b1_cols+offset
-
-            
-            ab2_cols = np.zeros(len(a2_cols)*len(b2_cols),dtype=np.int32)
-            vals_ab2 = np.kron(a2_vals,b2_vals)
-            num_a2_col = len(a2_cols)
-            num_b2_col = len(b2_cols)
-            for k in range(num_a2_col):
-                offset=a2_cols[k]*K2_size
-                ab2_cols[k*num_b2_col:(k+1)*num_b2_col]=b2_cols+offset
-            
-            #create a final vals that has overlapping parts added, non overlapping parts as is
-            #first find the intersect and add the two
-            #int_locs=np.intersect1d(ab1_cols,ab2_cols)
-            
-            #probably a more efficient way but for now do:
-            cols=np.union1d(ab1_cols,ab2_cols)
-            vals = np.zeros(len(cols))
-
-            aa=0
-            bb=0
-            cc=0
-            for colnum in cols:
-                #see which one is what
-                val1=0
-                val2=0
-                if np.isin(colnum,ab1_cols):
-                    val1=vals_ab1[aa]
-                    aa=aa+1 
-                if np.isin(colnum,ab1_cols):
-                    val2=vals_ab2[bb]
-                    bb=bb+1
-                vals[cc]=val1+val2
-                cc=cc+1
-            
-            if np.isin(ctr,boundary_dofs):
+            if np.isin(row_num,boundary_dofs):
                 vals = [1]
-                cols = [ctr]
+                cols = [row_num]
                 bc_ctr=bc_ctr+1
+            else:
+                b1_cols = cols_2[rows_2[j]:rows_2[j+1]]
+                b2_cols = cols_4[rows_4[j]:rows_4[j+1]]
+                b1_vals = vals_2[rows_2[j]:rows_2[j+1]]
+                b2_vals = vals_4[rows_4[j]:rows_4[j+1]]
+           
+                ab1_cols = np.zeros(len(a1_cols)*len(b1_cols),dtype=np.int32)
+                vals_ab1 = np.kron(a1_vals,b1_vals)
+                num_a1_col = len(a1_cols)
+                num_b1_col = len(b1_cols)
+                for k in range(num_a1_col):
+                    offset=a1_cols[k]*K2_size
+                    ab1_cols[k*num_b1_col:(k+1)*num_b1_col]=b1_cols+offset
+
+            
+                ab2_cols = np.zeros(len(a2_cols)*len(b2_cols),dtype=np.int32)
+                vals_ab2 = np.kron(a2_vals,b2_vals)
+                num_a2_col = len(a2_cols)
+                num_b2_col = len(b2_cols)
+                for k in range(num_a2_col):
+                    offset=a2_cols[k]*K2_size
+                    ab2_cols[k*num_b2_col:(k+1)*num_b2_col]=b2_cols+offset
+            
+                #create a final vals that has overlapping parts added, non overlapping parts as is
+                #first find the intersect and add the two
+                #int_locs=np.intersect1d(ab1_cols,ab2_cols)
+            
+
+                cols=np.union1d(ab1_cols,ab2_cols)
+                #probably a more efficient way but for now do:
+                '''
+                vals = np.zeros(len(cols))
+
+                aa=0
+                bb=0
+                cc=0
+                for colnum in cols:
+                    #see which one is what
+                    val1=0
+                    val2=0
+                    if np.isin(colnum,ab1_cols):
+                        val1=vals_ab1[aa]
+                        aa=aa+1 
+                    if np.isin(colnum,ab1_cols):
+                        val2=vals_ab2[bb]
+                        bb=bb+1
+                    vals[cc]=val1+val2
+                    cc=cc+1
+                '''
+
+                #assign to petsc vector
+                #'''
+                ab1 = PETSc.Vec().createSeq(N_dof)
+                ab1.setValues(ab1_cols,vals_ab1) 
+                ab2 = PETSc.Vec().createSeq(N_dof)
+                ab2.setValues(ab2_cols,vals_ab2)
+                vals=ab1+ab2
+                vals = vals.getValues(cols)
+                #'''
             #print('row',i*j)
             #print(len(vals))
             #nnz_save[ctr] = len(vals) 
-            Big_K.setValues(ctr,cols,vals)
-            ctr=ctr+1
+            Big_K.setValues(row_num,cols,vals)
+            row_num=row_num+1
     t3=time.time()
     print('nnz estinmation time')
     print(t1-t0)
