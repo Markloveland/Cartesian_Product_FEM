@@ -23,8 +23,8 @@ rank = comm.Get_rank()
 nprocs = comm.Get_size()
 import cartesianfunctions as CF
 # Create cartesian mesh of two intervals and define function spaces
-nx = 10
-ny = 8
+nx = 10000
+ny = 1000
 
 
 #the first subdomain will be split amongst processors
@@ -57,12 +57,12 @@ u=Function(V1)
 #print(dir(K_pet.mat()))
 #print(K_pet.mat().getInfo())
 #print(K_pet.mat().getValuesCSR())
-print('Local then global sizes of K1')
-print(K1_pet.mat().getOwnershipRange())
+#print('Local then global sizes of K1')
+#print(K1_pet.mat().getOwnershipRange())
 K1_sizes = K1_pet.mat().getLocalSize()
-print(K1_sizes)
+#print(K1_sizes)
 K1_global_size =K1_pet.mat().getSize() 
-print(K1_global_size)
+#print(K1_global_size)
 
 #lets see if we can get a consolidated one and have one on each proccessor
 
@@ -84,20 +84,32 @@ K2_pet = PETScMatrix(MPI.COMM_SELF)
 assemble(a2,tensor=K2_pet)
 #print("K2 Petscmatrix")
 K2_sizes = K2_pet.mat().getLocalSize()
-print('Local Size of K2')
-print(K2_sizes)
+
+
+#also need mass matrices in each subdomain
+m1 = u1*v1*dx
+M1_pet = PETScMatrix()
+assemble(m1,tensor=M1_pet)
+m2 = u2*v2*dx
+M2_pet = PETScMatrix(MPI.COMM_SELF)
+assemble(m2,tensor=M2_pet)
+
+
+local_rows = int(K1_sizes[0]*K2_sizes[0])
+global_rows = int(K1_global_size[0]*K2_sizes[0])
+local_cols = int(K1_sizes[1]*K2_sizes[1])
+global_cols = int(K1_global_size[1]*K2_sizes[1])
+#print('Local Size of K2')
+#print(K2_sizes)
 #print(K2_pet.mat().getValues(range(ny+1),range(ny+1))  )
 
 #now lets create a global matrix which will be stored on each process
 #global matrix is K11 x K22 + K12 x K21
 
 #first I need to create an mpi matrix of the appropriate size and start storing values
+
 A = PETSc.Mat()
 A.create(comm=comm)
-local_rows = int(K1_sizes[0]*K2_sizes[0])
-global_rows = int(K1_global_size[0]*K2_sizes[0])
-local_cols = int(K1_sizes[1]*K2_sizes[1])
-global_cols = int(K1_global_size[1]*K2_sizes[1])
 A.setSizes(([local_rows,global_rows],[local_cols,global_cols]),bsize=1)
 A.setFromOptions()
 A.setType('aij')
@@ -106,10 +118,9 @@ A.setUp()
 print('Tensor Product matrix:')
 
 local_range = A.getOwnershipRange()
-print(local_rows)
-print(A.getLocalSize())
+#print(local_rows)
+#print(A.getLocalSize())
 print(A.getSize())
-
 #This should be the right size
 #i will also need to calculate the global degrees of freedom
 dof_coordinates1=V1.tabulate_dof_coordinates()
@@ -122,37 +133,73 @@ x = global_dof[:,0]
 y = global_dof[:,1]
 global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2)+ local_range[0]
 #print(global_boundary_dofs)
-#need to assign values
+
+
+
+#need to assign values to all global matrices
 #preallocate with nnz first
 #######
 #to get nnz of cartesian matrix, need nnz of each submatrix
+#K matrices are u'v'
+K1_I,K1_J,K1_A = K1_pet.mat().getValuesCSR()
+K1_NNZ = K1_I[1:]-K1_I[:-1]
+K2_I,K2_J,K2_A = K2_pet.mat().getValuesCSR()
+K2_NNZ = K2_I[1:]-K2_I[:-1]
+#same for mass matrices uv
+M1_I,M1_J,M1_A = M1_pet.mat().getValuesCSR()
+M1_NNZ = M1_I[1:]-M1_I[:-1]
+M2_I,M2_J,M2_A = M2_pet.mat().getValuesCSR()
+M2_NNZ = M2_I[1:]-M2_I[:-1]
+#now use scipy for sparse kron and dump into petsc matrices
+K1 = sp.csr_matrix((K1_A,K1_J,K1_I),shape=(K1_sizes[0],K1_global_size[1]))
+K2 = sp.csr_matrix((K2_A,K2_J,K2_I),shape=K2_sizes)
+M1 = sp.csr_matrix((M1_A,M1_J,M1_I),shape=(K1_sizes[0],K1_global_size[1]))
+M2 = sp.csr_matrix((M2_A,M2_J,M2_I),shape=K2_sizes)
 
-I1,J1,A1 = K1_pet.mat().getValuesCSR()
-NNZ1 = I1[1:]-I1[:-1]
-I2,J2,A2 = K2_pet.mat().getValuesCSR()
-print('CSR matrix 1:')
-print(I1)
-print(J1)
-print(A1)
-print('CSR matrix 2:')
-print(I2)
-print(J2)
-print(A2)
-NNZ2 = I2[1:]-I2[:-1]
-NNZ = np.kron(NNZ1,NNZ2)
+temp = sp.kron(K1,M2,format="csr")+sp.kron(M1,K2,format="csr")
+A_NNZ = temp.indptr[1:]-temp.indptr[:-1]
+
+
+temp2 = sp.kron(M1,M2,format="csr")
+M_NNZ = temp2.indptr[1:]-temp2.indptr[:-1]
+
+#now need to mass matrixes for stiffness and RHS
+#first need global mass matrix
+#NNZ = np.kron(NNZ1,NNZ2)
+M = PETSc.Mat()
+M.create(comm=comm)
+#should be same as stiffness matrix
+M.setSizes(([local_rows,global_rows],[local_cols,global_cols]),bsize=1)
+M.setFromOptions()
+M.setType('aij')
+M.setUp()
+M.setPreallocationNNZ(M_NNZ)
+#set the global matrix using CSR
+M.setValuesCSR(temp2.indptr,temp2.indices,temp2.data)
+M.assemble()
+
+
+#print('CSR matrix 1:')
+#print(I1)
+#print(J1)
+#print(A1)
+#print('CSR matrix 2:')
+#print(I2)
+#print(J2)
+#print(A2)
+
+
+
+#NNZ = np.kron(NNZ1,NNZ2)
 #print(NNZ1)
 #print(NNZ2)
 #print(NNZ)
-A.setPreallocationNNZ(NNZ)
+A.setPreallocationNNZ(A_NNZ)
 
-#now use scipy to perform kron on csr matrices
-K1 = sp.csr_matrix((A1,J1,I1),shape=(K1_sizes[0],K1_global_size[1]))
-K2 = sp.csr_matrix((A2,J2,I2),shape=K2_sizes)
-temp = sp.kron(K1,K2,format="csr")
-print('Indices, values, rows of global mat')
-print(temp.indices)
-print(temp.data)
-print(temp.indptr)
+#print('Indices, values, rows of global mat')
+#print(temp.indices)
+#print(temp.data)
+#print(temp.indptr)
 #set the global matrix using CSR
 A.setValuesCSR(temp.indptr,temp.indices,temp.data)
 
@@ -162,49 +209,20 @@ rows = np.arange(local_range[0],local_range[1],dtype=np.int32)
 
 #this would be the identity matrix for the boundary dofs
 #need to wipe out row and set as the row of the identity matrix
-print(global_boundary_dofs)
-print(type(global_boundary_dofs[0]))
+#print(global_boundary_dofs)
+#print(type(global_boundary_dofs[0]))
 A.assemble()
 #this may be slow idk since it is after assembly
 A.zeroRows(global_boundary_dofs,diag=1)
 #checkout global matrix
-print(A.getInfo())
+#print(A.getInfo())
 #view global matrix
 #print(rows)
 #print(type(rows))
 #print(type(rows[0]))
-print(A.getValues(rows,rows))
+#print(A.getValues(rows,rows))
 
 
-#now need to construct RHS
-#first need global mass matrix
-m1 = u1*v1*dx
-M1_pet = PETScMatrix()
-assemble(m1,tensor=M1_pet)
-m2 = u2*v2*dx
-M2_pet = PETScMatrix(MPI.COMM_SELF)
-assemble(m2,tensor=M2_pet)
-I1,J1,A1 = M1_pet.mat().getValuesCSR()
-NNZ1 = I1[1:]-I1[:-1]
-I2,J2,A2 = K2_pet.mat().getValuesCSR()
-NNZ2 = I2[1:]-I2[:-1]
-NNZ = np.kron(NNZ1,NNZ2)
-
-
-M = PETSc.Mat()
-M.create(comm=comm)
-#should be same as stiffness matrix
-M.setSizes(([local_rows,global_rows],[local_cols,global_cols]),bsize=1)
-M.setFromOptions()
-M.setType('aij')
-M.setUp()
-M.setPreallocationNNZ(NNZ)
-K1 = sp.csr_matrix((A1,J1,I1),shape=(K1_sizes[0],K1_global_size[1]))
-K2 = sp.csr_matrix((A2,J2,I2),shape=K2_sizes)
-temp = sp.kron(K1,K2,format="csr")
-#set the global matrix using CSR
-M.setValuesCSR(temp.indptr,temp.indices,temp.data)
-M.assemble()
 
 
 #now evaluate RHS at all d.o.f and set that as the vector
@@ -224,17 +242,17 @@ B = F_dof.duplicate()
 B.setFromOptions()
 #Mass matrix
 M.mult(F_dof,B)
-print('Mass matrix')
-print(M.getValues(rows,rows))
-print('F_dof')
-print(F_dof.getArray())
-print('M*F = ')
-print(B.getArray())
+#print('Mass matrix')
+#print(M.getValues(rows,rows))
+#print('F_dof')
+#print(F_dof.getArray())
+#print('M*F = ')
+#print(B.getArray())
 #lastly, set exact solution at dirichlet boundary
 u_d = 1 + x[global_boundary_dofs-local_range[0]]**2
 B.setValues(global_boundary_dofs,u_d)
-print('B after boundaries')
-print(B.getArray())
+#print('B after boundaries')
+#print(B.getArray())
 #now we should be able to solve for final solution
 u_cart = B.duplicate()
 pc2 = PETSc.PC().create()
@@ -246,7 +264,7 @@ ksp2.setPC(pc2)
 B.assemble()
 ksp2.solve(B, u_cart)
 print('Cartesian solution')
-print(u_cart.getArray())
+print(u_cart.getArray()[::ny+1])
 
 
 #this is fenics solve
