@@ -1,13 +1,8 @@
 """
-FEniCS tutorial demo program: Poisson equation with Dirichlet conditions.
-Test problem is chosen to give an exact solution at all nodes of the mesh.
-  -Laplace(u) = f    in the unit interval
-            u = u_D  on the boundary
-  u_D = 1 + x^2
-    f = -2
-
-see if i can do tensor product and see what happens
-
+Action Balance Solver with implicit Euler time stepping:
+No Source Terms:
+    dN/dt + \/ .cN = 0
+only 2D cases to start
 """
 
 from __future__ import print_function
@@ -26,8 +21,8 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
 # Create cartesian mesh of two intervals and define function spaces
-nx = 1000
-ny = 200
+nx = 100
+ny = 100
 #set initial time
 t = 0
 #set time step
@@ -62,8 +57,7 @@ K1_global_size =K1_pet.mat().getSize()
 m1 = u1*v1*dx
 M1_pet = PETScMatrix()
 assemble(m1,tensor=M1_pet)
-print(M1_pet.mat().getValuesCSR())
-print(M1_pet.mat().getOwnershipRange())
+
 #assmble RHS
 f1_pet = PETScVector()
 assemble(L1,tensor=f1_pet)
@@ -124,7 +118,6 @@ M = A.duplicate()
 print('Tensor Product matrix:')
 print(A.getSize())
 local_range = A.getOwnershipRange()
-print(local_range)
 #vector of row numbers
 rows = np.arange(local_range[0],local_range[1],dtype=np.int32)
 #i will also need to calculate the global degrees of freedom
