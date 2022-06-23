@@ -123,6 +123,7 @@ A.setPreallocationNNZ(M_NNZ)
 #set the global mass matrix using CSR
 M.setValuesCSR(temp2.indptr,temp2.indices,temp2.data)
 M.assemble()
+print('Ownership Range')
 print(M.getOwnershipRange())
 #print(M.getValuesCSR())
 #Loading A matrix
@@ -179,6 +180,7 @@ for a in range(1,N_dof_2):
     assemble(K11,tensor=K1)
     assemble(K12,tensor=K2)
 
+
     _,_,temp = K1.mat().getValuesCSR()
     _,_,temp2 = K2.mat().getValuesCSR()
 
@@ -190,23 +192,23 @@ for a in range(1,N_dof_2):
 #print(vals1[:,a-1])
 #print(A2_I)
 #print(A2_J)
-print(vals2[:,a-1])
+#print(vals2[:,a-1])
 
 #now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
 # int_Omega2 fy ... dy
 #like before, first need to get sparsity patterns
 
-'''
+
 fy = Function(V2)
 
 fy.vector()[:] = np.array(vals1[0,:])
     
-K1 = PETScMatrix()
+K1 = PETScMatrix(MPI.COMM_SELF)
 K21 = u2*v2*fy*dx
 assemble(K21,tensor=K1)
     
         
-K2 = PETScMatrix()
+K2 = PETScMatrix(MPI.COMM_SELF)
 fy.vector()[:] = np.array(vals2[0,:])
 K22 = u2.dx(0)*v2.dx(0)*fy*dx
 assemble(K22,tensor=K2) 
@@ -214,6 +216,11 @@ assemble(K22,tensor=K2)
 
 B1_I,B1_J,temp = K1.mat().getValuesCSR()
 B2_I,B2_J,temp2 = K2.mat().getValuesCSR()
+#print('B1_I')
+#print(B1_I)
+#print(B1_J)
+#print(temp)
+
 
 blen1 = len(temp)
 blen2 = len(temp2)
@@ -223,19 +230,19 @@ dat2 = np.zeros((blen2,len2))
 
 dat1[:,0] = temp
 dat2[:,0] = temp2
-'''
+
 #KEY! IDK IF TRUE BUT ASSUMING length of sparse matrixes K1,K2 were same
 #If not, then will need separate loops
-'''
+
 for i in range(1,len1):
     fy.vector()[:] = np.array(vals1[i,:])
     
-    K1 = PETScMatrix()
+    K1 = PETScMatrix(MPI.COMM_SELF)
     K21 = u2*v2*fy*dx
     assemble(K21,tensor=K1)
     
         
-    K2 = PETScMatrix()
+    K2 = PETScMatrix(MPI.COMM_SELF)
     fy.vector()[:] = np.array(vals2[i,:])
     K22 = u2.dx(0)*v2.dx(0)*fy*dx
     assemble(K22,tensor=K2) 
@@ -246,14 +253,20 @@ for i in range(1,len1):
     dat1[:,i] = temp
     dat2[:,i] = temp2
 
-#Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
 
+Krow,Kcol,Kdat = CF.assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+#print(Krow)
+print(len(Kcol))
+print(len(Kdat))
+print('Num rows')
+print(len(Krow)-1)
+print(Kcol)
 #lastly need to rearrange indeces and rows to give final assignment in A
 
 
 #A.setValuesIJV(I,J,D)
 #A.setValuesCSR(A2_I,A2_J,A2_A)
-'''
+
 A.assemble()
 #print(A.getValuesCSR())
 

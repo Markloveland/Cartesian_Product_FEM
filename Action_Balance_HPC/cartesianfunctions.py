@@ -107,14 +107,17 @@ def fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2):
 def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
     #assembles inputs to load PETSc CSR matrix
     nnzA = Arow[1:] - Arow[:-1]
-    nnzB = Brow[1:] = Brow[:-1]
+    nnzB = Brow[1:] - Brow[:-1]
     nA = len(nnzA)
     nB = len(nnzB)
-    Kcol = np.zeros(len(dat))
+    print('Num A')
+    print(len(nnzA))
+    print('Num B')
+    print(len(nnzB))
+    Kcol = np.zeros(dat.size)
     Krow = np.zeros(len(nnzA)*len(nnzB)+1)
-    Kdat = np.zeros(len(dat))
-   
-    ind1 = 0
+    Kdat = np.zeros(dat.size)
+    ind = 0
     ctr = 0
     j0 = 0
     for i in range(nA):
@@ -123,8 +126,11 @@ def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
         for k in range(nB):
             n2 = nnzB[k]
             for j in range(n1):
+                #print(n2)
+                #print(Kdat[ctr:ctr+n2].shape)
+                #print(dat[k0:k0+n2,j0+j].shape)
                 Kdat[ctr:ctr+n2] = dat[k0:k0+n2,j0+j]
-                Kcol[ctr:ctr+n2] = int(Acol[j0+j]*Bcol[k0:k0+n2])
+                Kcol[ctr:ctr+n2] = np.array(Acol[j0+j]*nB)+Bcol[k0:k0+n2]
                 ctr=ctr+n2
             ind=ind+1
             Krow[ind]=ctr
