@@ -26,7 +26,7 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
 # Create cartesian mesh of two intervals and define function spaces
-nx = 1000
+nx = 100
 ny = 20
 #set initial time
 t = 0
@@ -217,8 +217,8 @@ print(u_cart.getArray()[::ny+1])
 #this is fenics solve
 #need equivalent solve step in PETSc
 solve(K1_pet,u.vector(),f1_pet)
-print('Fenics')
-print(u.vector()[:])
+#print('Fenics')
+#print(u.vector()[:])
 
 # Plot solution and mesh
 #plot(u)
@@ -228,6 +228,10 @@ print(u.vector()[:])
 #vtkfile = File('poisson/solution.pvd')
 #vtkfile << u
 
+#also compute exact solution
+u_exact=1+x*x
+print('Exact solution')
+print(u_exact[::ny+1])
 # Compute error in L2 norm
 #error_L2 = errornorm(u_D1, u, 'L2')
 

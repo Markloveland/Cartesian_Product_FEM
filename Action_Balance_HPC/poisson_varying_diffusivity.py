@@ -21,8 +21,8 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
 # Create cartesian mesh of two intervals and define function spaces
-nx = 200
-ny = 10
+nx = 400
+ny = 100
 #set initial time
 t = 0
 #set time step
@@ -255,47 +255,35 @@ for i in range(1,len1):
 
 
 Krow,Kcol,Kdat = CF.assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+Krow2,Kcol2,Kdat2 = CF.assemble_global_CSR(A2_I,A2_J,B2_I,B2_J,dat2)
 #print(Krow)
-print(len(Kcol))
-print(len(Kdat))
-print('Num rows')
-print(len(Krow)-1)
-print(Kcol)
+#print('K1')
+#print(len(Kcol))
+#print(len(Kdat))
+#print('Num rows')
+#print(len(Krow)-1)
+#print(Kcol)
+#print('K2')
+#print(len(Kcol2))
+#print(len(Kdat2))
+#print('Num rows')
+#print(len(Krow2)-1)
+#print(Kcol2)
 #lastly need to rearrange indeces and rows to give final assignment in A
 
+#see if sparsity patterns are identical
+#print(np.sum(Kcol-Kcol2))
+#print(np.sum(Krow-Krow2))
 
+Krow=Krow.astype(np.int32)
+Kcol=Kcol.astype(np.int32)
 #A.setValuesIJV(I,J,D)
-#A.setValuesCSR(A2_I,A2_J,A2_A)
-
+A.setValuesCSR(Krow,Kcol,Kdat+Kdat2)
 A.assemble()
+#set global boundary
+A.zeroRows(global_boundary_dofs,diag=1)
 #print(A.getValuesCSR())
 
-'''
-#now looping over each submatrix
-#obviously looping through each entry is incredibly inefficient but is left this way for simplicity
-#since this is just a small demo case. In practice, take advantage of sparsity
-fy = Function(V2)
-for i in range(N_dof_1):
-    for j in range(N_dof_1):
-        fy.vector()[:] = np.array(A1[i,j,:])
-        K21 = u2*v2*fy*dx
-        K21 = assemble(K21)
-        K21 = np.array(K21.array())
-        
-        
-        fy.vector()[:] = np.array(A2[i,j,:])
-        K22 = u2.dx(0)*v2.dx(0)*fy*dx
-        K22 = assemble(K22)
-        K22 = np.array(K22.array())
-
-        temp = sp.csr_matrix(K21+K22)
-
-        A.setValuesLocalCSR(np.append(np.zeros(i*N_dof_1),temp.indptr).astype(np.int32),temp.indices+j*N_dof_2,temp.data)
-#need to wipe out row and set as the row of the identity matrix
-#print(global_boundary_dofs)
-A.assemble()
-#this may be slow idk since it is after assembly
-A.zeroRows(global_boundary_dofs,diag=1)
 ##################################################################
 ##################################################################
 #assmble RHS
@@ -327,12 +315,18 @@ ksp2.setOperators(A)
 ksp2.setPC(pc2)
 B.assemble()
 ksp2.solve(B, u_cart)
-print('Cartesian solution')
-print(u_cart.getArray()[:])
+
+#print whole solution
+#print('Cartesian solution')
+#print(u_cart.getArray()[:])
 
 #for verification just print exact
-print('Exact')
-print(u_true[:])
+#print whole solution
+#print('Exact')
+#print(u_true[:])
+print('Error')
+print(np.sum(np.abs(u_cart.getArray()[:]-u_true)))
+
 
 # Plot solution and mesh
 #plot(u)
@@ -357,4 +351,4 @@ print(u_true[:])
 
 # Hold plot
 #plt.savefig('poisson/final_sol.png')
-'''
+
