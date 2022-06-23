@@ -123,7 +123,7 @@ A.setPreallocationNNZ(M_NNZ)
 #set the global mass matrix using CSR
 M.setValuesCSR(temp2.indptr,temp2.indices,temp2.data)
 M.assemble()
-#print(M.getOwnershipRange())
+print(M.getOwnershipRange())
 #print(M.getValuesCSR())
 #Loading A matrix
 kappa_func = Function(V1)
@@ -131,12 +131,38 @@ kappa_func = Function(V1)
 #this is terribly inneficient, maybe look into scipy sparse
 #or something like this
 
-#loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix, need way to store
-#is appending the best way?
-A1 = []
-A2 = []
+#loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix
+#each matrix will have same sparsity pattern so get first one then
+#create numpy to store vals
+
+#need value at a specific dof_coordinate in second domain
+kappa_func.vector()[:] = np.array(kappa[0::N_dof_2])
+#create expressions and assemble linear forms
+K11 = kappa_func*u1.dx(0)*v1.dx(0)*dx
+K12 = kappa_func*u1*v1*dx
+#then save all matrices to list of matrices
+#since these are sparse maybe take PETSc output and pipe 
+#to scipy sparse matrices
+#maybe not so easy to program on second loop though
+
+#K1,K2 are temporary variables to store matrices
+K1=PETScMatrix()
+K2 = PETScMatrix()
+assemble(K11,tensor=K1)
+assemble(K12,tensor=K2)
+
+#store sparsity pattern (rows,columns, vals)
+A1_I,A1_J,temp = K1.mat().getValuesCSR()
+A2_I,A2_J,temp2 = K2.mat().getValuesCSR()
+len1 = len(temp)
+len2 = len(temp2)
+#create np to store N_dof_2 sets of vals
+vals1 = np.zeros((len1,N_dof_2))
+vals2 = np.zeros((len2,N_dof_2))
+vals1[:,0] = temp
+vals2[:,0] = temp2
 #need to loop over nodes in N-dof-2
-for a in range(N_dof_2):
+for a in range(1,N_dof_2):
     #need value at a specific dof_coordinate in second domain
     kappa_func.vector()[:] = np.array(kappa[a::N_dof_2])
     #create expressions and assemble linear forms
@@ -147,14 +173,90 @@ for a in range(N_dof_2):
     #to scipy sparse matrices
     #maybe not so easy to program on second loop though
     
-    K1=PETScMatrix()
+    #need to rebuild each time?
+    K1 = PETScMatrix()
     K2 = PETScMatrix()
-    K11 = assemble(K11,tensor=K1)
+    assemble(K11,tensor=K1)
+    assemble(K12,tensor=K2)
 
-    K12 = assemble(K12,tensor=K2)
-    A1.append(K1)
-    A2.append(K2)
-print(A2[1].mat().getValuesCSR())
+    _,_,temp = K1.mat().getValuesCSR()
+    _,_,temp2 = K2.mat().getValuesCSR()
+
+    vals1[:,a] = temp
+    vals2[:,a] = temp2
+
+#print(A1_I)
+#print(A1_J)
+#print(vals1[:,a-1])
+#print(A2_I)
+#print(A2_J)
+print(vals2[:,a-1])
+
+#now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
+# int_Omega2 fy ... dy
+#like before, first need to get sparsity patterns
+
+'''
+fy = Function(V2)
+
+fy.vector()[:] = np.array(vals1[0,:])
+    
+K1 = PETScMatrix()
+K21 = u2*v2*fy*dx
+assemble(K21,tensor=K1)
+    
+        
+K2 = PETScMatrix()
+fy.vector()[:] = np.array(vals2[0,:])
+K22 = u2.dx(0)*v2.dx(0)*fy*dx
+assemble(K22,tensor=K2) 
+
+
+B1_I,B1_J,temp = K1.mat().getValuesCSR()
+B2_I,B2_J,temp2 = K2.mat().getValuesCSR()
+
+blen1 = len(temp)
+blen2 = len(temp2)
+
+dat1 = np.zeros((blen1,len1))
+dat2 = np.zeros((blen2,len2))
+
+dat1[:,0] = temp
+dat2[:,0] = temp2
+'''
+#KEY! IDK IF TRUE BUT ASSUMING length of sparse matrixes K1,K2 were same
+#If not, then will need separate loops
+'''
+for i in range(1,len1):
+    fy.vector()[:] = np.array(vals1[i,:])
+    
+    K1 = PETScMatrix()
+    K21 = u2*v2*fy*dx
+    assemble(K21,tensor=K1)
+    
+        
+    K2 = PETScMatrix()
+    fy.vector()[:] = np.array(vals2[i,:])
+    K22 = u2.dx(0)*v2.dx(0)*fy*dx
+    assemble(K22,tensor=K2) 
+
+    _,_,temp = K1.mat().getValuesCSR()
+    _,_,temp2 = K2.mat().getValuesCSR()
+
+    dat1[:,i] = temp
+    dat2[:,i] = temp2
+
+#Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+
+#lastly need to rearrange indeces and rows to give final assignment in A
+
+
+#A.setValuesIJV(I,J,D)
+#A.setValuesCSR(A2_I,A2_J,A2_A)
+'''
+A.assemble()
+#print(A.getValuesCSR())
+
 '''
 #now looping over each submatrix
 #obviously looping through each entry is incredibly inefficient but is left this way for simplicity

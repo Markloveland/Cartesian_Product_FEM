@@ -27,7 +27,7 @@ rank = comm.Get_rank()
 nprocs = comm.Get_size()
 # Create cartesian mesh of two intervals and define function spaces
 nx = 1000
-ny = 200
+ny = 20
 #set initial time
 t = 0
 #set time step

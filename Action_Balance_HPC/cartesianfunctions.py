@@ -103,3 +103,33 @@ def fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2):
     global_boundary_dofs=cartesian_form_to_kroneck_form(global_boundary_dofs, len(dof_coordinates2))
     global_boundary_dofs=global_boundary_dofs.astype("int32")
     return global_boundary_dofs
+
+def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
+    #assembles inputs to load PETSc CSR matrix
+    nnzA = Arow[1:] - Arow[:-1]
+    nnzB = Brow[1:] = Brow[:-1]
+    nA = len(nnzA)
+    nB = len(nnzB)
+    Kcol = np.zeros(len(dat))
+    Krow = np.zeros(len(nnzA)*len(nnzB)+1)
+    Kdat = np.zeros(len(dat))
+   
+    ind1 = 0
+    ctr = 0
+    j0 = 0
+    for i in range(nA):
+        n1 = nnzA[i]
+        k0=0
+        for k in range(nB):
+            n2 = nnzB[k]
+            for j in range(n1):
+                Kdat[ctr:ctr+n2] = dat[k0:k0+n2,j0+j]
+                Kcol[ctr:ctr+n2] = int(Acol[j0+j]*Bcol[k0:k0+n2])
+                ctr=ctr+n2
+            ind=ind+1
+            Krow[ind]=ctr
+            k0=k0+n2
+        j0=j0+n1
+    
+    return Krow,Kcol,Kdat
+
