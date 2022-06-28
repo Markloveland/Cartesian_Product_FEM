@@ -325,3 +325,224 @@ def build_stiffness_varying_poisson(V1,V2,kappa,N_dof_2,A):
     A.assemble()
     return 0
 
+
+def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
+    #Builds and assembles stiffness matrix for action balance equations
+    # mesh1 is geographic mesh
+    # V1 is FunctionSpace for geographic mesh
+    # mesh2 is spectral mesh
+    # V2 is FunctionSpace for spectral mesh
+    # c is group velocity vector at each d.o.f: should be #dof x 4 np vector
+    # N_dof_2 is number of degrees of freedom in spectral domain
+    # A is PETSc Matrix which is already preallocated, where output will be loaded
+
+    n1 = FacetNormal(mesh1)
+    n2 = FacetNormal(mesh2)
+    u1 = TrialFunction(V1)
+    v1 = TestFunction(V1)
+    u2 = TrialFunction(V2)
+    v2 = TestFunction(V2)
+    cx_func = Function(V1)
+    cy_func = Function(V1)
+    csig_func = Function(V1)
+    cthet_func = Function(V1)
+
+    #loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix
+    #each matrix will have same sparsity pattern so get first one then
+    #create numpy to store vals
+    A_global_size =A.getSize()
+    A_local_size = A.getLocalSize()
+
+    #need value at a specific dof_coordinate in second domain
+    cx_func.vector()[:] = np.array(c[0::N_dof_2,0])
+    cy_func.vector()[:] = np.array(c[0::N_dof_2,1])
+    csig_func.vector()[:] = np.array(c[0::N_dof_2,2])
+    cthet_func.vector()[:] = np.array(c[0::N_dof_2,3])
+    #create expressions and assemble linear forms
+    K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(0)*dx
+    K12 = csig_func*u1*v1*dx
+    K13 = cthet_func*u1*v1*dx
+    K14 = dot(as_vector((cx_func,cy_dunc))*u1,n1)*v1*ds
+    #then save all matrices to list of matrices
+    #since these are sparse maybe take PETSc output and pipe
+    #to scipy sparse matrices
+    #maybe not so easy to program on second loop though
+
+    #K1,K2 are temporary variables to store matrices
+    # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
+    K1 = PETScMatrix()
+    K2 = PETScMatrix()
+    K3 = PETScMatrix()
+    K4 = PETScMatrix()
+    assemble(K11,tensor=K1)
+    assemble(K12,tensor=K2)
+    assemble(K13,tensor=K3)
+    assemble(K14,tensor=K4)
+
+    #store sparsity pattern (rows,columns, vals)
+    A1_I,A1_J,temp = K1.mat().getValuesCSR()
+    A2_I,A2_J,temp2 = K2.mat().getValuesCSR()
+    A3_I,A3_J,temp3 = K3.mat().getValuesCSR()
+    A4_I,A4_J,temp4 = K4.mat().getValuesCSR()
+    len1 = len(temp)
+    len2 = len(temp2)
+    len3 = len(temp3)
+    len4 = len(temp4)
+    #create np to store N_dof_2 sets of vals
+    vals1 = np.zeros((len1,N_dof_2))
+    vals2 = np.zeros((len2,N_dof_2))
+    vals3 = np.zeros((len3,N_dof_2))
+    vals4 = np.zeros((len4,N_dof_2))
+    vals1[:,0] = temp
+    vals2[:,0] = temp2
+    vals3[:,0] = temp3
+    vals4[:,0] = temp4
+    #need to loop over nodes in N-dof-2
+    for a in range(1,N_dof_2):
+        cx_func.vector()[:] = np.array(c[a::N_dof_2,0])
+        cy_func.vector()[:] = np.array(c[a::N_dof_2,1])
+        csig_func.vector()[:] = np.array(c[a::N_dof_2,2])
+        cthet_func.vector()[:] = np.array(c[a::N_dof_2,3])
+        #create expressions and assemble linear forms
+        K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(0)*dx
+        K12 = csig_func*u1*v1*dx
+        K13 = cthet_func*u1*v1*dx
+        K14 = dot(as_vector((cx_func,cy_dunc))*u1,n1)*v1*ds
+        # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
+        K1 = PETScMatrix()
+        K2 = PETScMatrix()
+        K3 = PETScMatrix()
+        K4 = PETScMatrix()
+        assemble(K11,tensor=K1)
+        assemble(K12,tensor=K2)
+        assemble(K13,tensor=K3)
+        assemble(K14,tensor=K4)
+
+        _,_,temp = K1.mat().getValuesCSR()
+        _,_,temp2 = K2.mat().getValuesCSR()
+        _,_,temp3 = K3.mat().getValuesCSR()
+        _,_,temp4 = K4.mat().getValuesCSR()
+
+        vals1[:,a] = temp
+        vals2[:,a] = temp2
+        vals3[:,a] = temp3
+        vals4[:,a] = temp4
+
+    #now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
+    # int_Omega2 fy ... dy
+    #like before, first need to get sparsity patterns
+
+
+    fy = Function(V2)
+    fy2 = Function(V2)
+    fy.vector()[:] = np.array(vals1[0,:])
+    K1 = PETScMatrix(MPI.COMM_SELF)
+    K21 = u2*v2*fy*dx
+    assemble(K21,tensor=K1)
+
+
+    K2 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(vals2[0,:])
+    fy2.vector()[:]  = np.array(vals3[0,:])
+    K22 = inner(u2*as_vector((fy,fy2)),grad(v2))*fy*dx
+    assemble(K22,tensor=K2)
+
+        
+    K3 = PETScMatrix(MPI.COMM_SELF)
+    K23 = u2*v2*dot(as_vector((fy,fy2)),n2)*ds
+    assemble(K23,tensor=K3)
+
+    
+    K4 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(vals4[0,:])
+    K24 = u2*v2*fy*dx
+    assemble(K24,tensor=K4)
+
+    B1_I,B1_J,temp = K1.mat().getValuesCSR()
+    B2_I,B2_J,temp2 = K2.mat().getValuesCSR()
+    B3_I,B3_J,temp3 = K3.mat().getValuesCSR()
+    B4_I,B4_J,temp4 = K4.mat().getValuesCSR()
+
+    blen1 = len(temp)
+    blen2 = len(temp2)
+    blen3 = len(temp3)
+    blen4 = len(temp4)
+    
+    dat1 = np.zeros((blen1,len1))
+    dat2 = np.zeros((blen2,len2))
+    dat3 = np.zeros((blen3,len3))
+    dat4 = np.zeros((blen4,len4))
+    
+    dat1[:,0] = temp
+    dat2[:,0] = temp2
+    dat3[:,0] = temp3
+    dat4[:,0] = temp4
+
+
+    #KEY! IDK IF TRUE BUT ASSUMING length of sparse matrixes K1,K2,K3 were same
+    #If not, then will need separate loops
+
+    for i in range(1,len1):
+
+        fy.vector()[:] = np.array(vals1[i,:])
+        K1 = PETScMatrix(MPI.COMM_SELF)
+        K21 = u2*v2*fy*dx
+        assemble(K21,tensor=K1)
+
+
+        K2 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(vals2[i,:])
+        fy2.vector()[:]  = np.array(vals3[i,:])
+        K22 = inner(u2*as_vector((fy,fy2)),grad(v2))*fy*dx
+        assemble(K22,tensor=K2)
+
+
+        K3 = PETScMatrix(MPI.COMM_SELF)
+        K23 = u2*v2*dot(as_vector((fy,fy2)),n2)*ds
+        assemble(K23,tensor=K3)
+
+
+        _,_,temp = K1.mat().getValuesCSR()
+        _,_,temp2 = K2.mat().getValuesCSR()
+        _,_,temp3 = K3.mat().getValuesCSR()
+        dat1[:,i] = temp
+        dat2[:,i] = temp2
+        dat3[:,i] = temp3
+
+    Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+    Krow2,Kcol2,Kdat2 = assemble_global_CSR(A2_I,A2_J,B2_I,B2_J,dat2)
+    Krow3,Kcol3,Kdat3 = assemble_global_CSR(A3_I,A3_J,B3_I,B3_J,dat3)
+    
+    #K4 is the boundary integral dOmega1 x Omega2
+    for i in range(1,len4):
+        K4 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(vals4[0,:])
+        K24 = u2*v2*fy*dx
+        assemble(K24,tensor=K4)
+
+        _,_,temp4 = K4.mat().getValuesCSR()
+        dat4[:,i] = temp4
+    
+    
+    Krow4,Kcol4,Kdat4 = assemble_global_CSR(A4_I,A4_J,B4_I,B4_J,dat4)
+    
+    Krow=Krow.astype(np.int32)
+    Kcol=Kcol.astype(np.int32)
+    Krow2=Krow2.astype(np.int32)
+    Kcol2=Kcol2.astype(np.int32)
+    Krow3=Krow3.astype(np.int32)
+    Kcol3=Kcol3.astype(np.int32)
+    Krow4=Krow4.astype(np.int32)
+    Kcol4=Kcol4.astype(np.int32)
+    #challenge is we likely have 3 different sparsity patterns so how should we
+    #add them all using scipy???
+    K1 = sp.csr_matrix((Kdat+Kdat2, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
+    K2 = sp.csr_matrix((Kdat3, Kcol3, Krow3), shape=(A_local_size[0],A_global_size[1]))
+    K3 = sp.csr_matrix((Kdat4, Kcol4, Krow4), shape=(A_local_size[0],A_global_size[1]))
+    
+    #dt will need to be in here as well, and add mass matrix?
+    K = -K1+K2+K3
+    #assign values to PETSc matrix
+    A.setValuesCSR(K.indptr,K.indices,K.data)
+    A.assemble()
+    return 0

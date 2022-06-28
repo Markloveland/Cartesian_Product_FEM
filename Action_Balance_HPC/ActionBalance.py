@@ -1,7 +1,7 @@
 """
-Poisson with non-separable, varying diffusivity coefficient
+Action Balance Equation Solver
 This algorithm for loading will be same required of Action Balance Equation
-    \/ . k \/u = f
+    du/dt + \/.cu = f
 only 2D case to start
 """
 
@@ -20,9 +20,9 @@ import cartesianfunctions as CF
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
-# Create cartesian mesh of two intervals and define function spaces
-nx = 50
-ny = 50
+# Create cartesian mesh of two 2D and define function spaces
+nx = 20
+ny = 20
 #set initial time
 t = 0
 #set time step
@@ -32,7 +32,7 @@ t = 0
 #Subdomain 1
 #the first subdomain will be split amongst processors
 # this is set up ideally for subdomain 1 > subdomain 2
-mesh1 = UnitIntervalMesh(comm,nx)
+mesh1 = UnitSquareMesh(comm,nx,nx)
 V1 = FunctionSpace(mesh1, 'P', 1)
 u1 = TrialFunction(V1)
 v1 = TestFunction(V1)
@@ -41,7 +41,7 @@ v1 = TestFunction(V1)
 #Subdomain 2
 #now we want entire second subdomain on EACH processor, so this will always be the smaller mesh
 #MPI.COMM_SELF to not partition mesh
-mesh2 = UnitIntervalMesh(MPI.COMM_SELF,ny)
+mesh2 = UnitSquareMesh(MPI.COMM_SELF,ny,ny)
 V2 = FunctionSpace(mesh2, 'P', 1)
 u2 = TrialFunction(V2)
 v2 = TestFunction(V2)
@@ -87,11 +87,11 @@ rows = np.arange(local_range[0],local_range[1],dtype=np.int32)
 #from the function spaces and ownership ranges, generate global degrees of freedom
 dof_coordinates1=V1.tabulate_dof_coordinates()
 dof_coordinates2=V2.tabulate_dof_coordinates()
-N_dof_1 = dof_coordinates1.size   #Warning, this might be hardcoed for 1D subdomains
-N_dof_2 = dof_coordinates2.size
+N_dof_1 = dof_coordinates1.shape[0]   #Warning, this might be hardcoed for 1D subdomains
+N_dof_2 = dof_coordinates2.shape[0]   
 global_dof=CF.cartesian_product_coords(dof_coordinates1,dof_coordinates2)
 x = global_dof[:,0]
-y = global_dof[:,1]
+y = global_dof[:,2]
 #get global equation number of any node on entire global boundary
 global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2) + local_range[0]
 ####################################################################
@@ -101,13 +101,6 @@ alpha = 1.0
 kappa = np.exp(alpha*x*y)
 #exact solution and dirichlet boundary
 u_true=np.exp(alpha*x*y)
-
-u_exact = PETSc.Vec()
-u_exact.create(comm=comm)
-u_exact.setSizes((local_rows,global_rows),bsize=1)
-u_exact.setFromOptions()
-u_exact.setValues(rows,u_true)
-
 u_d = u_true[global_boundary_dofs-local_range[0]]
 ###################################################################
 ###################################################################
@@ -136,11 +129,7 @@ F_dof.setValues(rows,temp)
 
 #now matrix vector multiply with M to get actual right hand side
 B = F_dof.duplicate()
-E = F_dof.duplicate()
-L2_E = F_dof.duplicate()
-E.setFromOptions()
 B.setFromOptions()
-L2_E.setFromOptions()
 #Mass matrix
 M.mult(F_dof,B)
 #set Dirichlet boundary conditions
@@ -170,18 +159,13 @@ ksp2.solve(B, u_cart)
 #print('Exact')
 #print(u_true[:])
 
-#print('Error')
-#print(np.sum(np.abs(u_cart.getArray()[:]-u_true)))
+print('Error')
+print(np.sum(np.abs(u_cart.getArray()[:]-u_true)))
 
 
-#Evaluate L2 error
-PETSc.Vec.pointwiseMult(E,u_cart-u_exact,u_cart-u_exact)
-M.mult(E,L2_E)
-PETSc.Sys.Print("L2 error",np.sqrt(L2_E.sum()))
-#h
-PETSc.Sys.Print("h",1/nx)
-#dof
-PETSc.Sys.Print("dof",(nx+1)*(ny+1))
+#need function to evaluate L2 error
+
+
 ##################################################################
 #################################################################
 #If I can find integral parameter like Hs then this section
