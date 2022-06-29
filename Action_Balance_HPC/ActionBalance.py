@@ -21,8 +21,8 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
 # Create cartesian mesh of two 2D and define function spaces
-nx = 19
-ny = 20
+nx = 20
+ny = 18
 #set initial time
 t = 0
 #set final time
@@ -100,14 +100,25 @@ sigma = global_dof[:,2]
 theta = global_dof[:,3]
 #get global equation number of any node on entire global boundary
 global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2) + local_range[0]
+
+#check mesh dof are agreeing
+#print('Mesh1 dof shape and x,y')
+#print(dof_coordinates1.shape)
+#print(dof_coordinates1[:,0])
+#print(dof_coordinates1[:,1])
+#print('Calculated x')
+#print(x[::N_dof_2])
+#print('Calculated y')
+#print(y[::N_dof_2])
+
 ####################################################################
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
 c = np.ones(global_dof.shape)
 c[:,2:4] = 0
 #exact solution and dirichlet boundary
-u_true=np.sin(x-c[:,0]*t) + np.cos(x-c[:,1]*t)
-u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(x-c[:,1]*(t+dt))
+u_true=np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
+u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(y-c[:,1]*(t+dt))
 u_d = u_2[global_boundary_dofs-local_range[0]]
 ###################################################################
 ###################################################################
@@ -174,7 +185,7 @@ for i in range(nt):
 #print(u_cart.getArray()[:])
 #print('Exact')
 #print(u_true[:])
-u_true=np.sin(x-c[:,0]*t) + np.cos(x-c[:,1]*t)
+u_true=np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
 u_exact = PETSc.Vec()
 u_exact.create(comm=comm)
 u_exact.setSizes((local_rows,global_rows),bsize=1)
@@ -197,6 +208,22 @@ PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
 # could be helpful for visualization
 
 
+# Save solution to file in VTK format
+u = Function(V1)
+#uE= Expression('sin(x[0]-t)+cos(x[1]-t)',degree=6,t=t)
+#u = interpolate(uE,V1)
+#print(sum(u.vector()[:] - u_true[::N_dof_2]))
+#uex = u_exact.getArray()[::N_dof_2]
+uex = np.zeros(N_dof_1)
+uex[:] = u_cart.getArray()[::N_dof_2]
+#uex = np.sin(dof_coordinates1[:,0]-t)+np.cos(dof_coordinates1[:,1]-t)
+#print(uex)
+#print(u_exact.getArray()[::N_dof_2])
+u.vector()[:] = uex
+vtkfile = File('solution.pvd')
+vtkfile << u
+
+
 # Plot solution and mesh on each individual process
 #plot(u)
 #plot(mesh)
@@ -210,7 +237,7 @@ PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
 
 # Compute maximum error at vertices
 #vertex_values_u_D = u_D1.compute_vertex_values(mesh1)
-#vertex_values_u = u.compute_vertex_values(mesh1)
+#vertex_values_u = #u.compute_vertex_values(mesh1)
 #import numpy as np
 #error_max = np.max(np.abs(vertex_values_u_D - vertex_values_u))
 
