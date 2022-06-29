@@ -326,7 +326,7 @@ def build_stiffness_varying_poisson(V1,V2,kappa,N_dof_2,A):
     return 0
 
 
-def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
+def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
     #Builds and assembles stiffness matrix for action balance equations
     # mesh1 is geographic mesh
     # V1 is FunctionSpace for geographic mesh
@@ -362,7 +362,8 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
     K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(0)*dx
     K12 = csig_func*u1*v1*dx
     K13 = cthet_func*u1*v1*dx
-    K14 = dot(as_vector((cx_func,cy_dunc))*u1,n1)*v1*ds
+    K14 = dot(as_vector((cx_func,cy_func)),n1)*u1*v1*ds
+    #K14 = u1*v1*ds
     #then save all matrices to list of matrices
     #since these are sparse maybe take PETSc output and pipe
     #to scipy sparse matrices
@@ -378,7 +379,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
     assemble(K12,tensor=K2)
     assemble(K13,tensor=K3)
     assemble(K14,tensor=K4)
-
+    
     #store sparsity pattern (rows,columns, vals)
     A1_I,A1_J,temp = K1.mat().getValuesCSR()
     A2_I,A2_J,temp2 = K2.mat().getValuesCSR()
@@ -388,6 +389,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
     len2 = len(temp2)
     len3 = len(temp3)
     len4 = len(temp4)
+    
     #create np to store N_dof_2 sets of vals
     vals1 = np.zeros((len1,N_dof_2))
     vals2 = np.zeros((len2,N_dof_2))
@@ -407,7 +409,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
         K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(0)*dx
         K12 = csig_func*u1*v1*dx
         K13 = cthet_func*u1*v1*dx
-        K14 = dot(as_vector((cx_func,cy_dunc))*u1,n1)*v1*ds
+        K14 = dot(as_vector((cx_func,cy_func))*u1,n1)*v1*ds
         # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
         K1 = PETScMatrix()
         K2 = PETScMatrix()
@@ -453,30 +455,22 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
     assemble(K23,tensor=K3)
 
     
-    K4 = PETScMatrix(MPI.COMM_SELF)
-    fy.vector()[:] = np.array(vals4[0,:])
-    K24 = u2*v2*fy*dx
-    assemble(K24,tensor=K4)
 
     B1_I,B1_J,temp = K1.mat().getValuesCSR()
     B2_I,B2_J,temp2 = K2.mat().getValuesCSR()
     B3_I,B3_J,temp3 = K3.mat().getValuesCSR()
-    B4_I,B4_J,temp4 = K4.mat().getValuesCSR()
 
     blen1 = len(temp)
     blen2 = len(temp2)
     blen3 = len(temp3)
-    blen4 = len(temp4)
     
     dat1 = np.zeros((blen1,len1))
     dat2 = np.zeros((blen2,len2))
     dat3 = np.zeros((blen3,len3))
-    dat4 = np.zeros((blen4,len4))
     
     dat1[:,0] = temp
     dat2[:,0] = temp2
     dat3[:,0] = temp3
-    dat4[:,0] = temp4
 
 
     #KEY! IDK IF TRUE BUT ASSUMING length of sparse matrixes K1,K2,K3 were same
@@ -512,37 +506,54 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,A):
     Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
     Krow2,Kcol2,Kdat2 = assemble_global_CSR(A2_I,A2_J,B2_I,B2_J,dat2)
     Krow3,Kcol3,Kdat3 = assemble_global_CSR(A3_I,A3_J,B3_I,B3_J,dat3)
-    
-    #K4 is the boundary integral dOmega1 x Omega2
-    for i in range(1,len4):
-        K4 = PETScMatrix(MPI.COMM_SELF)
-        fy.vector()[:] = np.array(vals4[0,:])
-        K24 = u2*v2*fy*dx
-        assemble(K24,tensor=K4)
 
-        _,_,temp4 = K4.mat().getValuesCSR()
-        dat4[:,i] = temp4
-    
-    
-    Krow4,Kcol4,Kdat4 = assemble_global_CSR(A4_I,A4_J,B4_I,B4_J,dat4)
-    
     Krow=Krow.astype(np.int32)
     Kcol=Kcol.astype(np.int32)
     Krow2=Krow2.astype(np.int32)
     Kcol2=Kcol2.astype(np.int32)
     Krow3=Krow3.astype(np.int32)
     Kcol3=Kcol3.astype(np.int32)
-    Krow4=Krow4.astype(np.int32)
-    Kcol4=Kcol4.astype(np.int32)
     #challenge is we likely have 3 different sparsity patterns so how should we
     #add them all using scipy???
     K1 = sp.csr_matrix((Kdat+Kdat2, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
     K2 = sp.csr_matrix((Kdat3, Kcol3, Krow3), shape=(A_local_size[0],A_global_size[1]))
-    K3 = sp.csr_matrix((Kdat4, Kcol4, Krow4), shape=(A_local_size[0],A_global_size[1]))
+
+    #add the sparse matrices
+    K = dt*(-K1+K2)
     
-    #dt will need to be in here as well, and add mass matrix?
-    K = -K1+K2+K3
+    #only works if there is boundary of domain 1 on this process
+    if len(vals4[:,0]) != 0:
+        K4 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(vals4[0,:])
+        K24 = u2*v2*fy*dx
+        assemble(K24,tensor=K4)
+        B4_I,B4_J,temp4 = K4.mat().getValuesCSR()
+        blen4 = len(temp4)
+        dat4 = np.zeros((blen4,len4))
+        dat4[:,0] = temp4
+
+        #K4 is the boundary integral dOmega1 x Omega2
+        for i in range(1,len4):
+            K4 = PETScMatrix(MPI.COMM_SELF)
+            fy.vector()[:] = np.array(vals4[0,:])
+            K24 = u2*v2*fy*dx
+            assemble(K24,tensor=K4)
+
+            _,_,temp4 = K4.mat().getValuesCSR()
+            dat4[:,i] = temp4
+    
+    
+        Krow4,Kcol4,Kdat4 = assemble_global_CSR(A4_I,A4_J,B4_I,B4_J,dat4)
+   
+        Krow4=Krow4.astype(np.int32)
+        Kcol4=Kcol4.astype(np.int32)
+
+        K3 = sp.csr_matrix((Kdat4, Kcol4, Krow4), shape=(A_local_size[0],A_global_size[1]))
+
+        K = K + dt*K3
+    
     #assign values to PETSc matrix
     A.setValuesCSR(K.indptr,K.indices,K.data)
     A.assemble()
     return 0
+    

@@ -21,12 +21,16 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
 # Create cartesian mesh of two 2D and define function spaces
-nx = 20
+nx = 19
 ny = 20
 #set initial time
 t = 0
+#set final time
+t_f = 1/200
 #set time step
-
+dt = 1/200
+#calculate nt
+nt = int(np.ceil(t_f/dt))
 
 ####################################################################
 #Subdomain 1
@@ -91,17 +95,20 @@ N_dof_1 = dof_coordinates1.shape[0]   #Warning, this might be hardcoed for 1D su
 N_dof_2 = dof_coordinates2.shape[0]   
 global_dof=CF.cartesian_product_coords(dof_coordinates1,dof_coordinates2)
 x = global_dof[:,0]
-y = global_dof[:,2]
+y = global_dof[:,1]
+sigma = global_dof[:,2]
+theta = global_dof[:,3]
 #get global equation number of any node on entire global boundary
 global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2) + local_range[0]
 ####################################################################
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
-alpha = 1.0
-kappa = np.exp(alpha*x*y)
+c = np.ones(global_dof.shape)
+c[:,2:4] = 0
 #exact solution and dirichlet boundary
-u_true=np.exp(alpha*x*y)
-u_d = u_true[global_boundary_dofs-local_range[0]]
+u_true=np.sin(x-c[:,0]*t) + np.cos(x-c[:,1]*t)
+u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(x-c[:,1]*(t+dt))
+u_d = u_2[global_boundary_dofs-local_range[0]]
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
@@ -111,7 +118,8 @@ A.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-CF.build_stiffness_varying_poisson(V1,V2,kappa,N_dof_2,A)
+CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
+A=A+M
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
 ##################################################################
@@ -124,19 +132,23 @@ F_dof.setSizes((local_rows,global_rows),bsize=1)
 F_dof.setFromOptions()
 
 #calculate pointwise values of RHS and put them in F_dof
-temp = -2*alpha**2*(x**2+y**2)*np.exp(2*alpha*x*y)
+temp = u_true
 F_dof.setValues(rows,temp)
 
 #now matrix vector multiply with M to get actual right hand side
 B = F_dof.duplicate()
+E = F_dof.duplicate()
+L2_E = F_dof.duplicate()
+E.setFromOptions()
 B.setFromOptions()
+L2_E.setFromOptions()
 #Mass matrix
 M.mult(F_dof,B)
 #set Dirichlet boundary conditions
 B.setValues(global_boundary_dofs,u_d)
 ###################################################################
 ###################################################################
-#Solution step
+#Time step
 #u_cart will hold solution
 u_cart = B.duplicate()
 #create a linear solver
@@ -148,7 +160,11 @@ ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setPC(pc2)
 B.assemble()
-ksp2.solve(B, u_cart)
+
+for i in range(nt):
+    t+=dt
+    ksp2.solve(B, u_cart)
+
 ####################################################################
 ###################################################################
 #Post Processing section
@@ -158,13 +174,22 @@ ksp2.solve(B, u_cart)
 #print(u_cart.getArray()[:])
 #print('Exact')
 #print(u_true[:])
-
-print('Error')
-print(np.sum(np.abs(u_cart.getArray()[:]-u_true)))
+u_true=np.sin(x-c[:,0]*t) + np.cos(x-c[:,1]*t)
+u_exact = PETSc.Vec()
+u_exact.create(comm=comm)
+u_exact.setSizes((local_rows,global_rows),bsize=1)
+u_exact.setFromOptions()
+u_exact.setValues(rows,u_true)
 
 
 #need function to evaluate L2 error
-
+PETSc.Vec.pointwiseMult(E,u_cart-u_exact,u_cart-u_exact)
+M.mult(E,L2_E)
+PETSc.Sys.Print("L2 error",np.sqrt(L2_E.sum()))
+#h
+PETSc.Sys.Print("h",1/nx)
+#dof
+PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
 
 ##################################################################
 #################################################################
