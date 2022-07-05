@@ -20,9 +20,11 @@ import cartesianfunctions as CF
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
+#soecify domain size
+L = 10
 # Create cartesian mesh of two 2D and define function spaces
 nx = 20
-ny = 18
+ny = 20
 #set initial time
 t = 0
 #set final time
@@ -36,7 +38,7 @@ nt = int(np.ceil(t_f/dt))
 #Subdomain 1
 #the first subdomain will be split amongst processors
 # this is set up ideally for subdomain 1 > subdomain 2
-mesh1 = UnitSquareMesh(comm,nx,nx)
+mesh1 = RectangleMesh(comm,Point(0.0,0.0),Point(L,L),nx,nx)
 V1 = FunctionSpace(mesh1, 'P', 1)
 u1 = TrialFunction(V1)
 v1 = TestFunction(V1)
@@ -45,7 +47,7 @@ v1 = TestFunction(V1)
 #Subdomain 2
 #now we want entire second subdomain on EACH processor, so this will always be the smaller mesh
 #MPI.COMM_SELF to not partition mesh
-mesh2 = UnitSquareMesh(MPI.COMM_SELF,ny,ny)
+mesh2 =  RectangleMesh(MPI.COMM_SELF,Point(0.0,0.0),Point(L,L),ny,ny)
 V2 = FunctionSpace(mesh2, 'P', 1)
 u2 = TrialFunction(V2)
 v2 = TestFunction(V2)
@@ -93,14 +95,27 @@ dof_coordinates1=V1.tabulate_dof_coordinates()
 dof_coordinates2=V2.tabulate_dof_coordinates()
 N_dof_1 = dof_coordinates1.shape[0]   #Warning, this might be hardcoed for 1D subdomains
 N_dof_2 = dof_coordinates2.shape[0]   
-global_dof=CF.cartesian_product_coords(dof_coordinates1,dof_coordinates2)
-x = global_dof[:,0]
-y = global_dof[:,1]
-sigma = global_dof[:,2]
-theta = global_dof[:,3]
+local_dof=CF.cartesian_product_coords(dof_coordinates1,dof_coordinates2)
+x = local_dof[:,0]
+y = local_dof[:,1]
+sigma = local_dof[:,2]
+theta = local_dof[:,3]
 #get global equation number of any node on entire global boundary
-global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2) + local_range[0]
+local_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2)
 
+#now only want subset that is the inflow, need to automate later
+x_min = 0
+y_min = 0
+dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
+dum2 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
+local_boundary_dofs = np.unique(np.concatenate((dum1,dum2),0))
+#local_boundary_dofs = dum2
+global_boundary_dofs = local_boundary_dofs + local_range[0]
+#print('global_boundary_dofs')
+#print(global_boundary_dofs)
+#print('locations of the boundary')
+#print(x[local_boundary_dofs])
+#print(y[local_boundary_dofs])
 #check mesh dof are agreeing
 #print('Mesh1 dof shape and x,y')
 #print(dof_coordinates1.shape)
@@ -114,12 +129,13 @@ global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordin
 ####################################################################
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
-c = np.ones(global_dof.shape)
-c[:,2:4] = 0
+c = np.zeros(local_dof.shape)
+c[:,0] = 1
+c[:,1] = 1
 #exact solution and dirichlet boundary
-u_true=np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
+u_true = np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
 u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(y-c[:,1]*(t+dt))
-u_d = u_2[global_boundary_dofs-local_range[0]]
+u_d = u_2[local_boundary_dofs]
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
@@ -133,6 +149,8 @@ CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
 A=A+M
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
+#just want to test answer
+#A.zeroRows(rows,diag=1)
 ##################################################################
 ##################################################################
 #assmble RHS
@@ -143,8 +161,8 @@ F_dof.setSizes((local_rows,global_rows),bsize=1)
 F_dof.setFromOptions()
 
 #calculate pointwise values of RHS and put them in F_dof
-temp = u_true
-F_dof.setValues(rows,temp)
+#temp = u_true
+F_dof.setValues(rows,u_true)
 
 #now matrix vector multiply with M to get actual right hand side
 B = F_dof.duplicate()
@@ -153,10 +171,16 @@ L2_E = F_dof.duplicate()
 E.setFromOptions()
 B.setFromOptions()
 L2_E.setFromOptions()
-#Mass matrix
+#multiply F by Mass matrix to get B
 M.mult(F_dof,B)
 #set Dirichlet boundary conditions
 B.setValues(global_boundary_dofs,u_d)
+#print('local range')
+#print(local_range)
+#print('global boundary #')
+#print(global_boundary_dofs)
+#just want to test answer
+#B.setValues(rows,u_2)
 ###################################################################
 ###################################################################
 #Time step
@@ -185,18 +209,26 @@ for i in range(nt):
 #print(u_cart.getArray()[:])
 #print('Exact')
 #print(u_true[:])
-u_true=np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
+
+u_true = np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
 u_exact = PETSc.Vec()
 u_exact.create(comm=comm)
 u_exact.setSizes((local_rows,global_rows),bsize=1)
 u_exact.setFromOptions()
 u_exact.setValues(rows,u_true)
 
-
+PETSc.Sys.Print("Final t",t)
 #need function to evaluate L2 error
-PETSc.Vec.pointwiseMult(E,u_cart-u_exact,u_cart-u_exact)
+e1 = u_cart-u_exact
+PETSc.Vec.pointwiseMult(E,e1,e1)
 M.mult(E,L2_E)
+#L2
 PETSc.Sys.Print("L2 error",np.sqrt(L2_E.sum()))
+#Linf
+PETSc.Sys.Print("L inf error",e1.norm(PETSc.NormType.NORM_INFINITY)) 
+#min/max
+PETSc.Sys.Print("min in error",e1.min())
+PETSc.Sys.Print("max error",e1.max())
 #h
 PETSc.Sys.Print("h",1/nx)
 #dof
@@ -210,17 +242,8 @@ PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
 
 # Save solution to file in VTK format
 u = Function(V1)
-#uE= Expression('sin(x[0]-t)+cos(x[1]-t)',degree=6,t=t)
-#u = interpolate(uE,V1)
-#print(sum(u.vector()[:] - u_true[::N_dof_2]))
-#uex = u_exact.getArray()[::N_dof_2]
-uex = np.zeros(N_dof_1)
-uex[:] = u_cart.getArray()[::N_dof_2]
-#uex = np.sin(dof_coordinates1[:,0]-t)+np.cos(dof_coordinates1[:,1]-t)
-#print(uex)
-#print(u_exact.getArray()[::N_dof_2])
-u.vector()[:] = uex
-vtkfile = File('solution.pvd')
+u.vector()[:] = np.array(u_cart.getArray()[4::N_dof_2])
+vtkfile = File('ActionBalance/solution.pvd')
 vtkfile << u
 
 

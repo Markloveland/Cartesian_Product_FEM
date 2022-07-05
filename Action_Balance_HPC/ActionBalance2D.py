@@ -1,8 +1,8 @@
 """
-Action Balance Solver with implicit Euler time stepping:
-No Source Terms:
-    dN/dt + \/ .cN = 0
-only 2D cases to start
+Action Balance Equation Solver
+This algorithm for loading will be same required of Action Balance Equation
+    du/dt + \/.cu = f
+only 2D case to start
 """
 
 from __future__ import print_function
@@ -20,200 +20,253 @@ import cartesianfunctions as CF
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 nprocs = comm.Get_size()
-# Create cartesian mesh of two intervals and define function spaces
-nx = 100
-ny = 100
+#soecify domain size
+L = 10
+# Create cartesian mesh of two 2D and define function spaces
+nx = 32
+ny = 32
 #set initial time
 t = 0
+#set final time
+t_f = 1/200
 #set time step
-
+dt = 1/200
+#calculate nt
+nt = int(np.ceil(t_f/dt))
 
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
 # this is set up ideally for subdomain 1 > subdomain 2
-mesh1 = UnitIntervalMesh(comm,nx)
+mesh1 = IntervalMesh(comm,nx,0.0,L)
 V1 = FunctionSpace(mesh1, 'P', 1)
-# Define boundary condition 1
-u_D1 = Expression('1 + x[0]*x[0]', degree=2)
-def boundary(x, on_boundary):
-    return on_boundary
-bc1 = DirichletBC(V1, u_D1, boundary)
-
-# offload this to CF routine maybe
-# Define variational problem to generate submatrices for domain 1
 u1 = TrialFunction(V1)
 v1 = TestFunction(V1)
-f1 = Constant(-2.0)
-a1 = u1.dx(0)*v1.dx(0)*dx
-L1 = f1*v1*dx
-K1_pet = PETScMatrix()
-
-#assemble subdomain matrix
-assemble(a1,tensor=K1_pet)
-K1_sizes = K1_pet.mat().getLocalSize()
-K1_global_size =K1_pet.mat().getSize() 
-#also need mass matrices in each subdomain
-m1 = u1*v1*dx
-M1_pet = PETScMatrix()
-assemble(m1,tensor=M1_pet)
-
-#assmble RHS
-f1_pet = PETScVector()
-assemble(L1,tensor=f1_pet)
-#see if i can apply boundary conditions, I know globally i need to do something else
-bc1.apply(K1_pet)
-bc1.apply(f1_pet)
-u=Function(V1)
-
-
-
-#####################################################################
+####################################################################
+####################################################################
 #Subdomain 2
 #now we want entire second subdomain on EACH processor, so this will always be the smaller mesh
 #MPI.COMM_SELF to not partition mesh
-mesh2 = UnitIntervalMesh(MPI.COMM_SELF,ny)
+mesh2 =  IntervalMesh(MPI.COMM_SELF,ny,0.0,L)
 V2 = FunctionSpace(mesh2, 'P', 1)
-# Define variational problem
 u2 = TrialFunction(V2)
 v2 = TestFunction(V2)
-f2 = Constant(1.0)
-a2 = u2.dx(0)*v2.dx(0)*dx
-L2 = f2*v2*dx
-    
-#assemble, want same global matrix on every  processor
-K2_pet = PETScMatrix(MPI.COMM_SELF)
-assemble(a2,tensor=K2_pet)
-K2_sizes = K2_pet.mat().getLocalSize()
-
-
-#also need mass matrices in each subdomain
+###################################################################
+###################################################################
+#need local mass matrices to build global mass matrix
+#mass of subdomain 1
+m1 = u1*v1*dx
+M1_pet = PETScMatrix()
+assemble(m1,tensor=M1_pet)
 m2 = u2*v2*dx
 M2_pet = PETScMatrix(MPI.COMM_SELF)
 assemble(m2,tensor=M2_pet)
+###################################################################
+###################################################################
+#save sizes of subdomain matrices
+M1_sizes = M1_pet.mat().getLocalSize()
+M1_global_size =M1_pet.mat().getSize() 
+M2_sizes = M2_pet.mat().getLocalSize()
 
+#calculate sizes of matrix for global domain
+#number of rows/cols on each processor
+local_rows = int(M1_sizes[0]*M2_sizes[0])
+global_rows = int(M1_global_size[0]*M2_sizes[0])
+local_cols = int(M1_sizes[1]*M2_sizes[1])
+global_cols = int(M1_global_size[1]*M2_sizes[1])
+###################################################################
+###################################################################
+#Allocate global mass matrix
+#need to generate global mass matrix to get global matrix layout and sparsity patterns
+#global matrices are product of each subdomain
+M=CF.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols)
 
-
-###############################################################
-#Assemble global matrices (product of each subdomain)
-local_rows = int(K1_sizes[0]*K2_sizes[0])
-global_rows = int(K1_global_size[0]*K2_sizes[0])
-local_cols = int(K1_sizes[1]*K2_sizes[1])
-global_cols = int(K1_global_size[1]*K2_sizes[1])
-#now lets create a global matrix which will be stored on each process
-#global matrix is K11 x K22 + K12 x K21
-
-#first I need to create an mpi matrix of the appropriate size and start storing values
-A = PETSc.Mat()
-A.create(comm=comm)
-A.setSizes(([local_rows,global_rows],[local_cols,global_cols]),bsize=1)
-A.setFromOptions()
-A.setType('aij')
-A.setUp()
-#also need global mass matrix
-#same exact structure as A
-M = A.duplicate()
-
-#need to preallocate in here
-print('Tensor Product matrix:')
-print(A.getSize())
-local_range = A.getOwnershipRange()
+#also need global stiffness matrix
+#same exact structure as M
+A = M.duplicate()
+#get ownership range
+local_range = M.getOwnershipRange()
 #vector of row numbers
 rows = np.arange(local_range[0],local_range[1],dtype=np.int32)
-#i will also need to calculate the global degrees of freedom
+####################################################################
+####################################################################
+#from the function spaces and ownership ranges, generate global degrees of freedom
 dof_coordinates1=V1.tabulate_dof_coordinates()
 dof_coordinates2=V2.tabulate_dof_coordinates()
-global_dof=CF.cartesian_product_coords(dof_coordinates1,dof_coordinates2)
-#print(global_dof)
-x = global_dof[:,0]
-y = global_dof[:,1]
-global_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2)+ local_range[0]
+N_dof_1 = dof_coordinates1.shape[0]   #Warning, this might be hardcoed for 1D subdomains
+N_dof_2 = dof_coordinates2.shape[0]   
+local_dof=CF.cartesian_product_coords(dof_coordinates1,dof_coordinates2)
+x = local_dof[:,0]
+y = local_dof[:,1]
+#get global equation number of any node on entire global boundary
+local_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2)
 
-
-#########################################################
-#Loading routine
-#preallocate with nnz first
-#to get nnz of cartesian matrix, need nnz of each submatrix
-#K matrices are u'v'
-K1_I,K1_J,K1_A = K1_pet.mat().getValuesCSR()
-K1_NNZ = K1_I[1:]-K1_I[:-1]
-K2_I,K2_J,K2_A = K2_pet.mat().getValuesCSR()
-K2_NNZ = K2_I[1:]-K2_I[:-1]
-#same for mass matrices uv
-M1_I,M1_J,M1_A = M1_pet.mat().getValuesCSR()
-M1_NNZ = M1_I[1:]-M1_I[:-1]
-M2_I,M2_J,M2_A = M2_pet.mat().getValuesCSR()
-M2_NNZ = M2_I[1:]-M2_I[:-1]
-#now use scipy for sparse kron and dump into petsc matrices
-K1 = sp.csr_matrix((K1_A,K1_J,K1_I),shape=(K1_sizes[0],K1_global_size[1]))
-K2 = sp.csr_matrix((K2_A,K2_J,K2_I),shape=K2_sizes)
-M1 = sp.csr_matrix((M1_A,M1_J,M1_I),shape=(K1_sizes[0],K1_global_size[1]))
-M2 = sp.csr_matrix((M2_A,M2_J,M2_I),shape=K2_sizes)
-
-temp = sp.kron(K1,M2,format="csr")+sp.kron(M1,K2,format="csr")
-A_NNZ = temp.indptr[1:]-temp.indptr[:-1]
-
-
-temp2 = sp.kron(M1,M2,format="csr")
-M_NNZ = temp2.indptr[1:]-temp2.indptr[:-1]
-
-#now need to mass matrixes for stiffness and RHS
-M.setPreallocationNNZ(M_NNZ)
-#set the global matrix using CSR
-M.setValuesCSR(temp2.indptr,temp2.indices,temp2.data)
-M.assemble()
-
-#Loading A matrix
-A.setPreallocationNNZ(A_NNZ)
-A.setValuesCSR(temp.indptr,temp.indices,temp.data)
-
-#need to wipe out row and set as the row of the identity matrix
+#now only want subset that is the inflow, need to automate later
+x_min = 0
+y_min = 0
+dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
+dum2 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
+local_boundary_dofs = np.unique(np.concatenate((dum1,dum2),0))
+#local_boundary_dofs=dum2
+global_boundary_dofs = local_boundary_dofs + local_range[0]
+#print('global_boundary_dofs')
 #print(global_boundary_dofs)
-A.assemble()
-#this may be slow idk since it is after assembly
+#print('locations of the boundary')
+#print(x[local_boundary_dofs])
+#print(y[local_boundary_dofs])
+#check mesh dof are agreeing
+#print('Mesh1 dof shape and x,y')
+#print(dof_coordinates1.shape)
+#print(dof_coordinates1[:,0])
+#print(dof_coordinates1[:,1])
+#print('Calculated x')
+#print(x[::N_dof_2])
+#print('Calculated y')
+#print(y[::N_dof_2])
+
+####################################################################
+####################################################################
+#generate any coefficients that depend on the degrees of freedom
+c = np.zeros(local_dof.shape)
+c[:,:] = 1.0
+#exact solution and dirichlet boundary
+u_true=np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
+u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(y-c[:,1]*(t+dt))
+u_d = u_2[local_boundary_dofs]
+###################################################################
+###################################################################
+#Preallocate and load/assemble cartesian mass matrix!
+#now need to mass matrixes for stiffness and RHS, also optionally can out put the nnz
+M_NNZ = CF.build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M)
+A.setPreallocationNNZ(M_NNZ)
+##################################################################
+##################################################################
+#Loading A matrix routine
+CF.build_stiffness_varying_action_balance_2D(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
+A=A+M
+#set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
-#checkout global matrix
-#print(A.getInfo())
-
-
-#now evaluate RHS at all d.o.f and set that as the vector
+#just want to test answer
+#A.zeroRows(rows,diag=1)
+##################################################################
+##################################################################
+#assmble RHS
+#now evaluate RHS at all d.o.f and set that as the F vector
 F_dof = PETSc.Vec()
 F_dof.create(comm=comm)
 F_dof.setSizes((local_rows,global_rows),bsize=1)
 F_dof.setFromOptions()
 
 #calculate pointwise values of RHS and put them in F_dof
-temp = -2*np.ones(local_rows)
+temp = u_true
 F_dof.setValues(rows,temp)
-#now matrix vector multiply with M
+
+#now matrix vector multiply with M to get actual right hand side
 B = F_dof.duplicate()
+E = F_dof.duplicate()
+L2_E = F_dof.duplicate()
+E.setFromOptions()
 B.setFromOptions()
+L2_E.setFromOptions()
 #Mass matrix
 M.mult(F_dof,B)
-#lastly, set exact solution at dirichlet boundary
-u_d = 1 + x[global_boundary_dofs-local_range[0]]**2
+#set Dirichlet boundary conditions
 B.setValues(global_boundary_dofs,u_d)
-#now we should be able to solve for final solution
+#just want to test answer
+#B.setValues(rows,u_2)
+###################################################################
+###################################################################
+#Time step
+#u_cart will hold solution
 u_cart = B.duplicate()
+#create a linear solver
 pc2 = PETSc.PC().create()
+#this is a direct solve with lu
 pc2.setType('lu')
 pc2.setOperators(A)
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setPC(pc2)
 B.assemble()
-ksp2.solve(B, u_cart)
-print('Cartesian solution')
-print(u_cart.getArray()[::ny+1])
 
-#for verification just solve problem in subdomain 1
-#this is fenics solve
-#need equivalent solve step in PETSc
-solve(K1_pet,u.vector(),f1_pet)
-print('Fenics')
-print(u.vector()[:])
+for i in range(nt):
+    t+=dt
+    ksp2.solve(B, u_cart)
 
-# Plot solution and mesh
+####################################################################
+###################################################################
+#Post Processing section
+
+#print whole solution
+#print('Cartesian solution')
+#print(u_cart.getArray()[:])
+#print('Exact')
+#print(u_true[:])
+
+u_true= np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
+u_exact = PETSc.Vec()
+u_exact.create(comm=comm)
+u_exact.setSizes((local_rows,global_rows),bsize=1)
+u_exact.setFromOptions()
+u_exact.setValues(rows,u_true)
+
+PETSc.Sys.Print("Final t",t)
+#need function to evaluate L2 error
+e1 = u_cart-u_exact
+PETSc.Vec.pointwiseMult(E,e1,e1)
+M.mult(E,L2_E)
+#L2
+PETSc.Sys.Print("L2 error",np.sqrt(L2_E.sum()))
+#Linf
+PETSc.Sys.Print("L inf error",e1.norm(PETSc.NormType.NORM_INFINITY)) 
+#min/max
+PETSc.Sys.Print("min in error",e1.min())
+PETSc.Sys.Print("max error",e1.max())
+#h
+PETSc.Sys.Print("h",1/nx)
+#dof
+PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
+
+##################################################################
+#################################################################
+#If I can find integral parameter like Hs then this section
+# could be helpful for visualization
+
+
+# Save solution to file in VTK format
+#u = Function(V1)
+#u.vector()[:] = np.array(u_cart.getArray()[4::N_dof_2])
+#vtkfile = File('ActionBalance/solution.pvd')
+#vtkfile << u
+
+
+#Only for serial!
+#############
+#fig,  ax2 = plt.subplots(nrows=1)
+
+#ax2.tricontour(local_dof[:,0], local_dof[:,1], u_cart.getArray()[:], levels=14, linewidths=0.5, colors='k')
+#cntr2 = ax2.tricontourf(local_dof[:,0], local_dof[:,1], u_cart.getArray()[:], levels=14)#, cmap="RdBu_r")
+
+#fig.colorbar(cntr2, ax=ax2)
+#ax2.plot(local_dof[:,0], local_dof[:,1], 'ko', ms=3)
+#ax2.set(xlim=(0, 1), ylim=(0, 1))
+#ax2.set_title('Cartesian Product Solution')
+#plt.subplots_adjust(hspace=0.5)
+#plt.savefig('2DPropagation.png')
+#print(x[local_boundary_dofs])
+#print(y[local_boundary_dofs])
+#print(max(abs(u_exact.getArray()[:]-u_cart.getArray()[:])))
+#print(u_exact.getArray()[local_boundary_dofs] - u_cart.getArray()[local_boundary_dofs])
+###########
+
+
+#lets print out array to see what is happening
+#print(local_boundary_dofs)
+#print(global_boundary_dofs)
+#A=A-M
+#print(A.getValues(range(16),range(16)))
+#print(M.getValues(range(16),range(16)))
+# Plot solution and mesh on each individual process
 #plot(u)
 #plot(mesh)
 #plt.savefig('poisson/final_sol_p00'+str(rank)+'.png')
@@ -226,7 +279,7 @@ print(u.vector()[:])
 
 # Compute maximum error at vertices
 #vertex_values_u_D = u_D1.compute_vertex_values(mesh1)
-#vertex_values_u = u.compute_vertex_values(mesh1)
+#vertex_values_u = #u.compute_vertex_values(mesh1)
 #import numpy as np
 #error_max = np.max(np.abs(vertex_values_u_D - vertex_values_u))
 
