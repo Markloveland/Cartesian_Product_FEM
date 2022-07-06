@@ -23,17 +23,16 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 19
-ny = 19
+nx = 64
+ny = 64
 #set initial time
 t = 0
 #set final time
-t_f = 1/200
+t_f = 5
 #set time step
-dt = 1/200
+dt = .005
 #calculate nt
 nt = int(np.ceil(t_f/dt))
-
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -130,9 +129,9 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 c = np.zeros(local_dof.shape)
 c[:,:] = 1.0
 #exact solution and dirichlet boundary
-u_true=np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
-u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(y-c[:,1]*(t+dt))
-u_d = u_2[local_boundary_dofs]
+def u_func(x,y,c,t):
+    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t)
+
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
@@ -158,27 +157,25 @@ F_dof.setSizes((local_rows,global_rows),bsize=1)
 F_dof.setFromOptions()
 
 #calculate pointwise values of RHS and put them in F_dof
-temp = u_true
-F_dof.setValues(rows,temp)
+#temp = u_cart
+#F_dof.setValues(rows,temp)
 
 #now matrix vector multiply with M to get actual right hand side
-B = F_dof.duplicate()
 E = F_dof.duplicate()
 L2_E = F_dof.duplicate()
 E.setFromOptions()
-B.setFromOptions()
 L2_E.setFromOptions()
 #Mass matrix
-M.mult(F_dof,B)
 #set Dirichlet boundary conditions
-B.setValues(global_boundary_dofs,u_d)
 #just want to test answer
 #B.setValues(rows,u_2)
 ###################################################################
 ###################################################################
 #Time step
 #u_cart will hold solution
-u_cart = B.duplicate()
+u_cart = F_dof.duplicate()
+u_cart.setValues(rows,u_func(x,y,c,t))
+u_cart.assemble()
 #create a linear solver
 pc2 = PETSc.PC().create()
 #this is a direct solve with lu
@@ -187,10 +184,17 @@ pc2.setOperators(A)
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setPC(pc2)
-B.assemble()
 
 for i in range(nt):
     t+=dt
+
+    u_2 = u_func(x,y,c,t)
+    u_d = u_2[local_boundary_dofs]
+    B = F_dof.duplicate()
+    B.setFromOptions()
+    M.mult(u_cart,B)
+    B.setValues(global_boundary_dofs,u_d)
+    B.assemble()
     ksp2.solve(B, u_cart)
 
 ####################################################################
@@ -226,7 +230,6 @@ PETSc.Sys.Print("max error",e1.max())
 PETSc.Sys.Print("h",1/nx)
 #dof
 PETSc.Sys.Print("dof",(nx+1)*(ny+1))
-
 ##################################################################
 #################################################################
 #If I can find integral parameter like Hs then this section
