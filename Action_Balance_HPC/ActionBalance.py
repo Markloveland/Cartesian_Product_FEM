@@ -23,17 +23,17 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 20
-ny = 20
+nx = 16
+ny = 16
 #set initial time
 t = 0
 #set final time
-t_f = 1/200
+t_f = 5
 #set time step
-dt = 1/200
+dt = 0.005
 #calculate nt
 nt = int(np.ceil(t_f/dt))
-
+PETSc.Sys.Print('nt',nt)
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -137,9 +137,8 @@ c = np.ones(local_dof.shape)
 #c[:,0] = 1
 #c[:,1] = 1
 #exact solution and dirichlet boundary
-u_true =  np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
-u_2 = np.sin(x-c[:,0]*(t+dt)) + np.cos(y-c[:,1]*(t+dt)) + np.sin(sigma-c[:,2]*(t+dt)) + np.cos(theta-c[:,3]*(t+dt)) 
-u_d = u_2[local_boundary_dofs]
+def u_func(x,y,sigma,theta,c,t):
+    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
@@ -166,7 +165,7 @@ F_dof.setFromOptions()
 
 #calculate pointwise values of RHS and put them in F_dof
 #temp = u_true
-F_dof.setValues(rows,u_true)
+#F_dof.setValues(rows,u_true)
 
 #now matrix vector multiply with M to get actual right hand side
 B = F_dof.duplicate()
@@ -176,9 +175,9 @@ E.setFromOptions()
 B.setFromOptions()
 L2_E.setFromOptions()
 #multiply F by Mass matrix to get B
-M.mult(F_dof,B)
+#M.mult(F_dof,B)
 #set Dirichlet boundary conditions
-B.setValues(global_boundary_dofs,u_d)
+#B.setValues(global_boundary_dofs,u_d)
 #print('local range')
 #print(local_range)
 #print('global boundary #')
@@ -190,6 +189,8 @@ B.setValues(global_boundary_dofs,u_d)
 #Time step
 #u_cart will hold solution
 u_cart = B.duplicate()
+u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
+u_cart.assemble()
 #create a linear solver
 pc2 = PETSc.PC().create()
 #this is a direct solve with lu
@@ -198,10 +199,16 @@ pc2.setOperators(A)
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setPC(pc2)
-B.assemble()
 
 for i in range(nt):
     t+=dt
+    u_2 = u_func(x,y,sigma,theta,c,t)
+    u_d = u_2[local_boundary_dofs]
+    B = F_dof.duplicate()
+    B.setFromOptions()
+    M.mult(u_cart,B)
+    B.setValues(global_boundary_dofs,u_d)
+    B.assemble()
     ksp2.solve(B, u_cart)
 
 ####################################################################
@@ -214,7 +221,7 @@ for i in range(nt):
 #print('Exact')
 #print(u_true[:])
 
-u_true = np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
+u_true = u_func(x,y,sigma,theta,c,t)
 u_exact = PETSc.Vec()
 u_exact.create(comm=comm)
 u_exact.setSizes((local_rows,global_rows),bsize=1)

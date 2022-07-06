@@ -102,7 +102,8 @@ def fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2):
         last_ind = last_ind+len(dof_coordinates1)    
     
     #sorts and also eliminates duplicates of "corners"
-    global_boundary_dofs=np.unique(global_boundary_dofs,axis=0)
+    if len(global_boundary_dofs) !=0:
+        global_boundary_dofs=np.unique(global_boundary_dofs,axis=0)
 
     #have cartesian product of dof at entire boundary (this form should be easy to get coordinates in if needed)
     #now need to convert to global system dof as the kron function does
