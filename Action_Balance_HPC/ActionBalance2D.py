@@ -23,8 +23,8 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 32
-ny = 32
+nx = 19
+ny = 19
 #set initial time
 t = 0
 #set final time
@@ -225,7 +225,7 @@ PETSc.Sys.Print("max error",e1.max())
 #h
 PETSc.Sys.Print("h",1/nx)
 #dof
-PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
+PETSc.Sys.Print("dof",(nx+1)*(ny+1))
 
 ##################################################################
 #################################################################

@@ -350,7 +350,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
     #loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix
     #each matrix will have same sparsity pattern so get first one then
     #create numpy to store vals
-    A_global_size =A.getSize()
+    A_global_size = A.getSize()
     A_local_size = A.getLocalSize()
 
     #need value at a specific dof_coordinate in second domain
@@ -359,7 +359,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
     csig_func.vector()[:] = np.array(c[0::N_dof_2,2])
     cthet_func.vector()[:] = np.array(c[0::N_dof_2,3])
     #create expressions and assemble linear forms
-    K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(0)*dx
+    K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(1)*dx
     K12 = csig_func*u1*v1*dx
     K13 = cthet_func*u1*v1*dx
     K14 = dot(as_vector((cx_func,cy_func)),n1)*u1*v1*ds
@@ -406,7 +406,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
         csig_func.vector()[:] = np.array(c[a::N_dof_2,2])
         cthet_func.vector()[:] = np.array(c[a::N_dof_2,3])
         #create expressions and assemble linear forms
-        K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(0)*dx
+        K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(1)*dx
         K12 = csig_func*u1*v1*dx
         K13 = cthet_func*u1*v1*dx
         K14 = dot(as_vector((cx_func,cy_func))*u1,n1)*v1*ds
