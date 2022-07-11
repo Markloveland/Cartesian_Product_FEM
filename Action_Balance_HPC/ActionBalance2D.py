@@ -23,12 +23,12 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 64
-ny = 64
+nx = 32
+ny = 16
 #set initial time
 t = 0
 #set final time
-t_f = 5
+t_f = 20*5/1000
 #set time step
 dt = .005
 #calculate nt

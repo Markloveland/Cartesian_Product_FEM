@@ -630,9 +630,9 @@ def build_stiffness_varying_action_balance_2D(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
         K12 = cy_func*u1*v1*dx
         K14 = dot(as_vector((cx_func,))*u1,n1)*v1*ds
         # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
-        K1 = PETScMatrix()
-        K2 = PETScMatrix()
-        K4 = PETScMatrix()
+        #K1 = PETScMatrix()
+        #K2 = PETScMatrix()
+        #K4 = PETScMatrix()
         assemble(K11,tensor=K1)
         assemble(K12,tensor=K2)
         assemble(K14,tensor=K4)
@@ -692,18 +692,18 @@ def build_stiffness_varying_action_balance_2D(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
     for i in range(1,len1):
 
         fy.vector()[:] = np.array(vals1[i,:])
-        K1 = PETScMatrix(MPI.COMM_SELF)
+        #K1 = PETScMatrix(MPI.COMM_SELF)
         K21 = u2*v2*fy*dx
         assemble(K21,tensor=K1)
 
 
-        K2 = PETScMatrix(MPI.COMM_SELF)
+        #K2 = PETScMatrix(MPI.COMM_SELF)
         fy.vector()[:] = np.array(vals2[i,:])
         K22 = fy*u2*v2.dx(0)*dx
         assemble(K22,tensor=K2)
 
 
-        K3 = PETScMatrix(MPI.COMM_SELF)
+        #K3 = PETScMatrix(MPI.COMM_SELF)
         K23 = u2*v2*dot(as_vector((fy,)),n2)*ds
         assemble(K23,tensor=K3)
 
@@ -747,7 +747,7 @@ def build_stiffness_varying_action_balance_2D(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
 
         #K4 is the boundary integral dOmega1 x Omega2
         for i in range(1,len4):
-            K4 = PETScMatrix(MPI.COMM_SELF)
+            #K4 = PETScMatrix(MPI.COMM_SELF)
             fy.vector()[:] = np.array(vals4[i,:])
             K24 = u2*v2*fy*dx
             assemble(K24,tensor=K4)

@@ -15,7 +15,8 @@ import petsc4py
 petsc4py.init()
 from petsc4py import PETSc
 import cartesianfunctions as CF
-
+import time
+time_start = time.time()
 #get MPI variables
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -23,8 +24,8 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 16
-ny = 16
+nx = 32
+ny = 32
 #set initial time
 t = 0
 #set final time
@@ -149,6 +150,7 @@ A.setPreallocationNNZ(M_NNZ)
 ##################################################################
 #Loading A matrix routine
 CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
+time_2 = time.time()
 A=A+M
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
@@ -191,14 +193,17 @@ L2_E.setFromOptions()
 u_cart = B.duplicate()
 u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
 u_cart.assemble()
-#create a linear solver
-pc2 = PETSc.PC().create()
+
+#create a direct linear solver
+#pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-pc2.setType('lu')
-pc2.setOperators(A)
+#pc2.setType('lu')
+#pc2.setOperators(A)
+
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-ksp2.setPC(pc2)
+ksp2.setType('cg')
+#ksp2.setPC(pc2)
 
 for i in range(nt):
     t+=dt
@@ -210,7 +215,8 @@ for i in range(nt):
     B.setValues(global_boundary_dofs,u_d)
     B.assemble()
     ksp2.solve(B, u_cart)
-
+    B.destroy()
+time_end = time.time()
 ####################################################################
 ###################################################################
 #Post Processing section
@@ -244,7 +250,10 @@ PETSc.Sys.Print("max error",e1.max())
 PETSc.Sys.Print("h",1/nx)
 #dof
 PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
-
+buildTime = time_2-time_start
+solveTime = time_end-time_2
+print(f'The build time is {buildTime} seconds')
+print(f'The solve time is {solveTime} seconds')
 ##################################################################
 #################################################################
 #If I can find integral parameter like Hs then this section
