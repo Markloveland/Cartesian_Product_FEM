@@ -769,4 +769,71 @@ def build_stiffness_varying_action_balance_2D(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
     A.setValuesCSR(K.indptr,K.indices,K.data)
     A.assemble()
     return 0
+
+def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
+    #need a function to calculate wave speed (phase and group) and wavenumber
+    #takes in degrees of freedom and computes wave speeds pointwise
+    N_dof = len(sigma)
+    c_out = np.zeros((N_dof,4))
+    temp = np.zeros(N_dof)
+    k = np.zeros(N_dof)
+    #employ 3 different approximations depending on water depth
+    WGD=np.sqrt(depth/g)*g
+    SND=sigma*np.sqrt(depth/g)
+
+    shallow_range=np.argwhere(SND<1e-6)
+    mid_range=np.argwhere((SND<2.5)&(SND>=1e-6))
+    deep_range=np.argwhere(SND>=2.5)
+
+    def cg_mid(SND,g,depths,sigmas):
+        SND2=SND*SND
+        C=np.sqrt(g*depths/(SND2 +1/(1+0.666*SND2+.445*SND2**2
+                                     - 0.105*SND2**3 + 0.272*SND2**4)))
+        KND=sigmas*depths/C
+
+        FAC1=2*KND/np.sinh(2*KND)
+        N=0.5*(1+FAC1)
+        return N*C,sigmas/C
+    def cg_deep(g,sigmas):
+        return 0.5*g/sigmas
+    def cg_shallow(WGD):
+        return WGD
     
+    #store the c_g (group velocity) as temporary variables
+    temp[shallow_range]=cg_shallow(WGD[shallow_range])
+    temp[mid_range],k[mid_range]=cg_mid(SND[mid_range],g,depth[mid_range],sigma[mid_range])
+    temp[deep_range]=cg_deep(g,sigmas[deep_range])
+    #save these values in c_out and multiply by appropriate angles
+    c_out[:,0] = temp*np.cos(theta)
+    c_out[:,1] = temp*np.sin(theta)
+
+
+    #now calculate wavenumber k and store temporarily
+    k[shallow_range]=SND[shallow_range]/depth[shallow_range]
+    k[deep_range]=sigma[deep_range]**2/g
+
+    #now calculate c_sigma and c_theta, these are a bit more tricky
+
+    #for now assuming H is constant in time but can fix this later
+    #need to use FEniCS to calculate this!
+    dHdt=0.0
+    dHdy = 0.0
+    dudy = 0.0
+    dvdx = 0.0  #might not have to be 0, well see
+    dvdy = 0.0
+
+    #calc gradient of H w.r.t. x
+    #this is just forward euler but only works for fixed geometry
+    #instead we'll hard code for this case
+    dHdx=-1.0/200.0
+    dudx=0.0
+
+    #now calculate velocity vectors
+    #c_sigma
+    c_out[:,2] = k*sigma/(np.sinh(2*k*depth)) *(dHdt + u*dHdx + v*dHdy) - temp*k*(dudx)
+    #c theta
+    c_out[:,3] = sigma/(np.sinh(2*k*H))*(dHdx*np.sin(theta)- dHdy*np.cos(theta)) + \
+        dudx*np.cos(theta)*np.sin(theta) - dudy*(np.cos(theta)**2) + dvdx*(np.sin(theta)**2) \
+        -dvdy*np.cos(theta)*np.sin(theta)
+    return c_out
+
