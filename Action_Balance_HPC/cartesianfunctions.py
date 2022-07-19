@@ -837,3 +837,12 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
         -dvdy*np.cos(theta)*np.sin(theta)
     return c_out
 
+
+def calculate_HS(u_cart,V2,N_dof_1,N_dof_2):
+    HS_vec = np.zeros(N_dof_1)
+    dum = Function(V2)
+    for i in range(N_dof_1):
+        indx = i*N_dof_2
+        dum.vector()[:] = np.array(u_cart.getArray()[indx:indx+N_dof_2])
+        HS_vec[i] = 4*np.sqrt(abs(assemble(dum*dx)))
+    return HS_vec

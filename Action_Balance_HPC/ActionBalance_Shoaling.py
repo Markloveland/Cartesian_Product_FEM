@@ -164,20 +164,27 @@ u = np.zeros(local_dof.shape[0])
 v = np.zeros(local_dof.shape[0])
 c = np.zeros(local_dof.shape)
 c = CF.compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81)
-#c[:,3:] = 0
+#c[:,2:] = 0
 #dirichlet boundary, same as intital
 def u_func(x,y,sigma,theta,c,t):
     #takes in dof and paramters
     HS = 1
     F_std = 0.1
     F_peak = 0.1
-
+    Dir_mean = 0.0 #mean direction in degrees
+    Dir_rad = Dir_mean*np.pi/(180)
+    Dir_exp = 500
     #returns vector with initial condition values at global DOF
     aux1 = HS**2/(16*np.sqrt(2*np.pi)*F_std)
     aux3 = 2*F_std**2
     tol=1e-14
-    E = (x<tol)*aux1*np.exp(-(sigma - 2*np.pi*F_peak)**2/aux3)
-    return E*(np.cos(theta)**500)
+    aux2 = (sigma - ( np.pi*2*F_peak ) )**2
+    E = (x<tol)*aux1*np.exp(-aux2/aux3)
+    CTOT = np.sqrt(0.5*Dir_exp/np.pi)/(1.0 - 0.25/Dir_exp)
+    A_COS = np.cos(theta - Dir_rad)
+    CDIR = (A_COS>0)*CTOT*np.maximum(A_COS**Dir_exp, 1.0e-10)
+
+    return E*CDIR
 #initial condition
 #def u_init(x,y,sigma,theta,c):
 #    #need gaussian guy here
@@ -243,7 +250,6 @@ u_cart.assemble()
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-ksp2.view()
 #ksp2.monitor()
 #ksp2.setType('cg')
 #ksp2.setPC(pc2)
@@ -281,6 +287,11 @@ for i in range(nt):
         #hdf5_file.write(u,"solution",t)
 print('Reason of convergence')
 print(ksp2.getConvergedReason())
+ksp2.view()
+A.destroy()
+B.destroy()
+ksp2.destroy()
+
 time_end = time.time()
 ####################################################################
 ###################################################################
@@ -304,6 +315,7 @@ PETSc.Sys.Print("Final t",t)
 e1 = u_cart-u_exact
 PETSc.Vec.pointwiseMult(E,e1,e1)
 M.mult(E,L2_E)
+M.destroy()
 #L2
 PETSc.Sys.Print("L2 error",np.sqrt(L2_E.sum()))
 #Linf
@@ -326,6 +338,15 @@ buildTime = time_2-time_start
 solveTime = time_end-time_2
 print(f'The build time is {buildTime} seconds')
 print(f'The solve time is {solveTime} seconds')
+
+
+HS = Function(V1)
+HS_vec = CF.calculate_HS(u_cart,V2,N_dof_1,N_dof_2)
+HS.vector()[:] = np.array(HS_vec)
+fname = 'ActionBalance_Shoaling_HS/solution'
+#pvd doesnt seem to work with new paraview
+vtkfile = File(fname+'.pvd')
+vtkfile << HS
 ##################################################################
 #################################################################
 #If I can find integral parameter like Hs then this section
