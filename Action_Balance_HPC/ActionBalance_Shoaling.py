@@ -28,7 +28,7 @@ nprocs = comm.Get_size()
 x_min = 0.0
 x_max = 3950 #should be 4000 (need to truncate a bit due to problem at 0 elevation)
 y_min = 0.0
-y_max = 100.0
+y_max = 20000
 n_x = 100 #number of elements toward  coastline
 n_y = 100 # number of elements parallel to coastline
 
@@ -36,12 +36,12 @@ n_y = 100 # number of elements parallel to coastline
 
 
 #determine spectral domain
-omega_min=0.25 #smallest rad. frequency (needs to be larger than 0)
+omega_min= 0.25 #smallest rad. frequency (needs to be larger than 0)
 omega_max = 2.0 #largest rad. frequency
-theta_min = -np.pi/4
-theta_max = np.pi/4
-n_sigma = 30 #number of elements in frequncy which is dimension no. 0   
-n_theta = 10 #number of elements in theta
+theta_min = -10/180*np.pi
+theta_max = 10/180*np.pi
+n_sigma = 40 #number of elements in frequncy which is dimension no. 0   
+n_theta = 4 #number of elements in theta
 
 
 #set initial time
@@ -49,7 +49,7 @@ t = 0
 #set final time
 t_f = 1000
 #set time step
-dt = 5.0
+dt = 1.0
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
@@ -129,11 +129,12 @@ local_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordina
 dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
 #dum2 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
 #dum3 = local_boundary_dofs[sigma[local_boundary_dofs]<=(sigma_min+1e-14)]
-#dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
 
+dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
+dum2 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
-local_boundary_dofs = np.unique(dum1)
-#local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4),0))
+#local_boundary_dofs = np.unique(dum1)
+local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum4),0))
 #local_boundary_dofs = dum2
 global_boundary_dofs = local_boundary_dofs + local_range[0]
 #print('global_boundary_dofs')
@@ -161,15 +162,25 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 depth = 20 - x/200
 u = np.zeros(local_dof.shape[0])
 v = np.zeros(local_dof.shape[0])
-c = compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81)
-
-#dirichlet boundary
+c = np.zeros(local_dof.shape)
+c = CF.compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81)
+#c[:,3:] = 0
+#dirichlet boundary, same as intital
 def u_func(x,y,sigma,theta,c,t):
-    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
-    #need gaussian guy here
+    #takes in dof and paramters
+    HS = 1
+    F_std = 0.1
+    F_peak = 0.1
+
+    #returns vector with initial condition values at global DOF
+    aux1 = HS**2/(16*np.sqrt(2*np.pi)*F_std)
+    aux3 = 2*F_std**2
+    tol=1e-14
+    E = (x<tol)*aux1*np.exp(-(sigma - 2*np.pi*F_peak)**2/aux3)
+    return E*(np.cos(theta)**500)
 #initial condition
-def u_init(x,y,sigma,theta,c):
-    #need gaussian guy here
+#def u_init(x,y,sigma,theta,c):
+#    #need gaussian guy here
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
@@ -227,15 +238,17 @@ u_cart.assemble()
 #create a direct linear solver
 #pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-#pc2.setType('lu')
+#pc2.setType('jacobi')
 #pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-ksp2.setType('cg')
+ksp2.view()
+#ksp2.monitor()
+#ksp2.setType('cg')
 #ksp2.setPC(pc2)
 
-fname = 'ActionBalance/solution'
+fname = 'ActionBalance_Shoaling/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 #vtkfile << mesh1
@@ -266,7 +279,8 @@ for i in range(nt):
         u.vector()[:] = np.array(u_cart.getArray()[4::N_dof_2])
         vtkfile << u
         #hdf5_file.write(u,"solution",t)
-
+print('Reason of convergence')
+print(ksp2.getConvergedReason())
 time_end = time.time()
 ####################################################################
 ###################################################################
@@ -298,9 +312,16 @@ PETSc.Sys.Print("L inf error",e1.norm(PETSc.NormType.NORM_INFINITY))
 PETSc.Sys.Print("min in error",e1.min())
 PETSc.Sys.Print("max error",e1.max())
 #h
-PETSc.Sys.Print("h",1/nx)
+PETSc.Sys.Print("h",1/n_x)
 #dof
-PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
+PETSc.Sys.Print("dof",(n_x+1)**2*(n_y+1)**2)
+#L inf norm
+PETSc.Sys.Print("L inf norm of initial condition",u_exact.norm(PETSc.NormType.NORM_INFINITY))
+PETSc.Sys.Print("L inf norm of final solution",u_cart.norm(PETSc.NormType.NORM_INFINITY))
+#L 2 norms
+PETSc.Sys.Print("L 2 norm of initial condition",u_exact.norm(PETSc.NormType.NORM_2))
+PETSc.Sys.Print("L 2 norm of final solution",u_cart.norm(PETSc.NormType.NORM_2))
+
 buildTime = time_2-time_start
 solveTime = time_end-time_2
 print(f'The build time is {buildTime} seconds')

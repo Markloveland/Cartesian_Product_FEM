@@ -31,14 +31,12 @@ t = 0
 #set final time
 t_f = 5
 #set time step
-dt = 1.0
-#dt = 0.005
+dt = 0.005
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
-nplot = 1
-#nplot = 50
+nplot = 50
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -114,10 +112,11 @@ y_min = 0
 sigma_min = 0
 theta_min = 0
 dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
-dum2 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
-dum3 = local_boundary_dofs[sigma[local_boundary_dofs]<=(sigma_min+1e-14)]
-dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
-local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4),0))
+#dum2 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
+#dum3 = local_boundary_dofs[sigma[local_boundary_dofs]<=(sigma_min+1e-14)]
+#dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
+local_boundary_dofs = np.unique(dum1)
+#local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4),0))
 #local_boundary_dofs = dum2
 global_boundary_dofs = local_boundary_dofs + local_range[0]
 #print('global_boundary_dofs')
@@ -138,12 +137,12 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
-c = 2*np.ones(local_dof.shape)
-#c[:,0] = 1
+c = np.zeros(local_dof.shape)
+c[:,0] = 1
 #c[:,1] = 1
 #exact solution and dirichlet boundary
 def u_func(x,y,sigma,theta,c,t):
-    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
+    return np.sin(x-c[:,0]*t) #+ np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
@@ -206,10 +205,10 @@ u_cart.assemble()
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-#ksp2.setType('cg')
+ksp2.setType('cg')
 #ksp2.setPC(pc2)
 
-fname = 'ActionBalance_Propagation_vel2_dtbig/solution'
+fname = 'ActionBalance_x/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 #vtkfile << mesh1

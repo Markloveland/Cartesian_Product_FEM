@@ -24,13 +24,13 @@ nprocs = comm.Get_size()
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
 nx = 32
-ny = 16
+ny = 32
 #set initial time
 t = 0
 #set final time
-t_f = 20*5/1000
+t_f = 5
 #set time step
-dt = .005
+dt = 1.0
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 ####################################################################
@@ -177,13 +177,14 @@ u_cart = F_dof.duplicate()
 u_cart.setValues(rows,u_func(x,y,c,t))
 u_cart.assemble()
 #create a linear solver
-pc2 = PETSc.PC().create()
+#pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-pc2.setType('lu')
-pc2.setOperators(A)
+#pc2.setType('lu')
+#pc2.setOperators(A)
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-ksp2.setPC(pc2)
+#ksp2.setType('cg')
+#ksp2.setPC(pc2)
 
 for i in range(nt):
     t+=dt

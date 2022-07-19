@@ -410,7 +410,7 @@ def build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A):
         K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(1)*dx
         K12 = csig_func*u1*v1*dx
         K13 = cthet_func*u1*v1*dx
-        K14 = dot(as_vector((cx_func,cy_func))*u1,n1)*v1*ds
+        K14 = dot(as_vector((cx_func,cy_func)),n1)*u1*v1*ds
         # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
         K1 = PETScMatrix()
         K2 = PETScMatrix()
@@ -802,7 +802,7 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
     #store the c_g (group velocity) as temporary variables
     temp[shallow_range]=cg_shallow(WGD[shallow_range])
     temp[mid_range],k[mid_range]=cg_mid(SND[mid_range],g,depth[mid_range],sigma[mid_range])
-    temp[deep_range]=cg_deep(g,sigmas[deep_range])
+    temp[deep_range]=cg_deep(g,sigma[deep_range])
     #save these values in c_out and multiply by appropriate angles
     c_out[:,0] = temp*np.cos(theta)
     c_out[:,1] = temp*np.sin(theta)
@@ -832,7 +832,7 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
     #c_sigma
     c_out[:,2] = k*sigma/(np.sinh(2*k*depth)) *(dHdt + u*dHdx + v*dHdy) - temp*k*(dudx)
     #c theta
-    c_out[:,3] = sigma/(np.sinh(2*k*H))*(dHdx*np.sin(theta)- dHdy*np.cos(theta)) + \
+    c_out[:,3] = sigma/(np.sinh(2*k*depth))*(dHdx*np.sin(theta)- dHdy*np.cos(theta)) + \
         dudx*np.cos(theta)*np.sin(theta) - dudy*(np.cos(theta)**2) + dvdx*(np.sin(theta)**2) \
         -dvdy*np.cos(theta)*np.sin(theta)
     return c_out
