@@ -58,9 +58,9 @@ n_theta = 4 #number of elements in theta
 #set initial time
 t = 0
 #set final time
-t_f = 1000
+t_f = 0.0001
 #set time step
-dt = 5.0
+dt = 0.0001
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)

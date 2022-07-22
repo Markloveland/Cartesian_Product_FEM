@@ -846,3 +846,15 @@ def calculate_HS(u_cart,V2,N_dof_1,N_dof_2):
         dum.vector()[:] = np.array(u_cart.getArray()[indx:indx+N_dof_2])
         HS_vec[i] = 4*np.sqrt(abs(assemble(dum*dx)))
     return HS_vec
+
+
+def peval(f, x,comm):
+    '''Parallel synced eval'''
+    try:
+        yloc = f(x)
+    except RuntimeError:
+        yloc = np.inf*np.ones(1)
+
+    yglob = np.zeros_like(yloc)
+    comm.Reduce(yloc, yglob, op=MPI.MIN)
+    return yglob
