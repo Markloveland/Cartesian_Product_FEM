@@ -113,6 +113,12 @@ def fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordinates2):
 
 def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
     #assembles inputs to load PETSc CSR matrix
+    #option 1 is taking domain 2 matrices and putting in 
+    #block by block
+
+    #optiom 2 is taking domain 1 matrices and putting in
+    #piece by piece
+
     nnzA = Arow[1:] - Arow[:-1]
     nnzB = Brow[1:] - Brow[:-1]
     nA = len(nnzA)
@@ -122,8 +128,9 @@ def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
     #print('Num B')
     #print(len(nnzB))
     Kcol = np.zeros(dat.size)
-    Krow = np.zeros(len(nnzA)*len(nnzB)+1)
+    Krow = np.zeros(nA*nB+1)
     Kdat = np.zeros(dat.size)
+        
     ind = 0
     ctr = 0
     j0 = 0
@@ -143,7 +150,7 @@ def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
             Krow[ind]=ctr
             k0=k0+n2
         j0=j0+n1
-    
+
     return Krow,Kcol,Kdat
 def create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols):
     #Allocate global mass matrix
