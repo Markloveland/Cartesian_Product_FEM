@@ -5,6 +5,7 @@ petsc4py.init()
 from petsc4py import PETSc
 from mpi4py import MPI
 from scipy import sparse as sp
+from ufl import nabla_div
 
 #Some auxillary functions defined first
 def cartesian_product(array1,array2):
@@ -865,3 +866,797 @@ def peval(f, x,comm):
     yglob = np.zeros_like(yloc)
     comm.Reduce(yloc, yglob, op=MPI.MIN)
     return yglob
+
+
+
+def build_stiffness_varying_action_balance_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A):
+    #Builds and assembles stiffness matrix for action balance equations
+    # mesh1 is geographic mesh
+    # V1 is FunctionSpace for geographic mesh
+    # mesh2 is spectral mesh
+    # V2 is FunctionSpace for spectral mesh
+    # c is group velocity vector at each d.o.f: should be #dof x 4 np vector
+    # N_dof_2 is number of degrees of freedom in spectral domain
+    # A is PETSc Matrix which is already preallocated, where output will be loaded
+
+    n1 = FacetNormal(mesh1)
+    n2 = FacetNormal(mesh2)
+    u1 = TrialFunction(V1)
+    v1 = TestFunction(V1)
+    u2 = TrialFunction(V2)
+    v2 = TestFunction(V2)
+    cx_func = Function(V1)
+    cy_func = Function(V1)
+    csig_func = Function(V1)
+    cthet_func = Function(V1)
+
+    #loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix
+    #each matrix will have same sparsity pattern so get first one then
+    #create numpy to store vals
+    A_global_size = A.getSize()
+    A_local_size = A.getLocalSize()
+
+    #need value at a specific dof_coordinate in second domain
+    cx_func.vector()[:] = np.array(c[0::N_dof_2,0])
+    cy_func.vector()[:] = np.array(c[0::N_dof_2,1])
+    csig_func.vector()[:] = np.array(c[0::N_dof_2,2])
+    cthet_func.vector()[:] = np.array(c[0::N_dof_2,3])
+    #create expressions and assemble linear forms
+    K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(1)*dx
+    K12 = csig_func*u1*v1*dx
+    K13 = cthet_func*u1*v1*dx
+    K14 = dot(as_vector((cx_func,cy_func)),n1)*u1*v1*ds
+    #
+
+    #SUPG stabilization
+    R =  Circumradius(mesh1)*mesh2.hmax()
+    tau = R/(cx_func**2 + cy_func**2 + csig_func**2 + cthet_func**2)**0.5
+    c1 = as_vector((cx_func,cy_func))
+    c2 = as_vector((csig_func,cthet_func))
+    SUPG1 = tau*dot(c1,grad(u1))*dot(c1,grad(v1))*dx
+    SUPG2 = tau*csig_func*u1*dot(c1,grad(v1))*dx
+    SUPG3 = tau*cthet_func*u1*dot(c1,grad(v1))*dx
+    SUPG4 = tau*u1*nabla_div(c1)*dot(c1,grad(v1))*dx
+    SUPG5 = tau*csig_func*v1*dot(c1,grad(u1))*dx
+    SUPG6 = tau*cthet_func*v1*dot(c1,grad(u1))*dx
+    SUPG7 = tau*csig_func*v1*u1*nabla_div(c1)*dx
+    SUPG8 = tau*cthet_func*v1*u1*nabla_div(c1)*dx
+
+    #then save all matrices to list of matrices
+    #since these are sparse maybe take PETSc output and pipe
+    #to scipy sparse matrices
+    #maybe not so easy to program on second loop though
+
+    #K1,K2 are temporary variables to store matrices
+    # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
+    K1 = PETScMatrix()
+    K2 = PETScMatrix()
+    K3 = PETScMatrix()
+    K4 = PETScMatrix()
+    assemble(K11,tensor=K1)
+    assemble(K12,tensor=K2)
+    assemble(K13,tensor=K3)
+    assemble(K14,tensor=K4)
+    
+    #store sparsity pattern (rows,columns, vals)
+    A1_I,A1_J,temp = K1.mat().getValuesCSR()
+    A2_I,A2_J,temp2 = K2.mat().getValuesCSR()
+    A3_I,A3_J,temp3 = K3.mat().getValuesCSR()
+    A4_I,A4_J,temp4 = K4.mat().getValuesCSR()
+    len1 = len(temp)
+    len2 = len(temp2)
+    len3 = len(temp3)
+    len4 = len(temp4)
+    
+    #create np to store N_dof_2 sets of vals
+    vals1 = np.zeros((len1,N_dof_2))
+    vals2 = np.zeros((len2,N_dof_2))
+    vals3 = np.zeros((len3,N_dof_2))
+    vals4 = np.zeros((len4,N_dof_2))
+    vals1[:,0] = temp
+    vals2[:,0] = temp2
+    vals3[:,0] = temp3
+    vals4[:,0] = temp4
+
+
+
+    ##SUPG Terms#########
+    SUPG_1 = PETScMatrix()
+    SUPG_2 = PETScMatrix()
+    SUPG_3 = PETScMatrix()
+    SUPG_4 = PETScMatrix()
+    SUPG_5 = PETScMatrix()
+    SUPG_6 = PETScMatrix()
+    SUPG_7 = PETScMatrix()
+    SUPG_8 = PETScMatrix()
+    assemble(SUPG1,tensor=SUPG_1)
+    assemble(SUPG2,tensor=SUPG_2)
+    assemble(SUPG3,tensor=SUPG_3)
+    assemble(SUPG4,tensor=SUPG_4)
+    assemble(SUPG5,tensor=SUPG_5)
+    assemble(SUPG6,tensor=SUPG_6)
+    assemble(SUPG7,tensor=SUPG_7)
+    assemble(SUPG8,tensor=SUPG_8)
+
+    SUPG1_I,SUPG1_J,SUPG1_temp = SUPG_1.mat().getValuesCSR()
+    SUPG2_I,SUPG2_J,SUPG2_temp = SUPG_2.mat().getValuesCSR()
+    SUPG3_I,SUPG3_J,SUPG3_temp = SUPG_3.mat().getValuesCSR()
+    SUPG4_I,SUPG4_J,SUPG4_temp = SUPG_4.mat().getValuesCSR()
+    SUPG5_I,SUPG5_J,SUPG5_temp = SUPG_5.mat().getValuesCSR()
+    SUPG6_I,SUPG6_J,SUPG6_temp = SUPG_6.mat().getValuesCSR()
+    SUPG7_I,SUPG7_J,SUPG7_temp = SUPG_7.mat().getValuesCSR()
+    SUPG8_I,SUPG8_J,SUPG8_temp = SUPG_8.mat().getValuesCSR()
+
+    SUPG1_len = len(SUPG1_temp)
+    SUPG2_len = len(SUPG2_temp)
+    SUPG3_len = len(SUPG3_temp)
+    SUPG4_len = len(SUPG4_temp)
+    SUPG5_len = len(SUPG5_temp)
+    SUPG6_len = len(SUPG6_temp)
+    SUPG7_len = len(SUPG7_temp)
+    SUPG8_len = len(SUPG8_temp)
+
+    SUPG1_vals = np.zeros((SUPG1_len,N_dof_2))
+    SUPG2_vals = np.zeros((SUPG2_len,N_dof_2))
+    SUPG3_vals = np.zeros((SUPG3_len,N_dof_2))
+    SUPG4_vals = np.zeros((SUPG4_len,N_dof_2))
+    SUPG5_vals = np.zeros((SUPG5_len,N_dof_2))
+    SUPG6_vals = np.zeros((SUPG6_len,N_dof_2))
+    SUPG7_vals = np.zeros((SUPG7_len,N_dof_2))
+    SUPG8_vals = np.zeros((SUPG8_len,N_dof_2))
+
+    SUPG1_vals[:,0] = SUPG1_temp
+    SUPG2_vals[:,0] = SUPG2_temp
+    SUPG3_vals[:,0] = SUPG3_temp
+    SUPG4_vals[:,0] = SUPG4_temp
+    SUPG5_vals[:,0] = SUPG5_temp
+    SUPG6_vals[:,0] = SUPG6_temp
+    SUPG7_vals[:,0] = SUPG7_temp
+    SUPG8_vals[:,0] = SUPG8_temp
+    ###########################
+
+    #need to loop over nodes in N-dof-2
+    for a in range(1,N_dof_2):
+        cx_func.vector()[:] = np.array(c[a::N_dof_2,0])
+        cy_func.vector()[:] = np.array(c[a::N_dof_2,1])
+        csig_func.vector()[:] = np.array(c[a::N_dof_2,2])
+        cthet_func.vector()[:] = np.array(c[a::N_dof_2,3])
+        c1 = as_vector((cx_func,cy_func))
+        c2 = as_vector((csig_func,cthet_func))
+        #create expressions and assemble linear forms
+        K11 = cx_func*u1*v1.dx(0)*dx + cy_func*u1*v1.dx(1)*dx
+        K12 = csig_func*u1*v1*dx
+        K13 = cthet_func*u1*v1*dx
+        K14 = dot(as_vector((cx_func,cy_func)),n1)*u1*v1*ds
+        # IS THIS BEST WAY? OR SHOULD I REWRITE ONLY 1 MATRIX EACH TIME???
+        K1 = PETScMatrix()
+        K2 = PETScMatrix()
+        K3 = PETScMatrix()
+        K4 = PETScMatrix()
+        assemble(K11,tensor=K1)
+        assemble(K12,tensor=K2)
+        assemble(K13,tensor=K3)
+        assemble(K14,tensor=K4)
+
+        _,_,temp = K1.mat().getValuesCSR()
+        _,_,temp2 = K2.mat().getValuesCSR()
+        _,_,temp3 = K3.mat().getValuesCSR()
+        _,_,temp4 = K4.mat().getValuesCSR()
+
+        vals1[:,a] = temp
+        vals2[:,a] = temp2
+        vals3[:,a] = temp3
+        vals4[:,a] = temp4
+
+
+        ###############SUPG###################
+        
+        tau = R/(cx_func**2 + cy_func**2 + csig_func**2 + cthet_func**2)**0.5
+        SUPG1 = tau*dot(c1,grad(u1))*dot(c1,grad(v1))*dx
+        SUPG2 = tau*csig_func*u1*dot(c1,grad(v1))*dx
+        SUPG3 = tau*cthet_func*u1*dot(c1,grad(v1))*dx
+        SUPG4 = tau*u1*nabla_div(c1)*dot(c1,grad(v1))*dx
+        SUPG5 = tau*csig_func*v1*dot(c1,grad(u1))*dx
+        SUPG6 = tau*cthet_func*v1*dot(c1,grad(u1))*dx
+        SUPG7 = tau*csig_func*v1*u1*nabla_div(c1)*dx
+        SUPG8 = tau*cthet_func*v1*u1*nabla_div(c1)*dx
+        SUPG_1 = PETScMatrix()
+        SUPG_2 = PETScMatrix()
+        SUPG_3 = PETScMatrix()
+        SUPG_4 = PETScMatrix()
+        SUPG_5 = PETScMatrix()
+        SUPG_6 = PETScMatrix()
+        SUPG_7 = PETScMatrix()
+        SUPG_8 = PETScMatrix()
+        assemble(SUPG1,tensor=SUPG_1)
+        assemble(SUPG2,tensor=SUPG_2)
+        assemble(SUPG3,tensor=SUPG_3)
+        assemble(SUPG4,tensor=SUPG_4)
+        assemble(SUPG5,tensor=SUPG_5)
+        assemble(SUPG6,tensor=SUPG_6)
+        assemble(SUPG7,tensor=SUPG_7)
+        assemble(SUPG8,tensor=SUPG_8)
+
+        _,_,SUPG1_temp = SUPG_1.mat().getValuesCSR()
+        _,_,SUPG2_temp = SUPG_2.mat().getValuesCSR()
+        _,_,SUPG3_temp = SUPG_3.mat().getValuesCSR()
+        _,_,SUPG4_temp = SUPG_4.mat().getValuesCSR()
+        _,_,SUPG5_temp = SUPG_5.mat().getValuesCSR()
+        _,_,SUPG6_temp = SUPG_6.mat().getValuesCSR()
+        _,_,SUPG7_temp = SUPG_7.mat().getValuesCSR()
+        _,_,SUPG8_temp = SUPG_8.mat().getValuesCSR()
+    
+    
+        SUPG1_vals[:,a] = SUPG1_temp
+        SUPG2_vals[:,a] = SUPG2_temp
+        SUPG3_vals[:,a] = SUPG3_temp
+        SUPG4_vals[:,a] = SUPG4_temp
+        SUPG5_vals[:,a] = SUPG5_temp
+        SUPG6_vals[:,a] = SUPG6_temp
+        SUPG7_vals[:,a] = SUPG7_temp
+        SUPG8_vals[:,a] = SUPG8_temp
+    
+    
+    #now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
+    # int_Omega2 fy ... dy
+    #like before, first need to get sparsity patterns
+
+
+    fy = Function(V2)
+    fy2 = Function(V2)
+    fy.vector()[:] = np.array(vals1[0,:])
+    K1 = PETScMatrix(MPI.COMM_SELF)
+    K21 = u2*v2*fy*dx
+    assemble(K21,tensor=K1)
+
+
+    K2 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(vals2[0,:])
+    fy2.vector()[:]  = np.array(vals3[0,:])
+    K22 = inner(u2*as_vector((fy,fy2)),grad(v2))*dx
+    assemble(K22,tensor=K2)
+
+        
+    K3 = PETScMatrix(MPI.COMM_SELF)
+    K23 = u2*v2*dot(as_vector((fy,fy2)),n2)*ds
+    assemble(K23,tensor=K3)
+
+    
+
+    B1_I,B1_J,temp = K1.mat().getValuesCSR()
+    B2_I,B2_J,temp2 = K2.mat().getValuesCSR()
+    B3_I,B3_J,temp3 = K3.mat().getValuesCSR()
+
+    blen1 = len(temp)
+    blen2 = len(temp2)
+    blen3 = len(temp3)
+
+    dat1 = np.zeros((blen1,len1))
+    dat2 = np.zeros((blen2,len2))
+    dat3 = np.zeros((blen3,len3))
+    
+    dat1[:,0] = temp
+    dat2[:,0] = temp2
+    dat3[:,0] = temp3
+
+    
+
+    ###########SUPG################
+    ######
+    SUPG_B1 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(SUPG1_vals[0,:])
+    fy2.vector()[:] = np.array(SUPG4_vals[0,:])
+    SUPGB1 = u2*v2*(fy+fy2)*dx
+    assemble(SUPGB1,tensor=SUPG_B1)
+
+
+    SUPG_B2 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(SUPG2_vals[0,:])
+    fy2.vector()[:] = np.array(SUPG3_vals[0,:])
+    SUPGB2 = v2*dot(grad(u2),as_vector((fy,fy2)))*dx
+    assemble(SUPGB2,tensor=SUPG_B2)
+
+    SUPG_B3 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(SUPG5_vals[0,:])
+    fy2.vector()[:] = np.array(SUPG6_vals[0,:])
+    SUPGB3 = u2*dot(grad(v2),as_vector((fy,fy2)))*dx
+    assemble(SUPGB3,tensor=SUPG_B3)
+
+    SUPG_B4 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(SUPG7_vals[0,:])
+    fy2.vector()[:] = np.array(SUPG8_vals[0,:])
+    SUPGB4 = u2*dot(grad(v2),as_vector((fy,fy2)))*dx
+    assemble(SUPGB4,tensor=SUPG_B4)
+    
+    SUPGB1_I, SUPGB1_J, SUPGB1_temp = SUPG_B1.mat().getValuesCSR()
+    SUPGB2_I, SUPGB2_J, SUPGB2_temp = SUPG_B2.mat().getValuesCSR()
+    SUPGB3_I, SUPGB3_J, SUPGB3_temp = SUPG_B3.mat().getValuesCSR()
+    SUPGB4_I, SUPGB4_J, SUPGB4_temp = SUPG_B4.mat().getValuesCSR()
+
+
+    SUPGB1_len = len(SUPGB1_temp)
+    SUPGB2_len = len(SUPGB2_temp)
+    SUPGB3_len = len(SUPGB3_temp)
+    SUPGB4_len = len(SUPGB4_temp)
+
+
+    SUPG_dat1 = np.zeros((SUPGB1_len,SUPG1_len))
+    SUPG_dat2 = np.zeros((SUPGB2_len,SUPG2_len))
+    SUPG_dat3 = np.zeros((SUPGB3_len,SUPG3_len))
+    SUPG_dat4 = np.zeros((SUPGB4_len,SUPG4_len))
+
+    SUPG_dat1[:,0] = SUPGB1_temp
+    SUPG_dat2[:,0] = SUPGB2_temp
+    SUPG_dat3[:,0] = SUPGB3_temp
+    SUPG_dat4[:,0] = SUPGB4_temp
+    #KEY! IDK IF TRUE BUT ASSUMING length of sparse matrixes K1,K2,K3 were same
+    #If not, then will need separate loops
+
+    for i in range(1,len1):
+
+        fy.vector()[:] = np.array(vals1[i,:])
+        K1 = PETScMatrix(MPI.COMM_SELF)
+        K21 = u2*v2*fy*dx
+        assemble(K21,tensor=K1)
+
+
+        K2 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(vals2[i,:])
+        fy2.vector()[:]  = np.array(vals3[i,:])
+        K22 = inner(u2*as_vector((fy,fy2)),grad(v2))*dx
+        assemble(K22,tensor=K2)
+
+
+        K3 = PETScMatrix(MPI.COMM_SELF)
+        K23 = u2*v2*dot(as_vector((fy,fy2)),n2)*ds
+        assemble(K23,tensor=K3)
+
+
+        _,_,temp = K1.mat().getValuesCSR()
+        _,_,temp2 = K2.mat().getValuesCSR()
+        _,_,temp3 = K3.mat().getValuesCSR()
+        dat1[:,i] = temp
+        dat2[:,i] = temp2
+        dat3[:,i] = temp3
+
+
+        ##########SUPG########
+
+        SUPG_B1 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(SUPG1_vals[i,:])
+        fy2.vector()[:] = np.array(SUPG4_vals[i,:])
+        SUPGB1 = u2*v2*(fy+fy2)*dx
+        assemble(SUPGB1,tensor=SUPG_B1)
+
+
+        SUPG_B2 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(SUPG2_vals[i,:])
+        fy2.vector()[:] = np.array(SUPG3_vals[i,:])
+        SUPGB2 = v2*dot(grad(u2),as_vector((fy,fy2)))*dx
+        assemble(SUPGB2,tensor=SUPG_B2)
+
+        SUPG_B3 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(SUPG5_vals[i,:])
+        fy2.vector()[:] = np.array(SUPG6_vals[i,:])
+        SUPGB3 = u2*dot(grad(v2),as_vector((fy,fy2)))*dx
+        assemble(SUPGB3,tensor=SUPG_B3)
+
+        SUPG_B4 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(SUPG7_vals[i,:])
+        fy2.vector()[:] = np.array(SUPG8_vals[i,:])
+        SUPGB4 = u2*dot(grad(v2),as_vector((fy,fy2)))*dx
+        assemble(SUPGB4,tensor=SUPG_B4)
+
+        _,_,SUPGB1_temp = SUPG_B1.mat().getValuesCSR()
+        _,_,SUPGB2_temp = SUPG_B2.mat().getValuesCSR()
+        _,_,SUPGB3_temp = SUPG_B3.mat().getValuesCSR()
+        _,_,SUPGB4_temp = SUPG_B4.mat().getValuesCSR()
+
+
+        SUPG_dat1[:,i] = SUPGB1_temp
+        SUPG_dat2[:,i] = SUPGB2_temp
+        SUPG_dat3[:,i] = SUPGB3_temp
+        SUPG_dat4[:,i] = SUPGB4_temp
+
+    Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+    Krow2,Kcol2,Kdat2 = assemble_global_CSR(A2_I,A2_J,B2_I,B2_J,dat2)
+    Krow3,Kcol3,Kdat3 = assemble_global_CSR(A3_I,A3_J,B3_I,B3_J,dat3)
+
+    Krow=Krow.astype(np.int32)
+    Kcol=Kcol.astype(np.int32)
+    Krow2=Krow2.astype(np.int32)
+    Kcol2=Kcol2.astype(np.int32)
+    Krow3=Krow3.astype(np.int32)
+    Kcol3=Kcol3.astype(np.int32)
+    #challenge is we likely have 3 different sparsity patterns so how should we
+    #add them all using scipy???
+    K1 = sp.csr_matrix((Kdat+Kdat2, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
+    K2 = sp.csr_matrix((Kdat3, Kcol3, Krow3), shape=(A_local_size[0],A_global_size[1]))
+    
+    ###############SUPG####################
+    SUPG1_row,SUPG1_col,SUPG1_dat = assemble_global_CSR(SUPG1_I,SUPG1_J,SUPGB1_I,SUPGB1_J,SUPG_dat1)
+    SUPG2_row,SUPG2_col,SUPG2_dat = assemble_global_CSR(SUPG2_I,SUPG2_J,SUPGB2_I,SUPGB2_J,SUPG_dat2)
+    SUPG3_row,SUPG3_col,SUPG3_dat = assemble_global_CSR(SUPG3_I,SUPG3_J,SUPGB3_I,SUPGB3_J,SUPG_dat3)
+    SUPG4_row,SUPG4_col,SUPG4_dat = assemble_global_CSR(SUPG4_I,SUPG4_J,SUPGB4_I,SUPGB4_J,SUPG_dat4)
+   
+    SUPG1_row = SUPG1_row.astype(np.int32)
+    SUPG1_col = SUPG1_col.astype(np.int32)
+    SUPG2_row = SUPG2_row.astype(np.int32)
+    SUPG2_col = SUPG2_col.astype(np.int32)
+    SUPG3_row = SUPG3_row.astype(np.int32)
+    SUPG3_col = SUPG3_col.astype(np.int32)
+    SUPG4_row = SUPG4_row.astype(np.int32)
+    SUPG4_col = SUPG4_col.astype(np.int32)
+
+    #assuming sparsity patterns are all identical
+    SUPG1 = sp.csr_matrix((SUPG1_dat+SUPG2_dat+SUPG3_dat+SUPG4_dat,SUPG1_col,SUPG1_row), shape=(A_local_size[0],A_global_size[1]))
+    #add the sparse matrices
+    K = dt*(-K1+K2+SUPG1)
+    
+    #only works if there is boundary of domain 1 on this process
+    if len(vals4[:,0]) != 0:
+        K4 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(vals4[0,:])
+        K24 = u2*v2*fy*dx
+        assemble(K24,tensor=K4)
+        B4_I,B4_J,temp4 = K4.mat().getValuesCSR()
+        blen4 = len(temp4)
+        dat4 = np.zeros((blen4,len4))
+        dat4[:,0] = temp4
+
+        #K4 is the boundary integral dOmega1 x Omega2
+        for i in range(1,len4):
+            K4 = PETScMatrix(MPI.COMM_SELF)
+            fy.vector()[:] = np.array(vals4[i,:])
+            K24 = u2*v2*fy*dx
+            assemble(K24,tensor=K4)
+
+            _,_,temp4 = K4.mat().getValuesCSR()
+            dat4[:,i] = temp4
+    
+    
+        Krow4,Kcol4,Kdat4 = assemble_global_CSR(A4_I,A4_J,B4_I,B4_J,dat4)
+   
+        Krow4=Krow4.astype(np.int32)
+        Kcol4=Kcol4.astype(np.int32)
+
+        K3 = sp.csr_matrix((Kdat4, Kcol4, Krow4), shape=(A_local_size[0],A_global_size[1]))
+
+        K = K + dt*K3
+    PETSc.Sys.Print('Completed phase 1 of loading K')
+    #############SUPG##########################
+    #integrals that go 2 then 1
+    
+    cx_func = Function(V2)
+    cy_func = Function(V2)
+    csig_func = Function(V2)
+    cthet_func = Function(V2)
+    tau2 = Function(V2)
+
+    #need value at a specific dof_coordinate in first domain
+    cx_func.vector()[:] = np.array(c[0:N_dof_2,0])
+    cy_func.vector()[:] = np.array(c[0:N_dof_2,1])
+    csig_func.vector()[:] = np.array(c[0:N_dof_2,2])
+    cthet_func.vector()[:] = np.array(c[0:N_dof_2,3])
+    c1 = as_vector((cx_func,cy_func))
+    c2 = as_vector((csig_func,cthet_func))
+    tau2 = 1/(cx_func**2 + cy_func**2 + csig_func**2 + cthet_func**2)**0.5
+    PETSc.Sys.Print('Still good up to here')
+    SUPGB1 = tau2*csig_func*u2*v2*nabla_div(c2)*dx
+    SUPGB2 = tau2*cthet_func*u2*v2*nabla_div(c2)*dx
+    SUPGB3 = tau2*dot(c2,grad(u2))*dot(c2,grad(v2))*dx
+    SUPGB4 = tau2*u2*nabla_div(c2)*dot(c2,grad(v2))*dx
+    PETSc.Sys.Print('About to make some tensors') 
+    SUPG_B1 = PETScMatrix(MPI.COMM_SELF)
+    SUPG_B2 = PETScMatrix(MPI.COMM_SELF)
+    SUPG_B3 = PETScMatrix(MPI.COMM_SELF)
+    SUPG_B4 = PETScMatrix(MPI.COMM_SELF)
+    
+    PETSc.Sys.Print('Created tensors, going to load them now')
+    
+    assemble(SUPGB1,tensor=SUPG_B1)
+    PETSc.Sys.Print('Matrix 1 assembled')
+    assemble(SUPGB2,tensor=SUPG_B2)
+    PETSc.Sys.Print('Matrix 2 assembled')
+    assemble(SUPGB3,tensor=SUPG_B3)
+    PETSc.Sys.Print('Matrix 3 assembled')
+    assemble(SUPGB4,tensor=SUPG_B4)
+    PETSc.Sys.Print('Matrix 4 assembled')
+    
+    PETSc.Sys.Print('About to save contents in CSR format')
+    SUPGB1_I,SUPGB1_J,SUPGB1_temp = SUPG_B1.mat().getValuesCSR()
+    SUPGB2_I,SUPGB2_J,SUPGB2_temp = SUPG_B2.mat().getValuesCSR()
+    SUPGB3_I,SUPGB3_J,SUPGB3_temp = SUPG_B3.mat().getValuesCSR()
+    SUPGB4_I,SUPGB4_J,SUPGB4_temp = SUPG_B4.mat().getValuesCSR()
+    PETSc.Sys.Print('About to create array to store vals')
+    SUPGB1_len = len(SUPGB1_temp)
+    SUPGB2_len = len(SUPGB2_temp)
+    SUPGB3_len = len(SUPGB3_temp)
+    SUPGB4_len = len(SUPGB4_temp)
+
+    SUPGB1_vals = np.zeros((SUPGB1_len,N_dof_1))
+    SUPGB2_vals = np.zeros((SUPGB2_len,N_dof_1))
+    SUPGB3_vals = np.zeros((SUPGB3_len,N_dof_1))
+    SUPGB4_vals = np.zeros((SUPGB4_len,N_dof_1))
+    PETSc.Sys.Print('Storing now, zeros arrays made')
+    SUPGB1_vals[:,0] = SUPGB1_temp
+    SUPGB2_vals[:,0] = SUPGB2_temp
+    SUPGB3_vals[:,0] = SUPGB3_temp
+    SUPGB4_vals[:,0] = SUPGB4_temp
+
+    PETSc.Sys.Print('Entering loop 1 of phase 2')
+    for b in range(1,N_dof_1):
+        cx_func.vector()[:] = np.array(c[N_dof_2*b:N_dof_2*(b+1),0])
+        cy_func.vector()[:] = np.array(c[N_dof_2*b:N_dof_2*(b+1),1])
+        csig_func.vector()[:] = np.array(c[N_dof_2*b:N_dof_2*(b+1),2])
+        cthet_func.vector()[:] = np.array(c[N_dof_2*b:N_dof_2*(b+1),3])
+        c1 = as_vector((cx_func,cy_func))
+        c2 = as_vector((csig_func,cthet_func))
+        tau2 = 1/(cx_func**2 + cy_func**2 + csig_func**2 + cthet_func**2)**0.5
+        SUPGB1 = tau2*csig_func*u2*v2*nabla_div(c2)*dx
+        SUPGB2 = tau2*cthet_func*u2*v2*nabla_div(c2)*dx
+        SUPGB3 = tau2*dot(c2,grad(u2))*dot(c2,grad(v2))*dx
+        SUPGB4 = tau2*u2*nabla_div(c2)*dot(c2,grad(v2))*dx
+    
+        SUPG_B1 = PETScMatrix(MPI.COMM_SELF)
+        SUPG_B2 = PETScMatrix(MPI.COMM_SELF)
+        SUPG_B3 = PETScMatrix(MPI.COMM_SELF)
+        SUPG_B4 = PETScMatrix(MPI.COMM_SELF)
+
+        assemble(SUPGB1,tensor=SUPG_B1)
+        assemble(SUPGB2,tensor=SUPG_B2)
+        assemble(SUPGB3,tensor=SUPG_B3)
+        assemble(SUPGB4,tensor=SUPG_B4)
+
+        _,_,SUPGB1_temp = SUPG_B1.mat().getValuesCSR()
+        _,_,SUPGB2_temp = SUPG_B2.mat().getValuesCSR()
+        _,_,SUPGB3_temp = SUPG_B3.mat().getValuesCSR()
+        _,_,SUPGB4_temp = SUPG_B4.mat().getValuesCSR()
+
+
+        SUPGB1_vals[:,b] = SUPGB1_temp
+        SUPGB2_vals[:,b] = SUPGB2_temp
+        SUPGB3_vals[:,b] = SUPGB3_temp
+        SUPGB4_vals[:,b] = SUPGB4_temp
+
+    PETSc.Sys.Print('Completed 1/2 of phase 2')
+    #need to move tau into 2 separate parts ????
+    #or go back and do it right
+    #########MARK Stopped here#################
+
+    fx = Function(V1)
+    fx2 = Function(V1)
+    fx.vector()[:] = np.array(SUPGB1_vals[0,:])
+    fx2.vector()[:] = np.array(SUPGB2_vals[0,:])
+    SUPG1 = PETScMatrix()
+    SUPG_1 = R*u1*dot(grad(v1),as_vector((fx,fx2)))*dx
+    assemble(SUPG_1,tensor=SUPG1)
+
+
+    fx.vector()[:] = np.array(SUPGB3_vals[0,:])
+    fx2.vector()[:] = np.array(SUPGB4_vals[0,:])
+    SUPG2 = PETScMatrix()
+    SUPG_2 = R*u1*v1*(fx+fx2)*dx
+    assemble(SUPG_2,tensor=SUPG2)
+
+
+    SUPGA1_I,SUPGA1_J,SUPGA1_temp = SUPG1.mat().getValuesCSR()
+    SUPGA2_I,SUPGA2_J,SUPGA2_temp = SUPG2.mat().getValuesCSR()
+
+    alen1 = len(SUPGA1_temp)
+    alen2 = len(SUPGA2_temp)
+
+    dat1 = np.zeros((alen1,SUPGB1_len))
+    dat2 = np.zeros((alen2,SUPGB2_len))
+    
+    dat1[:,0] = SUPGA1_temp
+    dat2[:,0] = SUPGA2_temp
+    PETSc.Sys.Print('About to enter final loop, completed pre-loop')
+
+    for i in range(1,SUPGB1_len):
+
+    
+        fx.vector()[:] = np.array(SUPGB1_vals[i,:])
+        fx2.vector()[:] = np.array(SUPGB2_vals[i,:])
+        SUPG1 = PETScMatrix()
+        SUPG_1 = R*u1*dot(grad(v1),as_vector((fx,fx2)))*dx
+        assemble(SUPG_1,tensor=SUPG1)
+
+
+        fx.vector()[:] = np.array(SUPGB3_vals[0,:])
+        fx2.vector()[:] = np.array(SUPGB4_vals[0,:])
+        SUPG2 = PETScMatrix()
+        SUPG_2 = R*u1*v1*(fx+fx2)*dx
+        assemble(SUPG_2,tensor=SUPG2)
+
+
+        _,_,SUPGA1_temp = SUPG1.mat().getValuesCSR()
+        _,_,SUPGA2_temp = SUPG2.mat().getValuesCSR()
+
+    
+        dat1[:,i] = SUPGA1_temp
+        dat2[:,i] = SUPGA2_temp
+
+
+
+    SUPG1_row,SUPG1_col,SUPG1_dat = assemble_global_CSR(SUPGA1_I,SUPGA1_J,SUPGB1_I,SUPGB1_J,np.transpose(dat1))
+    SUPG2_row,SUPG2_col,SUPG2_dat = assemble_global_CSR(SUPGA2_I,SUPGA2_J,SUPGB2_I,SUPGB2_J,np.transpose(dat2))
+    SUPG1_row = SUPG1_row.astype(np.int32)
+    SUPG1_col = SUPG1_col.astype(np.int32)
+    SUPG2_row = SUPG2_row.astype(np.int32)
+    SUPG1 = sp.csr_matrix((SUPG1_dat+SUPG2_dat,SUPG1_col,SUPG1_row), shape=(A_local_size[0],A_global_size[1]))
+    K=K+dt*SUPG1
+    ##########################################
+    #assign values to PETSc matrix
+    A.setValuesCSR(K.indptr,K.indices,K.data)
+    A.assemble()
+    print('Finished assembly')
+    return 0
+
+
+def build_cartesian_mass_matrix_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A):
+        
+    # mesh1 is geographic mesh
+    # V1 is FunctionSpace for geographic mesh
+    # mesh2 is spectral mesh
+    # V2 is FunctionSpace for spectral mesh
+    # c is group velocity vector at each d.o.f: should be #dof x 4 np vector
+    # N_dof_2 is number of degrees of freedom in spectral domain
+    # A is PETSc Matrix which is already preallocated, where output will be loaded
+
+    n1 = FacetNormal(mesh1)
+    n2 = FacetNormal(mesh2)
+    u1 = TrialFunction(V1)
+    v1 = TestFunction(V1)
+    u2 = TrialFunction(V2)
+    v2 = TestFunction(V2)
+    cx_func = Function(V1)
+    cy_func = Function(V1)
+    csig_func = Function(V1)
+    cthet_func = Function(V1)
+
+    #loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix
+    #each matrix will have same sparsity pattern so get first one then
+    #create numpy to store vals
+    A_global_size = A.getSize()
+    A_local_size = A.getLocalSize()
+
+    #need value at a specific dof_coordinate in second domain
+    cx_func.vector()[:] = np.array(c[0::N_dof_2,0])
+    cy_func.vector()[:] = np.array(c[0::N_dof_2,1])
+    csig_func.vector()[:] = np.array(c[0::N_dof_2,2])
+    cthet_func.vector()[:] = np.array(c[0::N_dof_2,3])
+
+
+    R =  Circumradius(mesh1)*mesh2.hmax()
+    tau = R/(cx_func**2 + cy_func**2 + csig_func**2 + cthet_func**2)**0.5
+    c1 = as_vector((cx_func,cy_func))
+    c2 = as_vector((csig_func,cthet_func))
+
+    SUPG1 = tau*dot(c1,grad(v1))*u1*dx
+    SUPG2 = tau*csig_func*u1*v1*dx
+    SUPG3 = tau*cthet_func*u1*v1*dx
+
+
+    SUPG_1 = PETScMatrix()
+    SUPG_2 = PETScMatrix()
+    SUPG_3 = PETScMatrix()
+    assemble(SUPG1,tensor=SUPG_1)
+    assemble(SUPG2,tensor=SUPG_2)
+    assemble(SUPG3,tensor=SUPG_3)
+
+    SUPG1_I,SUPG1_J,SUPG1_temp = SUPG_1.mat().getValuesCSR()
+    SUPG2_I,SUPG2_J,SUPG2_temp = SUPG_2.mat().getValuesCSR()
+    SUPG3_I,SUPG3_J,SUPG3_temp = SUPG_3.mat().getValuesCSR()
+
+
+    SUPG1_len = len(SUPG1_temp)
+    SUPG2_len = len(SUPG2_temp)
+    SUPG3_len = len(SUPG3_temp)
+
+    SUPG1_vals = np.zeros((SUPG1_len,N_dof_2))
+    SUPG2_vals = np.zeros((SUPG2_len,N_dof_2))
+    SUPG3_vals = np.zeros((SUPG3_len,N_dof_2))
+
+    SUPG1_vals[:,0] = SUPG1_temp
+    SUPG2_vals[:,0] = SUPG2_temp
+    SUPG3_vals[:,0] = SUPG3_temp
+
+
+    for a in range(1,N_dof_2):
+        cx_func.vector()[:] = np.array(c[a::N_dof_2,0])
+        cy_func.vector()[:] = np.array(c[a::N_dof_2,1])
+        csig_func.vector()[:] = np.array(c[a::N_dof_2,2])
+        cthet_func.vector()[:] = np.array(c[a::N_dof_2,3])
+        c1 = as_vector((cx_func,cy_func))
+        c2 = as_vector((csig_func,cthet_func))
+
+        tau = R/(cx_func**2 + cy_func**2 + csig_func**2 + cthet_func**2)**0.5
+        SUPG1 = tau*dot(c1,grad(v1))*u1*dx
+        SUPG2 = tau*csig_func*u1*v1*dx
+        SUPG3 = tau*cthet_func*u1*v1*dx
+        SUPG_1 = PETScMatrix()
+        SUPG_2 = PETScMatrix()
+        SUPG_3 = PETScMatrix()
+        assemble(SUPG1,tensor=SUPG_1)
+        assemble(SUPG2,tensor=SUPG_2)
+        assemble(SUPG3,tensor=SUPG_3)
+
+        _,_,SUPG1_temp = SUPG_1.mat().getValuesCSR()
+        _,_,SUPG2_temp = SUPG_2.mat().getValuesCSR()
+        _,_,SUPG3_temp = SUPG_3.mat().getValuesCSR()
+    
+    
+        SUPG1_vals[:,a] = SUPG1_temp
+        SUPG2_vals[:,a] = SUPG2_temp
+        SUPG3_vals[:,a] = SUPG3_temp
+
+
+    fy = Function(V2)
+    fy2 = Function(V2)
+
+    SUPG_B1 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(SUPG1_vals[0,:])
+    SUPGB1 = u2*v2*(fy)*dx
+    assemble(SUPGB1,tensor=SUPG_B1)
+
+
+    SUPG_B2 = PETScMatrix(MPI.COMM_SELF)
+    fy.vector()[:] = np.array(SUPG2_vals[0,:])
+    fy2.vector()[:] = np.array(SUPG3_vals[0,:])
+    SUPGB2 = u2*dot(grad(v2),as_vector((fy,fy2)))*dx
+    assemble(SUPGB2,tensor=SUPG_B2)
+
+    SUPGB1_I, SUPGB1_J, SUPGB1_temp = SUPG_B1.mat().getValuesCSR()
+    SUPGB2_I, SUPGB2_J, SUPGB2_temp = SUPG_B2.mat().getValuesCSR()
+
+
+    SUPGB1_len = len(SUPGB1_temp)
+    SUPGB2_len = len(SUPGB2_temp)
+
+    SUPG_dat1 = np.zeros((SUPGB1_len,SUPG1_len))
+    SUPG_dat2 = np.zeros((SUPGB2_len,SUPG2_len))
+
+    SUPG_dat1[:,0] = SUPGB1_temp
+    SUPG_dat2[:,0] = SUPGB2_temp
+
+
+    for i in range(1,SUPG1_len):
+
+
+        SUPG_B1 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(SUPG1_vals[i,:])
+        SUPGB1 = u2*v2*(fy)*dx
+        assemble(SUPGB1,tensor=SUPG_B1)
+
+
+        SUPG_B2 = PETScMatrix(MPI.COMM_SELF)
+        fy.vector()[:] = np.array(SUPG2_vals[i,:])
+        fy2.vector()[:] = np.array(SUPG3_vals[i,:])
+        SUPGB2 = u2*dot(grad(v2),as_vector((fy,fy2)))*dx
+        assemble(SUPGB2,tensor=SUPG_B2)
+
+
+        _,_,SUPGB1_temp = SUPG_B1.mat().getValuesCSR()
+        _,_,SUPGB2_temp = SUPG_B2.mat().getValuesCSR()
+
+
+        SUPG_dat1[:,i] = SUPGB1_temp
+        SUPG_dat2[:,i] = SUPGB2_temp
+
+
+    SUPG1_row,SUPG1_col,SUPG1_dat = assemble_global_CSR(SUPG1_I,SUPG1_J,SUPGB1_I,SUPGB1_J,SUPG_dat1)
+    SUPG2_row,SUPG2_col,SUPG2_dat = assemble_global_CSR(SUPG2_I,SUPG2_J,SUPGB2_I,SUPGB2_J,SUPG_dat2)
+   
+    SUPG1_row = SUPG1_row.astype(np.int32)
+    SUPG1_col = SUPG1_col.astype(np.int32)
+    SUPG2_row = SUPG2_row.astype(np.int32)
+    SUPG2_col = SUPG2_col.astype(np.int32)
+
+    #assuming sparsity patterns are all identical
+    SUPG1 = sp.csr_matrix((SUPG1_dat+SUPG2_dat,SUPG1_col,SUPG1_row), shape=(A_local_size[0],A_global_size[1]))
+    #add the sparse matrices
+    
+    A.setValuesCSR(SUPG1.indptr,SUPG1.indices,SUPG1.data)
+    A.assemble()
+    return 0

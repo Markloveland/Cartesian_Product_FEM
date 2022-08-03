@@ -116,6 +116,7 @@ M=CF.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols)
 #also need global stiffness matrix
 #same exact structure as M
 A = M.duplicate()
+SUPG_M = M.duplicate()
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -138,14 +139,14 @@ local_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordina
 #now only want subset that is the inflow, need to automate later
 #for shoaling case it shoud only be the boundary at x_min
 dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
-dum2 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]>=(y_max-1e-14),theta[local_boundary_dofs]<0)]
-dum3 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]<=(y_min+1e-14),theta[local_boundary_dofs]>0)]
+#dum2 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]>=(y_max-1e-14),theta[local_boundary_dofs]<0)]
+#dum3 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]<=(y_min+1e-14),theta[local_boundary_dofs]>0)]
 dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
 dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
-local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4,dum5),0))
-#local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3),0))
-#local_boundary_dofs = dum2
+#local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4,dum5),0))
+local_boundary_dofs = np.unique(np.concatenate((dum1,dum4,dum5),0))
+#local_boundary_dofs = np.unique(dum1)
 global_boundary_dofs = local_boundary_dofs + local_range[0]
 #print('global_boundary_dofs')
 #print(global_boundary_dofs)
@@ -203,15 +204,18 @@ def u_func(x,y,sigma,theta,c,t):
 #Preallocate and load/assemble cartesian mass matrix!
 #now need to mass matrixes for stiffness and RHS, also optionally can out put the nnz
 M_NNZ = CF.build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M)
+SUPG_M.setPreallocationNNZ(M_NNZ)
+#need upwind mass matrix too
+CF.build_cartesian_mass_matrix_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,SUPG_M)
 A.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
-#CF.build_stiffness_varying_action_balance_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A)
-
+#CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
+CF.build_stiffness_varying_action_balance_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A)
 time_2 = time.time()
-A=A+M
+A=A+M+SUPG_M
+SUPG_M = SUPG_M + M
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
 #just want to test answer
@@ -266,7 +270,7 @@ ksp2.setOperators(A)
 #ksp2.setType('cg')
 #ksp2.setPC(pc2)
 
-fname = 'ActionBalance_Shoaling/solution'
+fname = 'ActionBalance_Shoaling_SUPG/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 #vtkfile << mesh1
@@ -286,7 +290,7 @@ for i in range(nt):
     u_d = u_2[local_boundary_dofs]
     B = F_dof.duplicate()
     B.setFromOptions()
-    M.mult(u_cart,B)
+    SUPG_M.mult(u_cart,B)
     B.setValues(global_boundary_dofs,u_d)
     B.assemble()
     ksp2.solve(B, u_cart)
@@ -294,7 +298,7 @@ for i in range(nt):
 
     # Save solution to file in VTK format
     if (i%nplot==0):
-        u.vector()[:] = np.array(u_cart.getArray()[int(N_dof_2/2)::N_dof_2])
+        u.vector()[:] = np.array(u_cart.getArray()[int(N_dof_2/4)::N_dof_2])
         vtkfile << u
         #hdf5_file.write(u,"solution",t)
 PETSc.Sys.Print('Reason of convergence')
@@ -360,7 +364,7 @@ PETSc.Sys.Print('The solve time is ',solveTime)
 HS = Function(V1)
 HS_vec = CF.calculate_HS(u_cart,V2,N_dof_1,N_dof_2)
 HS.vector()[:] = np.array(HS_vec)
-fname = 'ActionBalance_Shoaling_HS/solution'
+fname = 'ActionBalance_Shoaling__SUPG_HS/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 vtkfile << HS
@@ -368,7 +372,7 @@ vtkfile << HS
 
 PETSc.Sys.Print('Attempt at extracting HS at a fixed point')
 #want to create a graph along x axis
-numpoints = 100
+numpoints = 121
 x_points = np.linspace(x_min,x_max,numpoints)
 
 ux = np.zeros(numpoints)
@@ -382,11 +386,11 @@ if rank==0:
     print('values')
     print(ux)
     plt.plot(x_points,ux)
-    plt.savefig('HS_alongx.png')
+    plt.savefig('HS_SUPG_alongx.png')
     print('sigma coord')
-    print(sigma[int(N_dof_2/2)])
+    print(sigma[int(N_dof_2/4)])
     print('theta coord')
-    print(theta[int(N_dof_2/2)])
+    print(theta[int(N_dof_2/4)])
 
 
 
