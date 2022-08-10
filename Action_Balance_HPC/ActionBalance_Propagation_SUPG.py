@@ -89,6 +89,8 @@ M=CF.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols)
 #also need global stiffness matrix
 #same exact structure as M
 A = M.duplicate()
+M_SUPG = M.duplicate()
+A_SUPG = M.duplicate()
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -139,23 +141,31 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
 c = 2*np.ones(local_dof.shape)
-c[:,2:] = 0
-#c[:,1] = 1
+#c[:,0] = 0
+#c[:,1] = 0
 #exact solution and dirichlet boundary
 def u_func(x,y,sigma,theta,c,t):
-    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) #+ np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
+    return  np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t) +np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) 
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!
 #now need to mass matrixes for stiffness and RHS, also optionally can out put the nnz
 M_NNZ = CF.build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M)
 A.setPreallocationNNZ(M_NNZ)
+M_SUPG.setPreallocationNNZ(M_NNZ)
+A_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
 CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
+#CF.build_stiffness_varying_action_balance_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A)
+
+CF.only_SUPG_terms(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A_SUPG)
+CF.build_cartesian_mass_matrix_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,M_SUPG)
+
 time_2 = time.time()
-A=A+M
+A=A+M+M_SUPG+A_SUPG
+M_SUPG=M+M_SUPG
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
 #just want to test answer
@@ -209,7 +219,7 @@ ksp2.setOperators(A)
 #ksp2.setType('cg')
 #ksp2.setPC(pc2)
 
-fname = 'ActionBalance_Propagation_CG/solution'
+fname = 'ActionBalance_Propagation_SUPG/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 #vtkfile << mesh1
@@ -229,7 +239,7 @@ for i in range(nt):
     u_d = u_2[local_boundary_dofs]
     B = F_dof.duplicate()
     B.setFromOptions()
-    M.mult(u_cart,B)
+    M_SUPG.mult(u_cart,B)
     B.setValues(global_boundary_dofs,u_d)
     B.assemble()
     ksp2.solve(B, u_cart)
@@ -277,8 +287,8 @@ PETSc.Sys.Print("h",1/nx)
 PETSc.Sys.Print("dof",(nx+1)**2*(ny+1)**2)
 buildTime = time_2-time_start
 solveTime = time_end-time_2
-print(f'The build time is {buildTime} seconds')
-print(f'The solve time is {solveTime} seconds')
+PETSc.Sys.Print(f'The build time is {buildTime} seconds')
+PETSc.Sys.Print(f'The solve time is {solveTime} seconds')
 ##################################################################
 #################################################################
 #If I can find integral parameter like Hs then this section

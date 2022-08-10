@@ -58,14 +58,14 @@ n_theta = 4 #number of elements in theta
 #set initial time
 t = 0
 #set final time
-t_f = 1000
+t_f = 5000
 #set time step
-dt = 5.0
+dt = 1.0
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
-nplot = 10
+nplot = 500
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -117,6 +117,7 @@ M=CF.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols)
 #same exact structure as M
 A = M.duplicate()
 SUPG_M = M.duplicate()
+SUPG_A = M.duplicate()
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -139,13 +140,13 @@ local_boundary_dofs = CF.fetch_boundary_dofs(V1,V2,dof_coordinates1,dof_coordina
 #now only want subset that is the inflow, need to automate later
 #for shoaling case it shoud only be the boundary at x_min
 dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
-#dum2 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]>=(y_max-1e-14),theta[local_boundary_dofs]<0)]
-#dum3 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]<=(y_min+1e-14),theta[local_boundary_dofs]>0)]
+dum2 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]>=(y_max-1e-14),theta[local_boundary_dofs]<0)]
+dum3 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]<=(y_min+1e-14),theta[local_boundary_dofs]>0)]
 dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
 dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
-#local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4,dum5),0))
-local_boundary_dofs = np.unique(np.concatenate((dum1,dum4,dum5),0))
+local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4,dum5),0))
+#local_boundary_dofs = np.unique(np.concatenate((dum1,dum4,dum5),0))
 #local_boundary_dofs = np.unique(dum1)
 global_boundary_dofs = local_boundary_dofs + local_range[0]
 #print('global_boundary_dofs')
@@ -205,16 +206,18 @@ def u_func(x,y,sigma,theta,c,t):
 #now need to mass matrixes for stiffness and RHS, also optionally can out put the nnz
 M_NNZ = CF.build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M)
 SUPG_M.setPreallocationNNZ(M_NNZ)
+SUPG_A.setPreallocationNNZ(M_NNZ)
 #need upwind mass matrix too
 CF.build_cartesian_mass_matrix_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,SUPG_M)
 A.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-#CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
-CF.build_stiffness_varying_action_balance_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A)
+CF.build_stiffness_varying_action_balance(mesh1,V1,mesh2,V2,c,N_dof_2,dt,A)
+#CF.build_stiffness_varying_action_balance_SUPG(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,A)
+CF.only_SUPG_terms(mesh1,V1,mesh2,V2,c,N_dof_1,N_dof_2,dt,SUPG_A)
 time_2 = time.time()
-A=A+M+SUPG_M
+A=A+M+SUPG_M+SUPG_A
 SUPG_M = SUPG_M + M
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
@@ -372,13 +375,14 @@ vtkfile << HS
 
 PETSc.Sys.Print('Attempt at extracting HS at a fixed point')
 #want to create a graph along x axis
-numpoints = 121
+numpoints = 150
 x_points = np.linspace(x_min,x_max,numpoints)
 
 ux = np.zeros(numpoints)
 i=0
+y_cord = 10000
 for a in x_points:
-    ux[i] = CF.peval(HS,Point(a,0.0),comm)
+    ux[i] = CF.peval(HS,Point(a,y_cord),comm)
     i+=1
 if rank==0:
     print('num points')
