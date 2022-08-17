@@ -139,11 +139,11 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
 c = 2*np.ones(local_dof.shape)
-c[:,2:] = 0
+#c[:,2:] = 0
 #c[:,1] = 1
 #exact solution and dirichlet boundary
 def u_func(x,y,sigma,theta,c,t):
-    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) #+ np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
+    return np.sin(x-c[:,0]*t) + np.cos(y-c[:,1]*t) + np.sin(sigma-c[:,2]*t) + np.cos(theta-c[:,3]*t)
 ###################################################################
 ###################################################################
 #Preallocate and load/assemble cartesian mass matrix!

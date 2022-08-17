@@ -60,12 +60,12 @@ t = 0
 #set final time
 t_f = 5000
 #set time step
-dt = 1.0
+dt = 0.5
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
-nplot = 500
+nplot = 1000
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -146,7 +146,7 @@ dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
 dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
 local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4,dum5),0))
-#local_boundary_dofs = np.unique(np.concatenate((dum1,dum4,dum5),0))
+#local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3),0))
 #local_boundary_dofs = np.unique(dum1)
 global_boundary_dofs = local_boundary_dofs + local_range[0]
 #print('global_boundary_dofs')
@@ -176,7 +176,7 @@ u = np.zeros(local_dof.shape[0])
 v = np.zeros(local_dof.shape[0])
 c = np.zeros(local_dof.shape)
 c = CF.compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81)
-#c[:,3:] = 0
+#c[:,3] = 0
 #dirichlet boundary, almost same as intital
 def u_func(x,y,sigma,theta,c,t):
     #takes in dof and paramters
@@ -367,7 +367,7 @@ PETSc.Sys.Print('The solve time is ',solveTime)
 HS = Function(V1)
 HS_vec = CF.calculate_HS(u_cart,V2,N_dof_1,N_dof_2)
 HS.vector()[:] = np.array(HS_vec)
-fname = 'ActionBalance_Shoaling__SUPG_HS/solution'
+fname = 'ActionBalance_Shoaling_SUPG_HS/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 vtkfile << HS
@@ -380,7 +380,7 @@ x_points = np.linspace(x_min,x_max,numpoints)
 
 ux = np.zeros(numpoints)
 i=0
-y_cord = 10000
+y_cord = 10000.5
 for a in x_points:
     ux[i] = CF.peval(HS,Point(a,y_cord),comm)
     i+=1
