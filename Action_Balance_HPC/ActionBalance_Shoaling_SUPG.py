@@ -51,21 +51,21 @@ omega_min= 0.25 #smallest rad. frequency (needs to be larger than 0)
 omega_max = 2.0 #largest rad. frequency
 theta_min = -10/180*np.pi
 theta_max = 10/180*np.pi
-n_sigma = 40 #number of elements in frequncy which is dimension no. 0   
-n_theta = 4 #number of elements in theta
+n_sigma = 20#40 #number of elements in frequncy which is dimension no. 0   
+n_theta = 6#4 #number of elements in theta
 
 
 #set initial time
 t = 0
 #set final time
-t_f = 5000
+t_f = 1000
 #set time step
 dt = 0.5
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
-nplot = 1000
+nplot = 100
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -301,7 +301,7 @@ for i in range(nt):
 
     # Save solution to file in VTK format
     if (i%nplot==0):
-        u.vector()[:] = np.array(u_cart.getArray()[int(N_dof_2/4)::N_dof_2])
+        u.vector()[:] = np.array(u_cart.getArray()[int(N_dof_2/2)::N_dof_2])
         vtkfile << u
         #hdf5_file.write(u,"solution",t)
 PETSc.Sys.Print('Reason of convergence')
@@ -345,13 +345,16 @@ PETSc.Sys.Print("max error",e1.max())
 #h
 PETSc.Sys.Print("h",1/n_x)
 #dof
-PETSc.Sys.Print("dof",(n_x+1)**2*(n_y+1)**2)
+PETSc.Sys.Print("dof",N_dof_1*N_dof_2)
 #L inf norm
 PETSc.Sys.Print("L inf norm of initial condition",u_exact.norm(PETSc.NormType.NORM_INFINITY))
 PETSc.Sys.Print("L inf norm of final solution",u_cart.norm(PETSc.NormType.NORM_INFINITY))
 #L 2 norms
 PETSc.Sys.Print("L 2 norm of initial condition",u_exact.norm(PETSc.NormType.NORM_2))
 PETSc.Sys.Print("L 2 norm of final solution",u_cart.norm(PETSc.NormType.NORM_2))
+#check for negative values
+PETSc.Sys.Print("minimum in final solution", u_cart.min())
+
 
 buildTime = time_2-time_start
 solveTime = time_end-time_2
@@ -367,7 +370,7 @@ PETSc.Sys.Print('The solve time is ',solveTime)
 HS = Function(V1)
 HS_vec = CF.calculate_HS(u_cart,V2,N_dof_1,N_dof_2)
 HS.vector()[:] = np.array(HS_vec)
-fname = 'ActionBalance_Shoaling_SUPG_HS/solution'
+fname = 'ActionBalance_Shoaling_SUPG_HS_6_theta/solution'
 #pvd doesnt seem to work with new paraview
 vtkfile = File(fname+'.pvd')
 vtkfile << HS
@@ -392,9 +395,9 @@ if rank==0:
     plt.plot(x_points,ux)
     plt.savefig('HS_SUPG_alongx.png')
     print('sigma coord')
-    print(sigma[int(N_dof_2/4)])
+    print(sigma[int(N_dof_2/2)])
     print('theta coord')
-    print(theta[int(N_dof_2/4)])
+    print(theta[int(N_dof_2/2)])
 
 
 

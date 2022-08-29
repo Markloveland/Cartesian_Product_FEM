@@ -30,8 +30,8 @@ omega_min= 0.25 #smallest rad. frequency (needs to be larger than 0)
 omega_max = 2.0 #largest rad. frequency
 theta_min = -10/180*np.pi
 theta_max = 10/180*np.pi
-n_sigma = 40 #number of elements in frequncy which is dimension no. 0   
-n_theta = 4 #number of elements in theta
+n_sigma = 20 #number of elements in frequncy which is dimension no. 0   
+n_theta = 6 #number of elements in theta
 
 
 

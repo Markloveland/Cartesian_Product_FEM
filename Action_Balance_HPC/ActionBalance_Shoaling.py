@@ -60,12 +60,12 @@ t = 0
 #set final time
 t_f = 1000
 #set time step
-dt = 5.0
+dt = 0.5
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
-nplot = 10
+nplot = 100
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
