@@ -30,7 +30,7 @@ dofs = np.arange(*local_range,dtype=np.int32)
 local_size = V.dofmap.index_map.size_local
 #hopefully the dof coordinates owned by the process
 local_dof_coords = dof_coords[0:local_size,:]
-
+print(dofs)
 #try to set proper values
 uD.vector.setValues(dofs,  1 + local_dof_coords[:,0]**2 + 2*local_dof_coords[:,1]**2)
 #also need to propagate ghost values
