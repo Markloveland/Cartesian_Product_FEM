@@ -82,7 +82,7 @@ def build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M
     return M_NNZ
 
 
-def build_action_balance_stiffness(domain1,domain2,V1,V2,A):
+def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     #generates an assembled PETSc matrix
     #which is the stiffness matrix for the action balance equation
 
@@ -107,6 +107,9 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,A):
     A_local_size = A.getLocalSize()
     local_range1 = V1.dofmap.index_map.local_range
     dofs1 = np.arange(*local_range1,dtype=np.int32)
+    local_size1 = V1.dofmap.index_map.size_local
+    local_range2 = V1.dofmap.index_map.local_range
+    dofs2 = np.arange(*local_range2,dtype=np.int32)
     local_size2 = V2.dofmap.index_map.size_local
    
     #need value at a specific dof_coordinate in second domain
@@ -185,10 +188,10 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,A):
 
     #store CSR entries in a large matrix
     #store sparsity pattern (rows,columns, vals)
-    A1_I,A1_J,temp =  A1.mat().getValuesCSR()
-    A2_I,A2_J,temp2 = A2.mat().getValuesCSR()
-    A3_I,A3_J,temp3 = A3.mat().getValuesCSR()
-    A4_I,A4_J,temp4 = A4.mat().getValuesCSR()
+    A1_I,A1_J,temp =  A1.getValuesCSR()
+    A2_I,A2_J,temp2 = A2.getValuesCSR()
+    A3_I,A3_J,temp3 = A3.getValuesCSR()
+    A4_I,A4_J,temp4 = A4.getValuesCSR()
     len1 = len(temp)
     len2 = len(temp2)
     len3 = len(temp3)
@@ -212,7 +215,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,A):
     A4.zeroEntries()
 
     #iterate over each dof2
-    for a in range(local_size2):
+    for a in range(1,local_size2):
 
         #need value at a specific dof_coordinate in second domain
         cx_func.vector.setValues(dofs1, np.array(c[a::local_size2,0]))
@@ -245,16 +248,16 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,A):
 
         #store CSR entries in a large matrix
         #store sparsity pattern (rows,columns, vals)
-        _,_,temp =  A1.mat().getValuesCSR()
-        _,_,temp2 = A2.mat().getValuesCSR()
-        _,_,temp3 = A3.mat().getValuesCSR()
-        _,_,temp4 = A4.mat().getValuesCSR()
+        _,_,temp =  A1.getValuesCSR()
+        _,_,temp2 = A2.getValuesCSR()
+        _,_,temp3 = A3.getValuesCSR()
+        _,_,temp4 = A4.getValuesCSR()
 
 
-        vals1[:,0] = temp
-        vals2[:,0] = temp2
-        vals3[:,0] = temp3
-        vals4[:,0] = temp4
+        vals1[:,a] = temp
+        vals2[:,a] = temp2
+        vals3[:,a] = temp3
+        vals4[:,a] = temp4
 
 
         #for some reason it likes to add things
@@ -264,4 +267,162 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,A):
         A3.zeroEntries()
         A4.zeroEntries()
 
+    #now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
+    # int_Omega2 fy ... dy
+    #like before, first need to get sparsity patterns
+    fy1 = fem.Function(V2)
+    fy2 = fem.Function(V2)
+    fy3 = fem.Function(V2)
 
+    #need value at a specific dof_coordinate in second domain
+    fy1.vector.setValues(dofs2, np.array(vals1[0,:]))
+    #also need to propagate ghost values
+    fy1.vector.ghostUpdate()
+
+    #need value at a specific dof_coordinate in second domain
+    fy2.vector.setValues(dofs2, np.array(vals2[0,:]))
+    #also need to propagate ghost values
+    fy2.vector.ghostUpdate()
+    
+    #need value at a specific dof_coordinate in second domain
+    fy3.vector.setValues(dofs2, np.array(vals3[0,:]))
+    #also need to propagate ghost values
+    fy3.vector.ghostUpdate()
+
+    #assemble the weak form
+    K21 = -u2*v2*fy1*ufl.dx
+    K21 += -ufl.inner(u2*ufl.as_vector((fy2,fy3)),ufl.grad(v2))*ufl.dx
+    K21 += u2*v2*ufl.dot(ufl.as_vector((fy2,fy3)),n2)*ufl.ds
+
+    #turn expression into form
+    form_K21 = fem.form(K21, jit_params=jit_parameters)
+
+    #generate sparsity patterns just 1 time
+    #ideally they are all the same (except the boundary boi)
+    sp21 = fem.create_sparsity_pattern(form_K21)
+
+    #assemble each sparsity pattern
+    sp21.assemble()
+
+    #generate PETSc Matrices just one time
+    B1 = cpp.la.petsc.create_matrix(domain2.comm, sp21)
+
+    #assemble the PETSc Matrices
+    fem.petsc.assemble_matrix(B1, form_K21)
+    
+    B1.assemble()
+
+    B1_I,B1_J,temp = B1.getValuesCSR()
+
+    blen1 = len(temp)
+    dat1 = np.zeros((blen1,len1))
+    dat1[:,0] = temp
+    #for some reason it likes to add things
+    #so until we figure it out we need to zero entries
+    B1.zeroEntries()
+
+    #KEY! IDK IF TRUE BUT ASSUMING length of sparse matrixes K1,K2,K3 were same
+    #If not, then will need separate loops
+
+    for i in range(1,len1):
+
+        #need value at a specific dof_coordinate in second domain
+        fy1.vector.setValues(dofs2, np.array(vals1[i,:]))
+        #also need to propagate ghost values
+        fy1.vector.ghostUpdate()
+
+        #need value at a specific dof_coordinate in second domain
+        fy2.vector.setValues(dofs2, np.array(vals2[i,:]))
+        #also need to propagate ghost values
+        fy2.vector.ghostUpdate()
+    
+        #need value at a specific dof_coordinate in second domain
+        fy3.vector.setValues(dofs2, np.array(vals3[i,:]))
+        #also need to propagate ghost values
+        fy3.vector.ghostUpdate()
+
+
+        fem.petsc.assemble_matrix(B1,form_K21)
+        B1.assemble()
+
+        _,_,temp = B1.getValuesCSR()
+
+        dat1[:,i] = temp
+
+        B1.zeroEntries()
+
+    Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+
+    Krow=Krow.astype(np.int32)
+    Kcol=Kcol.astype(np.int32)
+    #challenge is we likely have 3 different sparsity patterns so how should we
+    #add them all using scipy???
+    K = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
+    #add the sparse matrices
+    K = dt*K
+
+
+
+    #now need to repeat last loop because sometimes we have empty global boundary
+    if len(vals4[:,0]) != 0:
+        #need value at a specific dof_coordinate in second domain
+        fy1.vector.setValues(dofs2, np.array(vals4[0,:]))
+        #also need to propagate ghost values
+        fy1.vector.ghostUpdate()
+        K22 = u2*v2*fy1*dx
+
+        #turn expression into form
+        form_K22 = fem.form(K22, jit_params=jit_parameters)
+
+        #generate sparsity patterns just 1 time
+        #ideally they are all the same (except the boundary boi)
+        sp22 = fem.create_sparsity_pattern(form_K22)
+
+        #assemble each sparsity pattern
+        sp22.assemble()
+
+        #generate PETSc Matrices just one time
+        B2 = cpp.la.petsc.create_matrix(domain2.comm, sp22)
+
+        #assemble the PETSc Matrices
+        fem.petsc.assemble_matrix(B2, form_K22)
+    
+        B2.assemble()
+
+        B2_I,B2_J,temp2 = B2.getValuesCSR()
+        blen2 = len(temp2)
+        dat2 = np.zeros((blen2,len4))
+        dat2[:,0] = temp2
+
+        B2.zeroEntries()
+
+
+        #K4 is the boundary integral dOmega1 x Omega2
+        for i in range(1,len4):
+            #need value at a specific dof_coordinate in second domain
+            fy1.vector.setValues(dofs2, np.array(vals1[i,:]))
+            #also need to propagate ghost values
+            fy1.vector.ghostUpdate()
+
+            fem.petsc.assemble_matrix(B2,form_K22)
+            B2.assemble()
+
+            _,_,temp2 = B2.getValuesCSR()
+
+            dat2[:,i] = temp2
+
+            B2.zeroEntries()
+
+        Krow2,Kcol2,Kdat2 = assemble_global_CSR(A4_I,A4_J,B2_I,B2_J,dat2)
+
+        Krow2=Krow2.astype(np.int32)
+        Kcol2=Kcol2.astype(np.int32)
+
+        K2 = sp.csr_matrix((Kdat2, Kcol2, Krow2), shape=(A_local_size[0],A_global_size[1]))
+
+        K = K + dt*K2
+
+    #assign values to PETSc matrix
+    A.setValuesCSR(K.indptr,K.indices,K.data)
+    A.assemble()
+    return 0
