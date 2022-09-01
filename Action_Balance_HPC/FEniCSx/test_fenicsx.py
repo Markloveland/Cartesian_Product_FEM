@@ -12,6 +12,7 @@ import CFx.transforms
 import CFx.boundary
 import CFx.assemble
 import CFx.wave
+import CFx.utils
 ##############
 #Domain 1
 domain1 = mesh.create_interval(MPI.COMM_WORLD,5,(0,1))
@@ -33,7 +34,7 @@ domain2 = mesh.create_interval(MPI.COMM_SELF,4,(0,1))
 #domain = mesh.create_interval(MPI.COMM_WORLD,25,(0,1),  ghost_mode=dolfinx.cpp.mesh.GhostMode.none)
 V2 = fem.FunctionSpace(domain2, ("CG", 1))
 dof_coords2 = V2.tabulate_dof_coordinates()
-print('domain2 coords',dof_coords2)
+#print('domain2 coords',dof_coords2)
 
 local_range2 = V2.dofmap.index_map.local_range
 dofs2 = np.arange(*local_range1,dtype=np.int32)
@@ -48,9 +49,9 @@ global_size2 = V2.dofmap.index_map.size_global
 new_coords = CFx.transforms.cartesian_product_coords(x_local1,x_local2)
 b_dof = CFx.boundary.fetch_boundary_dofs(domain1,domain2,V1,V2,local_size1,local_size2)
 
-print('new coords',new_coords)
-print('new_coords shpe',new_coords.shape)
-print('domain boundary',b_dof)
+#print('new coords',new_coords)
+#print('new_coords shpe',new_coords.shape)
+#print('domain boundary',b_dof)
 
 
 
@@ -72,3 +73,21 @@ F_dof.setValues(rows,2*np.ones(len(rows)))
 HS_vec = CFx.wave.calculate_HS(F_dof,V2,local_size1,local_size2,local_range2)
 
 print('HS',HS_vec)
+
+
+#############
+#now assign HS as a function in domain 1 and see if we can plot at select stations
+f = fem.Function(V1)
+#f.vector.setValues(dofs1,  HS_vec)
+f.interpolate(lambda x: x[0])
+#also need to propagate ghost values
+f.vector.ghostUpdate()
+
+#numpy list of stations
+stations = np.array([[0.12,0.32,0.65,0.9,0.22]]).T
+print(stations.shape)
+local_stats,local_vals = CFx.utils.station_data(stations,domain1,f)
+
+print('local stations',local_stats)
+print('local vals',local_vals)
+
