@@ -1,4 +1,5 @@
 import numpy as np
+from mpi4py import MPI
 from petsc4py import PETSc
 from scipy import sparse as sp
 import ufl
@@ -63,9 +64,9 @@ def build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M
     #Preallocate!
     #to get nnz of cartesian matrix, need nnz of each submatrix
     #use mass matrix to specify sparsity pattern
-    M1_I,M1_J,M1_A = M1_pet.mat().getValuesCSR()
+    M1_I,M1_J,M1_A = M1_pet.getValuesCSR()
     M1_NNZ = M1_I[1:]-M1_I[:-1]
-    M2_I,M2_J,M2_A = M2_pet.mat().getValuesCSR()
+    M2_I,M2_J,M2_A = M2_pet.getValuesCSR()
     M2_NNZ = M2_I[1:]-M2_I[:-1]
     M1 = sp.csr_matrix((M1_A,M1_J,M1_I),shape=(M1_sizes[0],M1_global_size[1]))
     M2 = sp.csr_matrix((M2_A,M2_J,M2_I),shape=M2_sizes)
@@ -82,7 +83,7 @@ def build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M
     return M_NNZ
 
 
-def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
+def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
     #generates an assembled PETSc matrix
     #which is the stiffness matrix for the action balance equation
 
@@ -91,6 +92,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
 
     u1 = ufl.TrialFunction(V1)
     v1 = ufl.TestFunction(V1)
+   
     u2 = ufl.TrialFunction(V2)
     v2 = ufl.TestFunction(V2)
 
@@ -105,10 +107,12 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     #create numpy to store vals
     A_global_size = A.getSize()
     A_local_size = A.getLocalSize()
+    
     local_range1 = V1.dofmap.index_map.local_range
     dofs1 = np.arange(*local_range1,dtype=np.int32)
     local_size1 = V1.dofmap.index_map.size_local
-    local_range2 = V1.dofmap.index_map.local_range
+    
+    local_range2 = V2.dofmap.index_map.local_range
     dofs2 = np.arange(*local_range2,dtype=np.int32)
     local_size2 = V2.dofmap.index_map.size_local
    
@@ -137,7 +141,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     K1 = cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx
     K2 = csig_func*u1*v1*ufl.dx
     K3 = cthet_func*u1*v1*ufl.dx
-    K4 = dot(as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds
+    K4 = ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds
 
     jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],
             "cffi_libraries": ["m"]}
@@ -163,11 +167,11 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     sp3.assemble()
     sp4.assemble()
 
-    print(f"Number of non-zeros in sparsity pattern: {sp.num_nonzeros}")
-    print(f"Num dofs: {V.dofmap.index_map.size_local * V.dofmap.index_map_bs}")
-    print(f"Entries per dof {sp.num_nonzeros/(V.dofmap.index_map.size_local * V.dofmap.index_map_bs)}")
-    print(f"Dofs per cell {V.element.space_dimension}")
-    print("-" * 25)
+    #print(f"Number of non-zeros in sparsity pattern: {sp1.num_nonzeros}")
+    #print(f"Num dofs: {V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs}")
+    #print(f"Entries per dof {sp1.num_nonzeros/(V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs)}")
+    #print(f"Dofs per cell {V1.element.space_dimension}")
+    #print("-" * 25)
 
     #generate PETSc Matrices just one time
     A1 = cpp.la.petsc.create_matrix(domain1.comm, sp1)
@@ -185,7 +189,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     A2.assemble()
     A3.assemble()
     A4.assemble()
-
+    
     #store CSR entries in a large matrix
     #store sparsity pattern (rows,columns, vals)
     A1_I,A1_J,temp =  A1.getValuesCSR()
@@ -206,7 +210,6 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     vals2[:,0] = temp2
     vals3[:,0] = temp3
     vals4[:,0] = temp4
-
     #for some reason it likes to add things
     #so until we figure it out we need to zero entries
     A1.zeroEntries()
@@ -267,6 +270,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
         A3.zeroEntries()
         A4.zeroEntries()
 
+    
     #now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
     # int_Omega2 fy ... dy
     #like before, first need to get sparsity patterns
@@ -275,6 +279,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     fy3 = fem.Function(V2)
 
     #need value at a specific dof_coordinate in second domain
+    #print(vals1.shape)
     fy1.vector.setValues(dofs2, np.array(vals1[0,:]))
     #also need to propagate ghost values
     fy1.vector.ghostUpdate()
@@ -360,8 +365,8 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
     K = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
     #add the sparse matrices
     K = dt*K
-
-
+    
+    
 
     #now need to repeat last loop because sometimes we have empty global boundary
     if len(vals4[:,0]) != 0:
@@ -369,7 +374,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
         fy1.vector.setValues(dofs2, np.array(vals4[0,:]))
         #also need to propagate ghost values
         fy1.vector.ghostUpdate()
-        K22 = u2*v2*fy1*dx
+        K22 = u2*v2*fy1*ufl.dx
 
         #turn expression into form
         form_K22 = fem.form(K22, jit_params=jit_parameters)
@@ -400,7 +405,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,dt,A):
         #K4 is the boundary integral dOmega1 x Omega2
         for i in range(1,len4):
             #need value at a specific dof_coordinate in second domain
-            fy1.vector.setValues(dofs2, np.array(vals1[i,:]))
+            fy1.vector.setValues(dofs2, np.array(vals4[i,:]))
             #also need to propagate ghost values
             fy1.vector.ghostUpdate()
 

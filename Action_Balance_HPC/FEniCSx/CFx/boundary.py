@@ -27,10 +27,10 @@ def fetch_boundary_dofs(mesh1,mesh2,V1,V2,local_size1,local_size2):
     #equation number of the individual boundaries
     boundary_dofs1 = fem.locate_dofs_topological(V1, fdim1, boundary_facets1)
     boundary_dofs2 = fem.locate_dofs_topological(V2, fdim2, boundary_facets2)
-    
+    boundary_dofs1 = boundary_dofs1[boundary_dofs1<local_size1]
+    boundary_dofs2 = boundary_dofs2[boundary_dofs2<local_size2]
     #now create array of global boundary dof numbers
     global_boundary_dofs=np.empty((len(boundary_dofs1)*local_size2 + local_size1*len(boundary_dofs2),2))
-
     ctr=0
     for j in boundary_dofs1:
         global_boundary_dofs[ctr*local_size2:(ctr+1)*local_size2,:] = \

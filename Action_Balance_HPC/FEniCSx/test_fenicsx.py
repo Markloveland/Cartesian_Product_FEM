@@ -51,7 +51,7 @@ b_dof = CFx.boundary.fetch_boundary_dofs(domain1,domain2,V1,V2,local_size1,local
 
 #print('new coords',new_coords)
 #print('new_coords shpe',new_coords.shape)
-#print('domain boundary',b_dof)
+print('domain boundary',b_dof)
 
 
 
