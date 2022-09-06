@@ -82,6 +82,48 @@ def build_cartesian_mass_matrix(M1_pet,M2_pet,M1_sizes,M1_global_size,M2_sizes,M
     M.assemble()
     return M_NNZ
 
+def init_dat(domain1,K1,jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],
+    "cffi_libraries": ["m"]}):
+    #give a ufl form, generate a sparsity pattern
+
+    form_K1 = fem.form(K1, jit_params=jit_parameters)
+    #generate sparsity patterns just 1 time
+    #ideally they are all the same (except the boundary boi)
+    sp1 = fem.create_sparsity_pattern(form_K1)
+
+    #assemble each sparsity pattern
+    sp1.assemble()
+
+    #generate PETSc Matrices just one time
+    A1 = cpp.la.petsc.create_matrix(domain1.comm, sp1)
+
+    #assemble the PETSc Matrices
+    fem.petsc.assemble_matrix(A1, form_K1)
+
+    A1.assemble()
+
+    return form_K1,A1
+
+def init_array1(A1,local_size2):
+    #needs petsc matrix
+    #store CSR entries in a large matrix
+    #store sparsity pattern (rows,columns, vals)
+    A1_I,A1_J,temp =  A1.getValuesCSR()
+    len1 = len(temp)
+
+    #create np to store N_dof_2 sets of vals
+    vals1 = np.zeros((len1,local_size2))
+    vals1[:,0] = temp
+    return A1_I,A1_J,vals1,len1
+
+def init_array2(B1,len1):
+
+    B1_I,B1_J,temp = B1.getValuesCSR()
+
+    blen1 = len(temp)
+    dat1 = np.zeros((blen1,len1))
+    dat1[:,0] = temp
+    return B1_I,B1_J,dat1
 
 def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
     #generates an assembled PETSc matrix
@@ -136,80 +178,37 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
     #also need to propagate ghost values
     cthet_func.vector.ghostUpdate()
 
+    jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],"cffi_libraries": ["m"]}
+
 
     #create expressions and assemble linear forms
-    K1 = cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx
-    K2 = csig_func*u1*v1*ufl.dx
-    K3 = cthet_func*u1*v1*ufl.dx
-    K4 = ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds
-
-    jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],
-            "cffi_libraries": ["m"]}
-
-
-    #turn expressions into forms
-    form_K1 = fem.form(K1, jit_params=jit_parameters)
-    form_K2 = fem.form(K2, jit_params=jit_parameters)
-    form_K3 = fem.form(K3, jit_params=jit_parameters)
-    form_K4 = fem.form(K4, jit_params=jit_parameters)
-
-    #generate sparsity patterns just 1 time
-    #ideally they are all the same (except the boundary boi)
-    sp1 = fem.create_sparsity_pattern(form_K1)
-    sp2 = fem.create_sparsity_pattern(form_K2)
-    sp3 = fem.create_sparsity_pattern(form_K3)
-    sp4 = fem.create_sparsity_pattern(form_K4)
+    K_vec = [cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx,  csig_func*u1*v1*ufl.dx, cthet_func*u1*v1*ufl.dx, ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds]
+   
+    
+    #K1 = cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx
+    #K2 = csig_func*u1*v1*ufl.dx
+    #K3 = cthet_func*u1*v1*ufl.dx
+    #K4 = ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds
 
 
-    #assemble each sparsity pattern
-    sp1.assemble()
-    sp2.assemble()
-    sp3.assemble()
-    sp4.assemble()
+    form_K1,A1 = init_dat(domain1,K_vec[0])
+    form_K2,A2 = init_dat(domain1,K_vec[1])
+    form_K3,A3 = init_dat(domain1,K_vec[2])
+    form_K4,A4 = init_dat(domain1,K_vec[3])
 
+    
+    A1_I,A1_J,vals1,len1 = init_array1(A1,local_size2)
+    A2_I,A2_J,vals2,len2 = init_array1(A2,local_size2)
+    A3_I,A3_J,vals3,len3 = init_array1(A3,local_size2)
+    A4_I,A4_J,vals4,len4 = init_array1(A4,local_size2)
+    
     #print(f"Number of non-zeros in sparsity pattern: {sp1.num_nonzeros}")
     #print(f"Num dofs: {V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs}")
     #print(f"Entries per dof {sp1.num_nonzeros/(V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs)}")
     #print(f"Dofs per cell {V1.element.space_dimension}")
     #print("-" * 25)
 
-    #generate PETSc Matrices just one time
-    A1 = cpp.la.petsc.create_matrix(domain1.comm, sp1)
-    A2 = cpp.la.petsc.create_matrix(domain1.comm, sp2)
-    A3 = cpp.la.petsc.create_matrix(domain1.comm, sp3)
-    A4 = cpp.la.petsc.create_matrix(domain1.comm, sp4)
-
-    #assemble the PETSc Matrices
-    fem.petsc.assemble_matrix(A1, form_K1)
-    fem.petsc.assemble_matrix(A2, form_K2)
-    fem.petsc.assemble_matrix(A3, form_K3)
-    fem.petsc.assemble_matrix(A4, form_K4)
-    
-    A1.assemble()
-    A2.assemble()
-    A3.assemble()
-    A4.assemble()
-    
-    #store CSR entries in a large matrix
-    #store sparsity pattern (rows,columns, vals)
-    A1_I,A1_J,temp =  A1.getValuesCSR()
-    A2_I,A2_J,temp2 = A2.getValuesCSR()
-    A3_I,A3_J,temp3 = A3.getValuesCSR()
-    A4_I,A4_J,temp4 = A4.getValuesCSR()
-    len1 = len(temp)
-    len2 = len(temp2)
-    len3 = len(temp3)
-    len4 = len(temp4)
-    
-    #create np to store N_dof_2 sets of vals
-    vals1 = np.zeros((len1,local_size2))
-    vals2 = np.zeros((len2,local_size2))
-    vals3 = np.zeros((len3,local_size2))
-    vals4 = np.zeros((len4,local_size2))
-    vals1[:,0] = temp
-    vals2[:,0] = temp2
-    vals3[:,0] = temp3
-    vals4[:,0] = temp4
+   
     #for some reason it likes to add things
     #so until we figure it out we need to zero entries
     A1.zeroEntries()
@@ -299,29 +298,10 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
     K21 += -ufl.inner(u2*ufl.as_vector((fy2,fy3)),ufl.grad(v2))*ufl.dx
     K21 += u2*v2*ufl.dot(ufl.as_vector((fy2,fy3)),n2)*ufl.ds
 
-    #turn expression into form
-    form_K21 = fem.form(K21, jit_params=jit_parameters)
+    form_K21,B1 = init_dat(domain2,K21)
 
-    #generate sparsity patterns just 1 time
-    #ideally they are all the same (except the boundary boi)
-    sp21 = fem.create_sparsity_pattern(form_K21)
-
-    #assemble each sparsity pattern
-    sp21.assemble()
-
-    #generate PETSc Matrices just one time
-    B1 = cpp.la.petsc.create_matrix(domain2.comm, sp21)
-
-    #assemble the PETSc Matrices
-    fem.petsc.assemble_matrix(B1, form_K21)
+    B1_I,B1_J,dat1 = init_array2(B1,len1)
     
-    B1.assemble()
-
-    B1_I,B1_J,temp = B1.getValuesCSR()
-
-    blen1 = len(temp)
-    dat1 = np.zeros((blen1,len1))
-    dat1[:,0] = temp
     #for some reason it likes to add things
     #so until we figure it out we need to zero entries
     B1.zeroEntries()
@@ -376,29 +356,9 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
         fy1.vector.ghostUpdate()
         K22 = u2*v2*fy1*ufl.dx
 
-        #turn expression into form
-        form_K22 = fem.form(K22, jit_params=jit_parameters)
 
-        #generate sparsity patterns just 1 time
-        #ideally they are all the same (except the boundary boi)
-        sp22 = fem.create_sparsity_pattern(form_K22)
-
-        #assemble each sparsity pattern
-        sp22.assemble()
-
-        #generate PETSc Matrices just one time
-        B2 = cpp.la.petsc.create_matrix(domain2.comm, sp22)
-
-        #assemble the PETSc Matrices
-        fem.petsc.assemble_matrix(B2, form_K22)
-    
-        B2.assemble()
-
-        B2_I,B2_J,temp2 = B2.getValuesCSR()
-        blen2 = len(temp2)
-        dat2 = np.zeros((blen2,len4))
-        dat2[:,0] = temp2
-
+        form_K22,B2 = init_dat(domain2,K22)
+        B2_I,B2_J,dat2 = init_array2(B2,len4)
         B2.zeroEntries()
 
 
