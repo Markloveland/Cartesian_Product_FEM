@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH -J ActionBalance
+#SBATCH -A ADCIRC
+#SBATCH -o ActionBalance.o%j
+#SBATCH -e ActionBalance.o%j
+#SBATCH -p normal
+#SBATCH -N 2
+#SBATCH -n 240
+#SBATCH -t 01:45:00
+
+#SBATCH --mail-user=markloveland@utexas.edu
+#SBATCH --mail-type=begin        # email me when the job starts
+#SBATCH --mail-type=end          # email me when the job finishes
+
+date > run.timing
+PYTHONPATH=/home1/04637/mdl2665/anaconda3
+eval "$(/home1/04637/mdl2665/anaconda3/bin/conda shell.bash hook)" 
+conda init
+conda activate fenicsx-env
+conda info
+ibrun python3 Propagation.py
+date >> run.timing
+
