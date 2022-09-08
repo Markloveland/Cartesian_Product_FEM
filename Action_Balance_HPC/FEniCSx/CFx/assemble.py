@@ -4,6 +4,7 @@ from petsc4py import PETSc
 from scipy import sparse as sp
 import ufl
 from dolfinx import fem,cpp
+import CFx.forms
 #all scripts related to assembling the global PETSc matrices
 
 
@@ -125,28 +126,90 @@ def init_array2(B1,len1):
     dat1[:,0] = temp
     return B1_I,B1_J,dat1
 
-def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
-    #generates an assembled PETSc matrix
-    #which is the stiffness matrix for the action balance equation
+def update_c(c_func,c_vals,dofs1,local_size2,node_num):
+    for c in c_func:
+        #need value at a specific dof_coordinate in second domain
+        c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2,0]))
+        #also need to propagate ghost values
+        c.vector.ghostUpdate()
 
-    n1 = ufl.FacetNormal(domain1)
-    n2 = ufl.FacetNormal(domain2)
+def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1):
+        
+    
+    form_K = []
+    A_vec = []
 
-    u1 = ufl.TrialFunction(V1)
-    v1 = ufl.TestFunction(V1)
-   
-    u2 = ufl.TrialFunction(V2)
-    v2 = ufl.TestFunction(V2)
+    for K in K_vec:
+        form_K1,A1 = init_dat(domain1,K)
+        form_K.append(form_K1)
+        A_vec.append(A1)
+        
+    A_I = []
+    A_J = []
+    vals = []
+    lens1 = []
+    
+    for A1 in A_vec:
+        A1_I,A1_J,vals1,len1 = init_array1(A1,local_size2)
+        A_I.append(A1_I)
+        A_J.append(A1_J)
+        vals.append(vals1)
+        lens1.append(len1)
+        A1.zeroEntries()
+    #print(f"Number of non-zeros in sparsity pattern: {sp1.num_nonzeros}")
+    #print(f"Num dofs: {V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs}")
+    #print(f"Entries per dof {sp1.num_nonzeros/(V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs)}")
+    #print(f"Dofs per cell {V1.element.space_dimension}")
+    #print("-" * 25)
 
-    cx_func = fem.Function(V1)
-    cy_func = fem.Function(V1)
-    csig_func = fem.Function(V1)
-    cthet_func = fem.Function(V1)
+    #iterate over each dof2
+    for a in range(1,local_size2):
+        update_c(c_func,c_vals,dofs1,local_size2,a)
+        
+        #need value at a specific dof_coordinate in second domain
+        #cx_func.vector.setValues(dofs1, np.array(c[a::local_size2,0]))
+        #also need to propagate ghost values
+        #cx_func.vector.ghostUpdate()
+
+        #need value at a specific dof_coordinate in second domain
+        #cy_func.vector.setValues(dofs1, np.array(c[a::local_size2,1]))
+        #also need to propagate ghost values
+        #cy_func.vector.ghostUpdate()
+
+        #need value at a specific dof_coordinate in second domain
+        #csig_func.vector.setValues(dofs1, np.array(c[a::local_size2,2]))
+        #also need to propagate ghost values
+        #csig_func.vector.ghostUpdate()
+
+        #need value at a specific dof_coordinate in second domain
+        #cthet_func.vector.setValues(dofs1, np.array(c[a::local_size2,3]))
+        #also need to propagate ghost values
+        #cthet_func.vector.ghostUpdate()
+        ctr = 0
+        for K in form_K:
+            fem.petsc.assemble_matrix(A_vec[ctr],K)
+            A_vec[ctr].assemble()
+            _,_,temp = A_vec[ctr].getValuesCSR()
+            vals[ctr][:,a] = temp
+            A_vec[ctr].zeroEntries()
+            ctr=ctr+1
+
+    
+    return A_I,A_J,vals,lens1
 
 
-    #loop through dof_2 and get a N_dof_1xN_dof_1 sparse matrix
-    #each matrix will have same sparsity pattern so get first one then
-    #create numpy to store vals
+
+
+def update_f(fy,dofs2,vals,entry_no):
+    ctr = 0
+    for fy1 in fy:
+        fy1.vector.setValues(dofs2, np.array(vals[ctr][entry_no,:]))
+        #also need to propagate ghost values
+        fy1.vector.ghostUpdate()
+        ctr=ctr+1
+
+def fetch_params(A,V1,V2):
+    #get parameters related to matrix construction
     A_global_size = A.getSize()
     A_local_size = A.getLocalSize()
     
@@ -157,146 +220,13 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
     local_range2 = V2.dofmap.index_map.local_range
     dofs2 = np.arange(*local_range2,dtype=np.int32)
     local_size2 = V2.dofmap.index_map.size_local
-   
-    #need value at a specific dof_coordinate in second domain
-    cx_func.vector.setValues(dofs1, np.array(c[0::local_size2,0]))
-    #also need to propagate ghost values
-    cx_func.vector.ghostUpdate()
 
-    #need value at a specific dof_coordinate in second domain
-    cy_func.vector.setValues(dofs1, np.array(c[0::local_size2,1]))
-    #also need to propagate ghost values
-    cy_func.vector.ghostUpdate()
+    return A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2
 
-    #need value at a specific dof_coordinate in second domain
-    csig_func.vector.setValues(dofs1, np.array(c[0::local_size2,2]))
-    #also need to propagate ghost values
-    csig_func.vector.ghostUpdate()
-
-    #need value at a specific dof_coordinate in second domain
-    cthet_func.vector.setValues(dofs1, np.array(c[0::local_size2,3]))
-    #also need to propagate ghost values
-    cthet_func.vector.ghostUpdate()
-
-    jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],"cffi_libraries": ["m"]}
-
-
-    #create expressions and assemble linear forms
-    K_vec = [cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx,  csig_func*u1*v1*ufl.dx, cthet_func*u1*v1*ufl.dx, ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds]
-   
-    
-    #K1 = cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx
-    #K2 = csig_func*u1*v1*ufl.dx
-    #K3 = cthet_func*u1*v1*ufl.dx
-    #K4 = ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds
-
-
-    form_K1,A1 = init_dat(domain1,K_vec[0])
-    form_K2,A2 = init_dat(domain1,K_vec[1])
-    form_K3,A3 = init_dat(domain1,K_vec[2])
-    form_K4,A4 = init_dat(domain1,K_vec[3])
-
-    
-    A1_I,A1_J,vals1,len1 = init_array1(A1,local_size2)
-    A2_I,A2_J,vals2,len2 = init_array1(A2,local_size2)
-    A3_I,A3_J,vals3,len3 = init_array1(A3,local_size2)
-    A4_I,A4_J,vals4,len4 = init_array1(A4,local_size2)
-    
-    #print(f"Number of non-zeros in sparsity pattern: {sp1.num_nonzeros}")
-    #print(f"Num dofs: {V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs}")
-    #print(f"Entries per dof {sp1.num_nonzeros/(V1.dofmap.index_map.size_local * V1.dofmap.index_map_bs)}")
-    #print(f"Dofs per cell {V1.element.space_dimension}")
-    #print("-" * 25)
-
-   
-    #for some reason it likes to add things
-    #so until we figure it out we need to zero entries
-    A1.zeroEntries()
-    A2.zeroEntries()
-    A3.zeroEntries()
-    A4.zeroEntries()
-
-    #iterate over each dof2
-    for a in range(1,local_size2):
-
-        #need value at a specific dof_coordinate in second domain
-        cx_func.vector.setValues(dofs1, np.array(c[a::local_size2,0]))
-        #also need to propagate ghost values
-        cx_func.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        cy_func.vector.setValues(dofs1, np.array(c[a::local_size2,1]))
-        #also need to propagate ghost values
-        cy_func.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        csig_func.vector.setValues(dofs1, np.array(c[a::local_size2,2]))
-        #also need to propagate ghost values
-        csig_func.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        cthet_func.vector.setValues(dofs1, np.array(c[a::local_size2,3]))
-        #also need to propagate ghost values
-        cthet_func.vector.ghostUpdate()
-
-        fem.petsc.assemble_matrix(A1,form_K1)
-        fem.petsc.assemble_matrix(A2, form_K2)
-        fem.petsc.assemble_matrix(A3, form_K3)
-        fem.petsc.assemble_matrix(A4, form_K4)
-        A1.assemble()
-        A2.assemble()
-        A3.assemble()
-        A4.assemble()
-
-        #store CSR entries in a large matrix
-        #store sparsity pattern (rows,columns, vals)
-        _,_,temp =  A1.getValuesCSR()
-        _,_,temp2 = A2.getValuesCSR()
-        _,_,temp3 = A3.getValuesCSR()
-        _,_,temp4 = A4.getValuesCSR()
-
-
-        vals1[:,a] = temp
-        vals2[:,a] = temp2
-        vals3[:,a] = temp3
-        vals4[:,a] = temp4
-
-
-        #for some reason it likes to add things
-        #so until we figure it out we need to zero entries
-        A1.zeroEntries()
-        A2.zeroEntries()
-        A3.zeroEntries()
-        A4.zeroEntries()
-
-    
-    #now for each entry in sparse N_dof_1 x N_dof_1 matrix need to evaluate
-    # int_Omega2 fy ... dy
-    #like before, first need to get sparsity patterns
-    fy1 = fem.Function(V2)
-    fy2 = fem.Function(V2)
-    fy3 = fem.Function(V2)
+def assemble_subdomain2(domain2,K21,len1,fy,dofs2,vals):
 
     #need value at a specific dof_coordinate in second domain
     #print(vals1.shape)
-    fy1.vector.setValues(dofs2, np.array(vals1[0,:]))
-    #also need to propagate ghost values
-    fy1.vector.ghostUpdate()
-
-    #need value at a specific dof_coordinate in second domain
-    fy2.vector.setValues(dofs2, np.array(vals2[0,:]))
-    #also need to propagate ghost values
-    fy2.vector.ghostUpdate()
-    
-    #need value at a specific dof_coordinate in second domain
-    fy3.vector.setValues(dofs2, np.array(vals3[0,:]))
-    #also need to propagate ghost values
-    fy3.vector.ghostUpdate()
-
-    #assemble the weak form
-    K21 = -u2*v2*fy1*ufl.dx
-    K21 += -ufl.inner(u2*ufl.as_vector((fy2,fy3)),ufl.grad(v2))*ufl.dx
-    K21 += u2*v2*ufl.dot(ufl.as_vector((fy2,fy3)),n2)*ufl.ds
 
     form_K21,B1 = init_dat(domain2,K21)
 
@@ -311,22 +241,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
 
     for i in range(1,len1):
 
-        #need value at a specific dof_coordinate in second domain
-        fy1.vector.setValues(dofs2, np.array(vals1[i,:]))
-        #also need to propagate ghost values
-        fy1.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        fy2.vector.setValues(dofs2, np.array(vals2[i,:]))
-        #also need to propagate ghost values
-        fy2.vector.ghostUpdate()
-    
-        #need value at a specific dof_coordinate in second domain
-        fy3.vector.setValues(dofs2, np.array(vals3[i,:]))
-        #also need to propagate ghost values
-        fy3.vector.ghostUpdate()
-
-
+        update_f(fy,dofs2,vals,i)
         fem.petsc.assemble_matrix(B1,form_K21)
         B1.assemble()
 
@@ -336,7 +251,28 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
 
         B1.zeroEntries()
 
-    Krow,Kcol,Kdat = assemble_global_CSR(A1_I,A1_J,B1_I,B1_J,dat1)
+    return B1_I,B1_J,dat1
+def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'):
+
+    jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],"cffi_libraries": ["m"]}
+    #generates an assembled PETSc matrix
+    #which is the stiffness matrix for the action balance equation
+    A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
+
+
+    #first pull the proper weak form:
+    if method == 'CG':
+        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
+    
+    update_c(c_func,c_vals,dofs1,local_size2,0)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1)
+    
+    update_f(fy,dofs2,vals,0)
+
+
+    B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K2,lens1[0],fy,dofs2,vals)
+    
+    Krow,Kcol,Kdat = assemble_global_CSR(A_I[0],A_J[0],B1_I,B1_J,dat1)
 
     Krow=Krow.astype(np.int32)
     Kcol=Kcol.astype(np.int32)
@@ -345,40 +281,19 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
     K = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
     #add the sparse matrices
     K = dt*K
-    
-    
+
+    #now do ones with boundary in first subdomain
+    update_c(c_func,c_vals,dofs1,local_size2,0)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size2,c_func,c_vals,dofs1)
 
     #now need to repeat last loop because sometimes we have empty global boundary
-    if len(vals4[:,0]) != 0:
-        #need value at a specific dof_coordinate in second domain
-        fy1.vector.setValues(dofs2, np.array(vals4[0,:]))
-        #also need to propagate ghost values
-        fy1.vector.ghostUpdate()
-        K22 = u2*v2*fy1*ufl.dx
+    if len(vals[0][:,0]) != 0:
+        
+        update_f(fy4,dofs2,vals,0)
+        B2_I,B2_J,dat2 = assemble_subdomain2(domain2,K3,lens1[0],fy4,dofs2,vals)
 
 
-        form_K22,B2 = init_dat(domain2,K22)
-        B2_I,B2_J,dat2 = init_array2(B2,len4)
-        B2.zeroEntries()
-
-
-        #K4 is the boundary integral dOmega1 x Omega2
-        for i in range(1,len4):
-            #need value at a specific dof_coordinate in second domain
-            fy1.vector.setValues(dofs2, np.array(vals4[i,:]))
-            #also need to propagate ghost values
-            fy1.vector.ghostUpdate()
-
-            fem.petsc.assemble_matrix(B2,form_K22)
-            B2.assemble()
-
-            _,_,temp2 = B2.getValuesCSR()
-
-            dat2[:,i] = temp2
-
-            B2.zeroEntries()
-
-        Krow2,Kcol2,Kdat2 = assemble_global_CSR(A4_I,A4_J,B2_I,B2_J,dat2)
+        Krow2,Kcol2,Kdat2 = assemble_global_CSR(A_I[0],A_J[0],B2_I,B2_J,dat2)
 
         Krow2=Krow2.astype(np.int32)
         Kcol2=Kcol2.astype(np.int32)
@@ -386,8 +301,9 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A):
         K2 = sp.csr_matrix((Kdat2, Kcol2, Krow2), shape=(A_local_size[0],A_global_size[1]))
 
         K = K + dt*K2
-
     #assign values to PETSc matrix
     A.setValuesCSR(K.indptr,K.indices,K.data)
     A.assemble()
     return 0
+
+
