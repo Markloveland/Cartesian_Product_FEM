@@ -1,7 +1,15 @@
 from dolfinx import fem
 import ufl
 #contains all weak formulations
-def CG_weak_form(domain1,domain2,V1,V2):
+
+
+def SUPG_weak_form(K_vol):
+    #adds in stability terms to weak forms
+    #designed to be called inside CG_weak_form routine
+    
+    return K_vol
+
+def CG_weak_form(domain1,domain2,V1,V2,SUPG='off'):
     #gives the weak form for the CG formulation
     #using 1 integration by parts
     n1 = ufl.FacetNormal(domain1)
@@ -44,7 +52,12 @@ def CG_weak_form(domain1,domain2,V1,V2):
     #assemble weak forms in domain 2 that depend on weak forms from K_bnd
     fy4 = fem.Function(V2) 
     K3 = u2*v2*fy4*ufl.dx
+    if  SUPG == 'off':
+        #returns functions/vector of weak forms in first subdomain, corresponding functions and weak forms to be integrated in second,
+        #then boundary boys and their corresponding second subdomain
+        return c_func,K_vol,fy,K2,K_bound,[fy4],K3
+    if  SUPG == 'on':
+        #adds on stabilizing term and returns stuff     
+        K_vol = SUPG_weak_form(K_vol)
+        return c_func,K_vol,fy,K2,K_bound,[fy4],K3
 
-    #returns functions/vector of weak forms in first subdomain, corresponding functions and weak forms to be integrated in second,
-    #then boundary boys and their corresponding second subdomain
-    return c_func,K_vol,fy,K2,K_bound,[fy4],K3

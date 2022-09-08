@@ -40,6 +40,8 @@ def assemble_global_CSR(Arow,Acol,Brow,Bcol,dat):
             k0=k0+n2
         j0=j0+n1
 
+    Krow=Krow.astype(np.int32)
+    Kcol=Kcol.astype(np.int32)
     return Krow,Kcol,Kdat
 
 
@@ -132,10 +134,9 @@ def update_c(c_func,c_vals,dofs1,local_size2,node_num):
         c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2,0]))
         #also need to propagate ghost values
         c.vector.ghostUpdate()
+    return 0
 
-def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1):
-        
-    
+def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1): 
     form_K = []
     A_vec = []
 
@@ -165,27 +166,8 @@ def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1):
     #iterate over each dof2
     for a in range(1,local_size2):
         update_c(c_func,c_vals,dofs1,local_size2,a)
-        
-        #need value at a specific dof_coordinate in second domain
-        #cx_func.vector.setValues(dofs1, np.array(c[a::local_size2,0]))
-        #also need to propagate ghost values
-        #cx_func.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        #cy_func.vector.setValues(dofs1, np.array(c[a::local_size2,1]))
-        #also need to propagate ghost values
-        #cy_func.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        #csig_func.vector.setValues(dofs1, np.array(c[a::local_size2,2]))
-        #also need to propagate ghost values
-        #csig_func.vector.ghostUpdate()
-
-        #need value at a specific dof_coordinate in second domain
-        #cthet_func.vector.setValues(dofs1, np.array(c[a::local_size2,3]))
-        #also need to propagate ghost values
-        #cthet_func.vector.ghostUpdate()
         ctr = 0
+        
         for K in form_K:
             fem.petsc.assemble_matrix(A_vec[ctr],K)
             A_vec[ctr].assemble()
@@ -198,8 +180,6 @@ def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1):
     return A_I,A_J,vals,lens1
 
 
-
-
 def update_f(fy,dofs2,vals,entry_no):
     ctr = 0
     for fy1 in fy:
@@ -207,6 +187,7 @@ def update_f(fy,dofs2,vals,entry_no):
         #also need to propagate ghost values
         fy1.vector.ghostUpdate()
         ctr=ctr+1
+    return 0
 
 def fetch_params(A,V1,V2):
     #get parameters related to matrix construction
@@ -224,14 +205,9 @@ def fetch_params(A,V1,V2):
     return A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2
 
 def assemble_subdomain2(domain2,K21,len1,fy,dofs2,vals):
-
     #need value at a specific dof_coordinate in second domain
-    #print(vals1.shape)
-
     form_K21,B1 = init_dat(domain2,K21)
-
     B1_I,B1_J,dat1 = init_array2(B1,len1)
-    
     #for some reason it likes to add things
     #so until we figure it out we need to zero entries
     B1.zeroEntries()
@@ -244,62 +220,53 @@ def assemble_subdomain2(domain2,K21,len1,fy,dofs2,vals):
         update_f(fy,dofs2,vals,i)
         fem.petsc.assemble_matrix(B1,form_K21)
         B1.assemble()
-
         _,_,temp = B1.getValuesCSR()
-
         dat1[:,i] = temp
-
         B1.zeroEntries()
 
     return B1_I,B1_J,dat1
-def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'):
 
-    jit_parameters = {"cffi_extra_compile_args": ["-Ofast", "-march=native"],"cffi_libraries": ["m"]}
+
+def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='SUPG'):
+    #given a method, pulls in fenics weak form and
     #generates an assembled PETSc matrix
     #which is the stiffness matrix for the action balance equation
-    A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
 
+    #get parameters relating to stiffness matrix size
+    A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
 
     #first pull the proper weak form:
     if method == 'CG':
         c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
+
+    if method == 'SUPG':
+        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,SUPG='on')
     
+    #integrate volume terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
     A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1)
-    
+    #integrate resulting terms in second subdomain
     update_f(fy,dofs2,vals,0)
-
-
     B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K2,lens1[0],fy,dofs2,vals)
-    
+    #formulate CSR format entries
     Krow,Kcol,Kdat = assemble_global_CSR(A_I[0],A_J[0],B1_I,B1_J,dat1)
-
-    Krow=Krow.astype(np.int32)
-    Kcol=Kcol.astype(np.int32)
-    #challenge is we likely have 3 different sparsity patterns so how should we
-    #add them all using scipy???
+    #use scipy make store temporary csr matrix
     K = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
     #add the sparse matrices
     K = dt*K
 
-    #now do ones with boundary in first subdomain
+    #now integrate boundary terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
     A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size2,c_func,c_vals,dofs1)
-
-    #now need to repeat last loop because sometimes we have empty global boundary
+    #some partitions in the first subdomain dont contain any global boundary so check
     if len(vals[0][:,0]) != 0:
-        
+        #integrate resulting  terms in second subdomain
         update_f(fy4,dofs2,vals,0)
         B2_I,B2_J,dat2 = assemble_subdomain2(domain2,K3,lens1[0],fy4,dofs2,vals)
-
-
+        #formulate CSR format entries
         Krow2,Kcol2,Kdat2 = assemble_global_CSR(A_I[0],A_J[0],B2_I,B2_J,dat2)
-
-        Krow2=Krow2.astype(np.int32)
-        Kcol2=Kcol2.astype(np.int32)
-
         K2 = sp.csr_matrix((Kdat2, Kcol2, Krow2), shape=(A_local_size[0],A_global_size[1]))
-
+        #add scipy matrices
         K = K + dt*K2
     #assign values to PETSc matrix
     A.setValuesCSR(K.indptr,K.indices,K.data)
