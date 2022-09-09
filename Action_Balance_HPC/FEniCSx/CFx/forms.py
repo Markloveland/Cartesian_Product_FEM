@@ -3,10 +3,56 @@ import ufl
 #contains all weak formulations
 
 
-def SUPG_weak_form(K_vol):
+def SUPG_weak_form(V1,u1,v1,c_func,K_vol,V2,u2,v2,K2,fy):
     #adds in stability terms to weak forms
     #designed to be called inside CG_weak_form routine
+    tau = fem.Function(V1)
+    c1 = ufl.as_vector((c_func[0],c_func[1]))
+    c2 = ufl.as_vector((c_func[2],c_func[3]))
+
+    #fy4
+    K_vol.append(tau*ufl.dot(c1,ufl.grad(u1))*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
+    #fy5
+    K_vol.append(tau*c_func[2]*v1*ufl.dot(c1,ufl.grad(u1))*ufl.dx)
+    #fy6
+    K_vol.append(tau*c_func[3]*v1*ufl.dot(c1,ufl.grad(u1))*ufl.dx)
+    #fy7
+    K_vol.append(tau*c_func[2]*u1*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
+    #fy8
+    K_vol.append(tau*c_func[3]*u1*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
+    #fy9
+    K_vol.append(tau*u1*ufl.nabla_div(c1)*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
+    #fy10
+    K_vol.append(tau*c_func[2]*u1*v1*ufl.nabla_div(c1)*ufl.dx)
+    #fy11
+    K_vol.append(tau*c_func[3]*u1*v1*ufl.nabla_div(c1)*ufl.dx)
     
+
+    fy4 = fem.Function(V2)
+    fy5 = fem.Function(V2)
+    fy6 = fem.Function(V2)
+    fy7 = fem.Function(V2)
+    fy8 = fem.Function(V2)
+    fy9 = fem.Function(V2)
+    fy10 = fem.Function(V2)
+    fy11 = fem.Function(V2)
+
+    fy.append(fy4)
+    fy.append(fy5)
+    fy.append(fy6)
+    fy.append(fy7)
+    fy.append(fy8)
+    fy.append(fy9)
+    fy.append(fy10)
+    fy.append(fy11)
+
+    K2 += u2*v2*(fy4+fy9)*ufl.dx
+    K2 += u2*ufl.dot(ufl.grad(v2),ufl.as_vector((fy5,fy6)))*ufl.dx
+    K2 += v2*ufl.dot(ufl.grad(u2),ufl.as_vector((fy7,fy8)))*ufl.dx
+    K2 += u2*ufl.dot(ufl.grad(v2),ufl.as_vector((fy10,fy11)))*ufl.dx
+
+
+
     return K_vol
 
 def CG_weak_form(domain1,domain2,V1,V2,SUPG='off'):
@@ -50,14 +96,16 @@ def CG_weak_form(domain1,domain2,V1,V2,SUPG='off'):
     K2 += u2*v2*ufl.dot(ufl.as_vector((fy[1],fy[2])),n2)*ufl.ds
 
     #assemble weak forms in domain 2 that depend on weak forms from K_bnd
-    fy4 = fem.Function(V2) 
-    K3 = u2*v2*fy4*ufl.dx
+    fy24 = fem.Function(V2) 
+    K3 = u2*v2*fy24*ufl.dx
     if  SUPG == 'off':
         #returns functions/vector of weak forms in first subdomain, corresponding functions and weak forms to be integrated in second,
         #then boundary boys and their corresponding second subdomain
-        return c_func,K_vol,fy,K2,K_bound,[fy4],K3
+        return c_func,K_vol,fy,K2,K_bound,[fy24],K3
     if  SUPG == 'on':
         #adds on stabilizing term and returns stuff     
         K_vol = SUPG_weak_form(K_vol)
-        return c_func,K_vol,fy,K2,K_bound,[fy4],K3
+        #also need to add in integrals that go subdomain 2 then subdomain 1!!!
+
+        return c_func,K_vol,fy,K2,K_bound,[fy24],K3
 
