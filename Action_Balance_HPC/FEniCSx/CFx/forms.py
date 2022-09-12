@@ -183,26 +183,26 @@ def SUPG_weak_form_standalone(domain1,domain2,V1,V2):
     #adds in stability terms to weak forms
     #designed to be called inside CG_weak_form routine
     tau = fem.Function(V1)
-    c1 = ufl.as_vector((c_func[0],c_func[1]))
-    c2 = ufl.as_vector((c_func[2],c_func[3]))
+    c1 = ufl.as_vector((cx_func,cy_func))
+    c2 = ufl.as_vector((csig_func,cthet_func))
 
     K_vol = []
     #fy4
     K_vol.append(tau*ufl.dot(c1,ufl.grad(u1))*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
     #fy5
-    K_vol.append(tau*c_func[2]*v1*ufl.dot(c1,ufl.grad(u1))*ufl.dx)
+    K_vol.append(tau*csig_func*v1*ufl.dot(c1,ufl.grad(u1))*ufl.dx)
     #fy6
-    K_vol.append(tau*c_func[3]*v1*ufl.dot(c1,ufl.grad(u1))*ufl.dx)
+    K_vol.append(tau*cthet_func*v1*ufl.dot(c1,ufl.grad(u1))*ufl.dx)
     #fy7
-    K_vol.append(tau*c_func[2]*u1*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
+    K_vol.append(tau*csig_func*u1*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
     #fy8
-    K_vol.append(tau*c_func[3]*u1*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
+    K_vol.append(tau*cthet_func*u1*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
     #fy9
     K_vol.append(tau*u1*ufl.nabla_div(c1)*ufl.dot(c1,ufl.grad(v1))*ufl.dx)
     #fy10
-    K_vol.append(tau*c_func[2]*u1*v1*ufl.nabla_div(c1)*ufl.dx)
+    K_vol.append(tau*csig_func*u1*v1*ufl.nabla_div(c1)*ufl.dx)
     #fy11
-    K_vol.append(tau*c_func[3]*u1*v1*ufl.nabla_div(c1)*ufl.dx)
+    K_vol.append(tau*cthet_func*u1*v1*ufl.nabla_div(c1)*ufl.dx)
     
 
     fy4 = fem.Function(V2)
@@ -224,11 +224,11 @@ def SUPG_weak_form_standalone(domain1,domain2,V1,V2):
     fy.append(fy10)
     fy.append(fy11)
 
-    K_vol_y = u2*v2*(fy4+fy9)*ufl.dx
+    K_vol_y = u2*v2*fy4*ufl.dx
     K_vol_y += u2*ufl.dot(ufl.grad(v2),ufl.as_vector((fy5,fy6)))*ufl.dx
     K_vol_y += v2*ufl.dot(ufl.grad(u2),ufl.as_vector((fy7,fy8)))*ufl.dx
     K_vol_y += u2*ufl.dot(ufl.grad(v2),ufl.as_vector((fy10,fy11)))*ufl.dx
-
+    K_vol_y += u2*v2*fy9*ufl.dx
 
     ####need new variables for integrals that must go domain 2 then domain 1
     c2_x = fem.Function(V2)
@@ -238,8 +238,11 @@ def SUPG_weak_form_standalone(domain1,domain2,V1,V2):
     c2 = [c2_x,c2_y,c2_sig,c2_thet]
     tau2 = fem.Function(V2)
     c2_2 = ufl.as_vector((c2_sig,c2_thet))
-    K2_vol = [tau2*ufl.dot(c2_2,ufl.grad(v2))*ufl.dot(c2_2,ufl.grad(u2))*ufl.dx, tau2*c2_x*u2*v2*ufl.nabla_div(c2_2)*ufl.dx,
-            tau2*c2_y*u2*v2*ufl.nabla_div(c2_2)*ufl.dx, tau2*ufl.dot(c2_2,ufl.grad(v2))*u2*ufl.nabla_div(c2_2)*ufl.dx]
+    K2_vol =[]
+    K2_vol.append(tau2*ufl.dot(c2_2,ufl.grad(v2))*ufl.dot(c2_2,ufl.grad(u2))*ufl.dx)
+    K2_vol.append(tau2*c2_x*u2*v2*ufl.nabla_div(c2_2)*ufl.dx)
+    K2_vol.append(tau2*c2_y*u2*v2*ufl.nabla_div(c2_2)*ufl.dx)
+    K2_vol.append(tau2*ufl.dot(c2_2,ufl.grad(v2))*u2*ufl.nabla_div(c2_2)*ufl.dx)
 
 
     fx1 = fem.Function(V1)

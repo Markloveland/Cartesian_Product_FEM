@@ -162,7 +162,8 @@ def update_tau(tau,c_vals,mesh1,mesh2,local_size2,dofs,node_num,subdomain=0):
         temp = c_vals[node_num*local_size2:(node_num+1)*local_size2,:]**2
     c_mag = np.sqrt(temp.sum(axis=1))
     #tau = h / /|c/|
-    tau.vector.setValues(dofs,h/c_mag)
+    tau.vector.setValues(dofs,np.array(h/c_mag))
+    tau.vector.ghostUpdate()
     return 0
 
 def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,j=0): 
@@ -328,7 +329,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
         #add the sparse matrices
         K = K + dt*K_SUPG
         
-        '''
+        
         #integrate volume terms in second subdomain
         update_c(c2,c_vals,dofs2,local_size2,0,subdomain=1)
         B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1)
@@ -338,7 +339,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
         Krow3,Kcol3,Kdat3 = assemble_global_CSR(A1_I,A1_J,B_I[0],B_J[0],dat3.T)
         K3 = sp.csr_matrix((Kdat3, Kcol3, Krow3), shape=(A_local_size[0],A_global_size[1]))
         K = K + dt*K3
-        '''
+        
     #assign values to PETSc matrix
     A.setValuesCSR(K.indptr,K.indices,K.data)
     A.assemble()
