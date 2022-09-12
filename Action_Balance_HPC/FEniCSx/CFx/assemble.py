@@ -128,15 +128,49 @@ def init_array2(B1,len1):
     dat1[:,0] = temp
     return B1_I,B1_J,dat1
 
-def update_c(c_func,c_vals,dofs1,local_size2,node_num):
-    for c in c_func:
-        #need value at a specific dof_coordinate in second domain
-        c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2,0]))
-        #also need to propagate ghost values
-        c.vector.ghostUpdate()
+def update_c(c_func,c_vals,dofs1,local_size2,node_num,subdomain=0):
+    if subdomain == 0:
+        ctr = 0
+        for c in c_func:
+            #need value at a specific dof_coordinate in second domain
+            c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2,ctr]))
+            #also need to propagate ghost values
+            c.vector.ghostUpdate()
+            ctr = ctr+1
+    if subdomain == 1:
+        ctr = 0
+        for c in c_func:
+            c.vector.setValues(dofs1,np.array(c_vals[node_num*local_size2:(node_num+1)*local_size2,ctr]))
+            c.vector.ghostUpdate()
+            ctr = ctr+1
     return 0
 
-def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1): 
+def update_tau(tau,c_vals,mesh1,mesh2,local_size2,dofs,node_num,subdomain=0):
+    #hardcoded for uniform mesh this time
+    tdim = mesh1.topology.dim
+    num_cells = mesh1.topology.index_map(tdim).size_local
+    h1 = cpp.mesh.h(mesh1, tdim, range(num_cells)).max()
+    
+    tdim = mesh2.topology.dim
+    num_cells = mesh2.topology.index_map(tdim).size_local
+    h2 = cpp.mesh.h(mesh2, tdim, range(num_cells)).max()
+
+    h = np.sqrt(h1**2+h2**2)
+    if subdomain == 0:
+        temp = c_vals[node_num::local_size2,:]**2
+    if subdomain == 1:
+        temp = c_vals[node_num*local_size2:(node_num+1)*local_size2,:]**2
+    c_mag = np.sqrt(temp.sum(axis=1))
+    #tau = h / /|c/|
+    tau.vector.setValues(dofs,h/c_mag)
+    return 0
+
+def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,j=0): 
+    if j == 0:
+        local_size = local_size2
+    if j ==1:
+        local_size = local_size1
+
     form_K = []
     A_vec = []
 
@@ -151,7 +185,7 @@ def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1):
     lens1 = []
     
     for A1 in A_vec:
-        A1_I,A1_J,vals1,len1 = init_array1(A1,local_size2)
+        A1_I,A1_J,vals1,len1 = init_array1(A1,local_size)
         A_I.append(A1_I)
         A_J.append(A1_J)
         vals.append(vals1)
@@ -164,8 +198,8 @@ def assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1):
     #print("-" * 25)
 
     #iterate over each dof2
-    for a in range(1,local_size2):
-        update_c(c_func,c_vals,dofs1,local_size2,a)
+    for a in range(1,local_size):
+        update_c(c_func,c_vals,dofs1,local_size2,a,subdomain=j)
         ctr = 0
         
         for K in form_K:
@@ -227,7 +261,7 @@ def assemble_subdomain2(domain2,K21,len1,fy,dofs2,vals):
     return B1_I,B1_J,dat1
 
 
-def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='SUPG'):
+def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'):
     #given a method, pulls in fenics weak form and
     #generates an assembled PETSc matrix
     #which is the stiffness matrix for the action balance equation
@@ -236,15 +270,18 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='SUP
     A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
 
     #first pull the proper weak form:
-    if method == 'CG':
-        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
+    c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
 
-    if method == 'SUPG':
-        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,SUPG='on')
+    #if method == 'SUPG':
+    #    c_func,K_vec,fy,K2,K_bound,fy4,K3,tau,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,SUPG='on')
+    #    #(still need to update tau)
+    #    #update_c([tau] ...
+    #    update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+    #    update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
     
     #integrate volume terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
-    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size2,c_func,c_vals,dofs1)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
     #integrate resulting terms in second subdomain
     update_f(fy,dofs2,vals,0)
     B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K2,lens1[0],fy,dofs2,vals)
@@ -257,7 +294,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='SUP
 
     #now integrate boundary terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
-    A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size2,c_func,c_vals,dofs1)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
     #some partitions in the first subdomain dont contain any global boundary so check
     if len(vals[0][:,0]) != 0:
         #integrate resulting  terms in second subdomain
@@ -268,9 +305,60 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='SUP
         K2 = sp.csr_matrix((Kdat2, Kcol2, Krow2), shape=(A_local_size[0],A_global_size[1]))
         #add scipy matrices
         K = K + dt*K2
+    
+    #if method is stabilized, will have terms that need to be integrated in first subdomain then second
+    if method == 'SUPG':
+        c_func,tau,K_vol,fy,K_vol_y,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.SUPG_weak_form_standalone(domain1,domain2,V1,V2) 
+        
+        
+        #integrate volume terms in first subdomain
+        update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+        update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
+        
+        update_c(c_func,c_vals,dofs1,local_size2,0)
+        
+        A_I,A_J,vals,lens1 = assemble_subdomain1(K_vol,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+        #integrate resulting terms in second subdomain
+        update_f(fy,dofs2,vals,0)
+        B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K_vol_y,lens1[0],fy,dofs2,vals)
+        #formulate CSR format entries
+        Krow,Kcol,Kdat = assemble_global_CSR(A_I[0],A_J[0],B1_I,B1_J,dat1)
+        #use scipy make store temporary csr matrix
+        K_SUPG = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
+        #add the sparse matrices
+        K = K + dt*K_SUPG
+        
+        '''
+        #integrate volume terms in second subdomain
+        update_c(c2,c_vals,dofs2,local_size2,0,subdomain=1)
+        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1)
+        update_f(fx,dofs1,vals,0)
+        A1_I,A1_J,dat3 = assemble_subdomain2(domain1,K2_vol_x,lens1[0],fx,dofs1,vals)
+        
+        Krow3,Kcol3,Kdat3 = assemble_global_CSR(A1_I,A1_J,B_I[0],B_J[0],dat3.T)
+        K3 = sp.csr_matrix((Kdat3, Kcol3, Krow3), shape=(A_local_size[0],A_global_size[1]))
+        K = K + dt*K3
+        '''
     #assign values to PETSc matrix
     A.setValuesCSR(K.indptr,K.indices,K.data)
     A.assemble()
     return 0
 
+def build_RHS(domain1,domain2,V1,V2,c_vals,A):
+    A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
+    L,g,L_y,tau,c_func = CFx.forms.SUPG_RHS(domain1,domain2,V1,V2)
+    update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+    #integrate volume terms in first subdomain
+    update_c(c_func,c_vals,dofs1,local_size2,0)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(L,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+    #integrate resulting terms in second subdomain
+    update_f(g,dofs2,vals,0)
+    B1_I,B1_J,dat1 = assemble_subdomain2(domain2,L_y,lens1[0],g,dofs2,vals)
+    #formulate CSR format entries
+    Krow,Kcol,Kdat = assemble_global_CSR(A_I[0],A_J[0],B1_I,B1_J,dat1)
+    #use scipy make store temporary csr matrix
+    K = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
 
+    A.setValuesCSR(K.indptr,K.indices,K.data)
+    A.assemble()
+    return 0

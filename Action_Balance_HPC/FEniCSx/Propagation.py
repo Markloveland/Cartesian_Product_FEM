@@ -43,6 +43,8 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 50
 
+method = 'SUPG'
+
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -96,6 +98,9 @@ M=CFx.assemble.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,gl
 #also need global stiffness matrix
 #same exact structure as M
 A = M.duplicate()
+#Adjust RHS for SUPG
+M_SUPG = M.duplicate()
+
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -156,19 +161,35 @@ def u_func(x,y,sigma,theta,c,t):
 #now need to mass matrixes for stiffness and RHS, also optionally can out put the nnz
 M_NNZ = CFx.assemble.build_cartesian_mass_matrix(M1,M2,M1_sizes,M1_global_size,M2_sizes,M)
 A.setPreallocationNNZ(M_NNZ)
+M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A)
+CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method)
+if method == 'SUPG':
+    CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG)
+
+
 time_2 = time.time()
+
 #if rank==0:
 #    print(local_dof_coords1)
 #    print(A.getValues(30,30))
-A=A+M
+if method == 'SUPG':
+    M_SUPG = M+M_SUPG
+    A=A+M_SUPG
+if method == 'CG':
+    M_SUPG = M
+    A = A + M_SUPG
+
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1)
 #just want to test answer
 #A.zeroRows(rows,diag=1)
+#correction to RHS for SUPG
+
+
+##################################################################
 ##################################################################
 ##################################################################
 #assmble RHS
@@ -241,7 +262,7 @@ for i in range(nt):
     u_d = u_2[local_boundary_dofs]
     #B = F_dof.duplicate()
     #B.setFromOptions()
-    M.mult(u_cart,B)
+    M_SUPG.mult(u_cart,B)
     B.setValues(global_boundary_dofs,u_d)
     B.assemble()
     ksp2.solve(B, u_cart)
