@@ -368,7 +368,7 @@ def build_RHS(domain1,domain2,V1,V2,c_vals,A):
     update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
     #integrate volume terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
-    A_I,A_J,vals,lens1 = assemble_subdomain1(L,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(L,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=1,tau=tau,mesh2=domain2)
     #integrate resulting terms in second subdomain
     update_f(g,dofs2,vals,0)
     B1_I,B1_J,dat1 = assemble_subdomain2(domain2,L_y,lens1[0],g,dofs2,vals)

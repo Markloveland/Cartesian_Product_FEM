@@ -12,6 +12,8 @@ from petsc4py import PETSc
 from dolfinx import fem,mesh,io
 import ufl
 import time
+import CFx.wave
+import CFx.utils
 import CFx.assemble
 import CFx.transforms
 import CFx.boundary
@@ -27,8 +29,8 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 32#16
-ny = 32#16
+nx = 16
+ny = 16
 #set initial time
 t = 0
 #set final time
@@ -43,7 +45,7 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 50
 
-method = 'SUPG'
+method = 'CG'
 
 ####################################################################
 #Subdomain 1
@@ -309,3 +311,44 @@ buildTime = time_2-time_start
 solveTime = time_end-time_2
 PETSc.Sys.Print(f'The build time is {buildTime} seconds')
 PETSc.Sys.Print(f'The solve time is {solveTime} seconds')
+
+
+
+#compute significant wave height
+HS = fem.Function(V1)
+HS_vec = CFx.wave.calculate_HS(u_cart,V2,N_dof_1,N_dof_2,local_range2)
+HS.vector.setValues(dofs1,np.array(HS_vec))
+HS.vector.ghostUpdate()
+fname = 'Test_HS/solution'
+xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
+xdmf.write_mesh(domain1)
+xdmf.write_function(HS)
+xdmf.close()
+
+#try to extract HS at stations
+numpoints = 150
+x_stats = np.linspace(0.01,L-0.01,numpoints)
+
+y_coord = L/2
+stations = y_coord*np.ones((numpoints,2))
+stations[:,0] = x_stats
+points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
+
+#PETSc.Sys.Print("Printing put HS along with coords as found on each process")
+#print(points_on_proc,vals_on_proc)
+
+PETSc.Sys.Print("Trying to mpi gather")
+gathered_coords = comm.gather(points_on_proc,root=0)
+gathered_vals = comm.gather(vals_on_proc,root=0)
+coords=[]
+if rank ==0:
+    for a in gathered_coords:
+        if a.shape[0] !=0:
+            for row in a:
+                coords.append(row)
+    coords =np.array(coords)
+    print(coords.shape)
+    coords = np.unique(coords)
+    print(coords.shape)
+PETSc.Sys.Print(coords)
+#PETSc.Sys.Print()
