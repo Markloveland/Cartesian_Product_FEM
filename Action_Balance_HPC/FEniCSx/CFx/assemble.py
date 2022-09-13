@@ -128,22 +128,6 @@ def init_array2(B1,len1):
     dat1[:,0] = temp
     return B1_I,B1_J,dat1
 
-def update_c(c_func,c_vals,dofs1,local_size2,node_num,subdomain=0):
-    if subdomain == 0:
-        ctr = 0
-        for c in c_func:
-            #need value at a specific dof_coordinate in second domain
-            c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2,ctr]))
-            #also need to propagate ghost values
-            c.vector.ghostUpdate()
-            ctr = ctr+1
-    if subdomain == 1:
-        ctr = 0
-        for c in c_func:
-            c.vector.setValues(dofs1,np.array(c_vals[node_num*local_size2:(node_num+1)*local_size2,ctr]))
-            c.vector.ghostUpdate()
-            ctr = ctr+1
-    return 0
 
 def update_tau(tau,c_vals,mesh1,mesh2,local_size2,dofs,node_num,subdomain=0):
     #hardcoded for uniform mesh this time
@@ -166,7 +150,26 @@ def update_tau(tau,c_vals,mesh1,mesh2,local_size2,dofs,node_num,subdomain=0):
     tau.vector.ghostUpdate()
     return 0
 
-def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,j=0): 
+
+def update_c(c_func,c_vals,dofs1,local_size2,node_num,subdomain=0):
+    if subdomain == 0:
+        ctr = 0
+        for c in c_func:
+            #need value at a specific dof_coordinate in second domain
+            c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2,ctr]))
+            #also need to propagate ghost values
+            c.vector.ghostUpdate()
+            ctr = ctr+1
+    if subdomain == 1:
+        ctr = 0
+        for c in c_func:
+            c.vector.setValues(dofs1,np.array(c_vals[node_num*local_size2:(node_num+1)*local_size2,ctr]))
+            c.vector.ghostUpdate()
+            ctr = ctr+1
+
+    return 0
+
+def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,j=0,SUPG=0,tau=0,mesh2=0): 
     if j == 0:
         local_size = local_size2
     if j ==1:
@@ -199,19 +202,32 @@ def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs
     #print("-" * 25)
 
     #iterate over each dof2
-    for a in range(1,local_size):
-        update_c(c_func,c_vals,dofs1,local_size2,a,subdomain=j)
-        ctr = 0
+    if SUPG == 0:    
+        for a in range(1,local_size):
+            update_c(c_func,c_vals,dofs1,local_size2,a,subdomain=j)
+            ctr = 0
         
-        for K in form_K:
-            fem.petsc.assemble_matrix(A_vec[ctr],K)
-            A_vec[ctr].assemble()
-            _,_,temp = A_vec[ctr].getValuesCSR()
-            vals[ctr][:,a] = temp
-            A_vec[ctr].zeroEntries()
-            ctr=ctr+1
-
+            for K in form_K:
+                fem.petsc.assemble_matrix(A_vec[ctr],K)
+                A_vec[ctr].assemble()
+                _,_,temp = A_vec[ctr].getValuesCSR()
+                vals[ctr][:,a] = temp
+                A_vec[ctr].zeroEntries()
+                ctr=ctr+1
+    if SUPG == 1:
     
+        for a in range(1,local_size):
+            update_c(c_func,c_vals,dofs1,local_size2,a,subdomain=j)
+            update_tau(tau,c_vals,domain1,mesh2,local_size2,dofs1,a,subdomain=j)
+            ctr = 0
+        
+            for K in form_K:
+                fem.petsc.assemble_matrix(A_vec[ctr],K)
+                A_vec[ctr].assemble()
+                _,_,temp = A_vec[ctr].getValuesCSR()
+                vals[ctr][:,a] = temp
+                A_vec[ctr].zeroEntries()
+                ctr=ctr+1
     return A_I,A_J,vals,lens1
 
 
@@ -318,7 +334,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
         
         update_c(c_func,c_vals,dofs1,local_size2,0)
         
-        A_I,A_J,vals,lens1 = assemble_subdomain1(K_vol,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+        A_I,A_J,vals,lens1 =assemble_subdomain1(K_vol,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=1,tau=tau,mesh2=domain2)
         #integrate resulting terms in second subdomain
         update_f(fy,dofs2,vals,0)
         B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K_vol_y,lens1[0],fy,dofs2,vals)
@@ -332,7 +348,8 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
         
         #integrate volume terms in second subdomain
         update_c(c2,c_vals,dofs2,local_size2,0,subdomain=1)
-        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1)
+        
+        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1,SUPG=1,tau=tau2,mesh2=domain1)
         update_f(fx,dofs1,vals,0)
         A1_I,A1_J,dat3 = assemble_subdomain2(domain1,K2_vol_x,lens1[0],fx,dofs1,vals)
         
