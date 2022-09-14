@@ -13,13 +13,16 @@ import CFx.boundary
 import CFx.assemble
 import CFx.wave
 import CFx.utils
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+
 ##############
 #Domain 1
 domain1 = mesh.create_interval(MPI.COMM_WORLD,5,(0,1))
 #domain = mesh.create_interval(MPI.COMM_WORLD,25,(0,1),  ghost_mode=dolfinx.cpp.mesh.GhostMode.none)
 V1 = fem.FunctionSpace(domain1, ("CG", 1))
 dof_coords1 = V1.tabulate_dof_coordinates()
-print('domain1 coords',dof_coords1)
+#print('domain1 coords',dof_coords1)
 
 local_range1 = V1.dofmap.index_map.local_range
 dofs1 = np.arange(*local_range1,dtype=np.int32)
@@ -51,7 +54,7 @@ b_dof = CFx.boundary.fetch_boundary_dofs(domain1,domain2,V1,V2,local_size1,local
 
 #print('new coords',new_coords)
 #print('new_coords shpe',new_coords.shape)
-print('domain boundary',b_dof)
+#print('domain boundary',b_dof)
 
 
 
@@ -72,22 +75,28 @@ F_dof.setValues(rows,2*np.ones(len(rows)))
 
 HS_vec = CFx.wave.calculate_HS(F_dof,V2,local_size1,local_size2,local_range2)
 
-print('HS',HS_vec)
+#print('HS',HS_vec)
 
 
 #############
 #now assign HS as a function in domain 1 and see if we can plot at select stations
 f = fem.Function(V1)
 #f.vector.setValues(dofs1,  HS_vec)
-f.interpolate(lambda x: x[0])
+f.interpolate(lambda x: 2*x[0])
 #also need to propagate ghost values
 f.vector.ghostUpdate()
 
 #numpy list of stations
-stations = np.array([[0.12,0.32,0.65,0.9,0.22]]).T
-print(stations.shape)
+stations = np.array([[0.01,0.5678,0.8923,0.1045]]).T
+#print(stations.shape)
 local_stats,local_vals = CFx.utils.station_data(stations,domain1,f)
 
-print('local stations',local_stats)
-print('local vals',local_vals)
+#print('local stations',local_stats)
+#print('local vals',local_vals)
 
+
+
+stats,vals = CFx.utils.gather_station(comm,0,local_stats,local_vals)
+
+PETSc.Sys.Print('stats',stats)
+PETSc.Sys.Print('vals',vals)

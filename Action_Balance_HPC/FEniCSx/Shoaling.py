@@ -359,13 +359,13 @@ x_stats = np.linspace(x_min,x_max,numpoints)
 y_coord = 10000
 stations = y_coord*np.ones((numpoints,2))
 stations[:,0] = x_stats
-points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
 
-PETSc.Sys.Print("Printing put HS along with coords as found on each process")
-#print(points_on_proc,vals_on_proc)
-PETSc.Sys.Print("Trying to mpi gather")
-gathered_coords = comm.gather(points_on_proc,root=0)
-gathered_vals = comm.gather(vals_on_proc,root=0)
-PETSc.Sys.Print(gathered_coords)
-PETSc.Sys.Print(gathered_vals)
+
+points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
+stats,vals = CFx.utils.gather_station(comm,0,points_on_proc,vals_on_proc)
+PETSc.Sys.Print('Station locs:')
+PETSc.Sys.Print(stats)
+PETSc.Sys.Print('Station vals:')
+PETSc.Sys.Print(vals)
+np.savetxt("HS_stations.csv", np.append(stats, vals, axis=1), delimiter=",")
 

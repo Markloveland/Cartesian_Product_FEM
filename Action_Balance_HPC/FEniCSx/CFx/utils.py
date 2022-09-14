@@ -30,3 +30,31 @@ def station_data(stations,domain,f):
     f_values = f.eval(points_on_proc, cells)
 
     return points_on_proc,f_values
+
+def gather_station(comm,root,local_stats,local_vals):
+    rank = comm.Get_rank()
+    #PETSc.Sys.Print("Trying to mpi gather")
+    gathered_coords = comm.gather(local_stats,root=root)
+    gathered_vals = comm.gather(local_vals,root=root)
+    #PETSc.Sys.Print("directly after mpi gather",gathered_coords,gathered_vals)
+    #PETSc.Sys.Print("size of new list",gathered_coords,gathered_vals)
+    coords=[]
+    vals = []
+    if rank == root:
+        for a in gathered_coords:
+            if a.shape[0] != 0:
+                for row in a:
+                    coords.append(row)
+        coords = np.array(coords)
+        coords,ind1 = np.unique(coords,axis=0,return_index=True)
+        
+        for n in gathered_vals:
+            if n.shape[0] !=0:
+                for row in n:
+                    vals.append(np.array(row))
+        vals = np.array(vals)
+        vals = vals[ind1]
+    return coords,vals
+    #PETSc.Sys.Print('station coords',coords)
+    #PETSc.Sys.Print('station vals',vals)
+
