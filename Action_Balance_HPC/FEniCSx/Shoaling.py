@@ -40,20 +40,20 @@ omega_min = 0.25
 omega_max = 2.0
 theta_min = -10/180*np.pi
 theta_max = 10/180*np.pi
-n_sigma = 20
-n_theta = 6
+n_sigma = 30
+n_theta = 12
 #set initial time
 t = 0
 #set final time
-t_f = 1000
+t_f = 2100
 #set time step
-dt = 1.0
+dt = 0.70
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
 #nplot = 1
-nplot = 50
+nplot = 100
 
 method = 'SUPG'
 
@@ -269,15 +269,16 @@ u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
 u_cart.assemble()
 
 #create a direct linear solver
-#pc2 = PETSc.PC().create()
+pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-#pc2.setType('jacobi')
-#pc2.setOperators(A)
+pc2.setType('bjacobi')
+pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-#ksp2.setType('cg')
-#ksp2.setPC(pc2)
+ksp2.setType('gmres')
+ksp2.setPC(pc2)
+ksp2.setInitialGuessNonzero(True)
 
 fname = 'ActionBalance_Shoaling/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
@@ -303,6 +304,11 @@ for i in range(nt):
         u.vector.setValues(dofs1, np.array(u_cart.getArray()[4::N_dof_2]))
         xdmf.write_function(u, t)
         #hdf5_file.write(u,"solution",t)
+#print final iterations
+ksp2.view()
+PETSc.Sys.Print('Niter',ksp2.getIterationNumber())
+PETSc.Sys.Print('convergence code',ksp2.getConvergedReason())
+
 xdmf.close()
 time_end = time.time()
 ############################################################################
@@ -363,9 +369,13 @@ stations[:,0] = x_stats
 
 points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
 stats,vals = CFx.utils.gather_station(comm,0,points_on_proc,vals_on_proc)
-PETSc.Sys.Print('Station locs:')
-PETSc.Sys.Print(stats)
-PETSc.Sys.Print('Station vals:')
-PETSc.Sys.Print(vals)
-np.savetxt("HS_stations.csv", np.append(stats, vals, axis=1), delimiter=",")
+
+if rank ==0:
+    #PETSc.Sys.Print('Station locs:')
+    #PETSc.Sys.Print(stats)
+    #PETSc.Sys.Print(stats.shape)
+    #PETSc.Sys.Print('Station vals:')
+    #PETSc.Sys.Print(vals)
+    #PETSc.Sys.Print(vals.shape)
+    np.savetxt("HS_stations_SUPG.csv", np.append(stats, vals, axis=1), delimiter=",")
 

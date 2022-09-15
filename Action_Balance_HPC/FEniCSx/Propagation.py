@@ -43,7 +43,7 @@ nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
 #nplot = 1
-nplot = 50
+nplot = 100
 
 method = 'CG'
 
@@ -242,15 +242,18 @@ u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
 u_cart.assemble()
 
 #create a direct linear solver
-#pc2 = PETSc.PC().create()
+pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-#pc2.setType('jacobi')
-#pc2.setOperators(A)
+pc2.setType('bjacobi')
+pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-#ksp2.setType('cg')
-#ksp2.setPC(pc2)
+ksp2.setType('gmres')
+ksp2.setPC(pc2)
+#ksp2.setUp()
+
+ksp2.setInitialGuessNonzero(True)
 
 fname = 'ActionBalance_Propagation_CG/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
@@ -270,12 +273,14 @@ for i in range(nt):
     ksp2.solve(B, u_cart)
     #B.destroy()
     B.zeroEntries()
-
     # Save solution to file in VTK format
     if (i%nplot==0):
         u.vector.setValues(dofs1, np.array(u_cart.getArray()[4::N_dof_2]))
         xdmf.write_function(u, t)
         #hdf5_file.write(u,"solution",t)
+ksp2.view()	
+PETSc.Sys.Print('Niter',ksp2.getIterationNumber())
+PETSc.Sys.Print('convergence code',ksp2.getConvergedReason())
 xdmf.close()
 time_end = time.time()
 ############################################################################
@@ -350,5 +355,5 @@ if rank ==0:
     print(coords.shape)
     coords = np.unique(coords)
     print(coords.shape)
-PETSc.Sys.Print(coords)
+#PETSc.Sys.Print(coords)
 #PETSc.Sys.Print()
