@@ -41,13 +41,13 @@ omega_max = 2.0
 theta_min = -10/180*np.pi
 theta_max = 10/180*np.pi
 n_sigma = 30
-n_theta = 12
+n_theta = 16
 #set initial time
 t = 0
 #set final time
 t_f = 2100
 #set time step
-dt = 0.70
+dt = 0.7
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
