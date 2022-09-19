@@ -45,7 +45,7 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 100
 
-method = 'CG'
+method = 'SUPG'
 
 ####################################################################
 #Subdomain 1
@@ -244,12 +244,13 @@ u_cart.assemble()
 #create a direct linear solver
 pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-pc2.setType('bjacobi')
+pc2.setType('none')
 pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-ksp2.setType('gmres')
+ksp2.setType('tfqmr')
+#options are cgne(worked well), gmres, cgs, bcgs, bicg
 ksp2.setPC(pc2)
 #ksp2.setUp()
 

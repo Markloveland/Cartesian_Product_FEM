@@ -41,13 +41,13 @@ omega_max = 2.0
 theta_min = -10/180*np.pi
 theta_max = 10/180*np.pi
 n_sigma = 30
-n_theta = 16
+n_theta = 24
 #set initial time
 t = 0
 #set final time
-t_f = 2100
+t_f = 2000
 #set time step
-dt = 0.7
+dt = 0.5
 #calculate nt
 nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
@@ -271,7 +271,7 @@ u_cart.assemble()
 #create a direct linear solver
 pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-pc2.setType('bjacobi')
+pc2.setType('none')
 pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
