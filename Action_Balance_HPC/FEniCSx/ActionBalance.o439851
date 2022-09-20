@@ -1,0 +1,108 @@
+no change     /home1/04637/mdl2665/anaconda3/condabin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda-env
+no change     /home1/04637/mdl2665/anaconda3/bin/activate
+no change     /home1/04637/mdl2665/anaconda3/bin/deactivate
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.sh
+no change     /home1/04637/mdl2665/anaconda3/etc/fish/conf.d/conda.fish
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/Conda.psm1
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/conda-hook.ps1
+no change     /home1/04637/mdl2665/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.csh
+no change     /home1/04637/mdl2665/.bashrc
+No action taken.
+
+     active environment : fenicsx-env
+    active env location : /home1/04637/mdl2665/anaconda3/envs/fenicsx-env
+            shell level : 2
+       user config file : /home1/04637/mdl2665/.condarc
+ populated config files : 
+          conda version : 4.12.0
+    conda-build version : 3.21.8
+         python version : 3.9.12.final.0
+       virtual packages : __linux=4.18.0=0
+                          __glibc=2.28=0
+                          __unix=0=0
+                          __archspec=1=x86_64
+       base environment : /home1/04637/mdl2665/anaconda3  (writable)
+      conda av data dir : /home1/04637/mdl2665/anaconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home1/04637/mdl2665/anaconda3/pkgs
+                          /home1/04637/mdl2665/.conda/pkgs
+       envs directories : /home1/04637/mdl2665/anaconda3/envs
+                          /home1/04637/mdl2665/.conda/envs
+               platform : linux-64
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/4.18.0-305.12.1.el8_4.x86_64 rocky/8.4 glibc/2.28
+                UID:GID : 839365:819760
+             netrc file : None
+           offline mode : False
+
+TACC:  Starting up job 439851 
+TACC:  Starting parallel tasks... 
+nt 1000
+KSP Object: 240 MPI processes
+  type: gmres
+    restart=30, using Classical (unmodified) Gram-Schmidt Orthogonalization with no iterative refinement
+    happy breakdown tolerance 1e-30
+  maximum iterations=10000, nonzero initial guess
+  tolerances:  relative=1e-05, absolute=1e-50, divergence=10000.
+  left preconditioning
+  using PRECONDITIONED norm type for convergence test
+PC Object: 240 MPI processes
+  type: bjacobi
+    number of blocks = 240
+    Local solver information for first block is in the following KSP and PC objects on rank 0:
+    Use -ksp_view ::ascii_info_detail to display information for all blocks
+  KSP Object: (sub_) 1 MPI processes
+    type: preonly
+    maximum iterations=10000, initial guess is zero
+    tolerances:  relative=1e-05, absolute=1e-50, divergence=10000.
+    left preconditioning
+    using NONE norm type for convergence test
+  PC Object: (sub_) 1 MPI processes
+    type: ilu
+      out-of-place factorization
+      0 levels of fill
+      tolerance for zero pivot 2.22045e-14
+      matrix ordering: natural
+      factor fill ratio given 1., needed 1.
+        Factored matrix follows:
+          Mat Object: 1 MPI processes
+            type: seqaij
+            rows=4356, cols=4356
+            package used to perform factorization: petsc
+            total: nonzeros=42506, allocated nonzeros=42506
+              not using I-node routines
+    linear system matrix = precond matrix:
+    Mat Object: (sub_) 1 MPI processes
+      type: seqaij
+      rows=4356, cols=4356
+      total: nonzeros=42506, allocated nonzeros=44166
+      total number of mallocs used during MatSetValues calls=0
+        not using I-node routines
+  linear system matrix = precond matrix:
+  Mat Object: 240 MPI processes
+    type: mpiaij
+    rows=1185921, cols=1185921
+    total: nonzeros=49713026, allocated nonzeros=54184321
+    total number of mallocs used during MatSetValues calls=0
+      not using I-node (on process 0) routines
+Niter 6
+convergence code 2
+Final t 4.999999999999916
+L2 error 2.0888063395714194
+L inf error 0.15542813469049532
+min in error (287324, -0.12244452230855085)
+max error (909743, 0.15542813469049532)
+h 0.03125
+dof 1185921
+The build time is 49.677552461624146 seconds
+The solve time is 83.38376975059509 seconds
+Trying to mpi gather
+(447, 3)
+(152,)
+TACC:  Shutdown complete. Exiting. 

@@ -286,19 +286,32 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
     #get parameters relating to stiffness matrix size
     A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
 
-    #first pull the proper weak form:
-    c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
-
-    #if method == 'SUPG':
-    #    c_func,K_vec,fy,K2,K_bound,fy4,K3,tau,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,SUPG='on')
-    #    #(still need to update tau)
-    #    #update_c([tau] ...
-    #    update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
-    #    update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
-    
+    if method == 'CG':
+        #first pull the proper weak form:
+        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
+        SUPG = 0
+        tau = 0
+    if method == 'SUPG':
+        c_func,K_vec,fy,K2,K_bound,fy4,K3,tau,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,SUPG='on')
+        #(still need to update tau)
+        #update_c([tau] ...
+        update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+        update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
+        SUPG = 1
+    if method == 'CG_strong':
+        c_func,K_vec,fy,K2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_strong_form(domain1,domain2,V1,V2,SUPG='off')
+        tau = 0
+        tau2 = 0
+        SUPG = 0
+    if method == 'SUPG_strong':
+        c_func,K_vec,fy,K2,tau,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_strong_form(domain1,domain2,V1,V2,SUPG='on') 
+        update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+        update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
+        SUPG = 1
     #integrate volume terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
-    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+    #assemble volume terms with first subdomain    
+    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=SUPG,tau=tau,mesh2=domain2)
     #integrate resulting terms in second subdomain
     update_f(fy,dofs2,vals,0)
     B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K2,lens1[0],fy,dofs2,vals)
@@ -309,47 +322,26 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
     #add the sparse matrices
     K = dt*K
 
-    #now integrate boundary terms in first subdomain
-    update_c(c_func,c_vals,dofs1,local_size2,0)
-    A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
-    #some partitions in the first subdomain dont contain any global boundary so check
-    if len(vals[0][:,0]) != 0:
-        #integrate resulting  terms in second subdomain
-        update_f(fy4,dofs2,vals,0)
-        B2_I,B2_J,dat2 = assemble_subdomain2(domain2,K3,lens1[0],fy4,dofs2,vals)
-        #formulate CSR format entries
-        Krow2,Kcol2,Kdat2 = assemble_global_CSR(A_I[0],A_J[0],B2_I,B2_J,dat2)
-        K2 = sp.csr_matrix((Kdat2, Kcol2, Krow2), shape=(A_local_size[0],A_global_size[1]))
-        #add scipy matrices
-        K = K + dt*K2
+    if method == 'CG' or method == 'SUPG':
+        #now integrate boundary terms in first subdomain
+        update_c(c_func,c_vals,dofs1,local_size2,0)
+        A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+        #some partitions in the first subdomain dont contain any global boundary so check
+        if len(vals[0][:,0]) != 0:
+            #integrate resulting  terms in second subdomain
+            update_f(fy4,dofs2,vals,0)
+            B2_I,B2_J,dat2 = assemble_subdomain2(domain2,K3,lens1[0],fy4,dofs2,vals)
+            #formulate CSR format entries
+            Krow2,Kcol2,Kdat2 = assemble_global_CSR(A_I[0],A_J[0],B2_I,B2_J,dat2)
+            K2 = sp.csr_matrix((Kdat2, Kcol2, Krow2), shape=(A_local_size[0],A_global_size[1]))
+            #add scipy matrices
+            K = K + dt*K2
     
     #if method is stabilized, will have terms that need to be integrated in first subdomain then second
-    if method == 'SUPG':
-        c_func,tau,K_vol,fy,K_vol_y,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.SUPG_weak_form_standalone(domain1,domain2,V1,V2) 
-        
-        
-        #integrate volume terms in first subdomain
-        update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
-        update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
-        
-        update_c(c_func,c_vals,dofs1,local_size2,0)
-        
-        A_I,A_J,vals,lens1 =assemble_subdomain1(K_vol,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=1,tau=tau,mesh2=domain2)
-        #integrate resulting terms in second subdomain
-        update_f(fy,dofs2,vals,0)
-        B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K_vol_y,lens1[0],fy,dofs2,vals)
-        #formulate CSR format entries
-        Krow,Kcol,Kdat = assemble_global_CSR(A_I[0],A_J[0],B1_I,B1_J,dat1)
-        #use scipy make store temporary csr matrix
-        K_SUPG = sp.csr_matrix((Kdat, Kcol, Krow), shape=(A_local_size[0],A_global_size[1]))
-        #add the sparse matrices
-        K = K + dt*K_SUPG
-        
-        
-        #integrate volume terms in second subdomain
+    if method == 'SUPG' or method == 'CG_strong' or method =='SUPG_strong':
         update_c(c2,c_vals,dofs2,local_size2,0,subdomain=1)
         
-        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1,SUPG=1,tau=tau2,mesh2=domain1)
+        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1,SUPG=SUPG,tau=tau2,mesh2=domain1)
         update_f(fx,dofs1,vals,0)
         A1_I,A1_J,dat3 = assemble_subdomain2(domain1,K2_vol_x,lens1[0],fx,dofs1,vals)
         
@@ -357,6 +349,8 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'
         K3 = sp.csr_matrix((Kdat3, Kcol3, Krow3), shape=(A_local_size[0],A_global_size[1]))
         K = K + dt*K3
         
+
+
     #assign values to PETSc matrix
     A.setValuesCSR(K.indptr,K.indices,K.data)
     A.assemble()

@@ -29,8 +29,8 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 16
-ny = 16
+nx = 32#16
+ny = 32#16
 #set initial time
 t = 0
 #set final time
@@ -46,7 +46,7 @@ PETSc.Sys.Print('nt',nt)
 nplot = 100
 
 method = 'SUPG'
-
+PETSc.Sys.Print('Method chosen:', method)
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
@@ -168,7 +168,7 @@ M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 #Loading A matrix routine
 CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method)
-if method == 'SUPG':
+if method == 'SUPG' or method == 'SUPG_strong':
     CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG)
 
 
@@ -177,10 +177,10 @@ time_2 = time.time()
 #if rank==0:
 #    print(local_dof_coords1)
 #    print(A.getValues(30,30))
-if method == 'SUPG':
+if method == 'SUPG' or method == 'SUPG_strong':
     M_SUPG = M+M_SUPG
     A=A+M_SUPG
-if method == 'CG':
+if method == 'CG' or method == 'CG_strong':
     M_SUPG = M
     A = A + M_SUPG
 
@@ -249,9 +249,9 @@ pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
-ksp2.setType('tfqmr')
+ksp2.setType('gmres')
 #options are cgne(worked well), gmres, cgs, bcgs, bicg
-ksp2.setPC(pc2)
+#ksp2.setPC(pc2)
 #ksp2.setUp()
 
 ksp2.setInitialGuessNonzero(True)

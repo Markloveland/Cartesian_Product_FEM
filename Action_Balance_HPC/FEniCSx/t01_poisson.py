@@ -2,18 +2,24 @@ from mpi4py import MPI
 from dolfinx import mesh
 from dolfinx.fem import FunctionSpace
 from dolfinx import fem
+from dolfinx import io
 from dolfinx import cpp
 import numpy as np
 import ufl
 from petsc4py.PETSc import ScalarType
 from petsc4py import PETSc
 
-domain = mesh.create_unit_square(MPI.COMM_WORLD, 12, 12, mesh.CellType.triangle, ghost_mode=cpp.mesh.GhostMode.none)
+#domain = mesh.create_unit_square(MPI.COMM_WORLD, 12, 12, mesh.CellType.triangle, ghost_mode=cpp.mesh.GhostMode.none)
+filename = 'meshes/unit_square.xdmf'
+encoding= io.XDMFFile.Encoding.HDF5
+with io.XDMFFile(MPI.COMM_WORLD, filename, "r", encoding=encoding) as file:
+    domain = file.read_mesh()
+
 V = FunctionSpace(domain, ("CG", 1))
 uD= fem.Function(V)
 
 #define function via interpolate
-#uD.interpolate(lambda x: 1 + x[0]**2 + 2 * x[1]**2)
+uD.interpolate(lambda x: 1 + x[0]**2 + 2 * x[1]**2)
 
 #you can print locally owned values:
 #print('Correct uD',uD2.vector.array)
@@ -30,18 +36,18 @@ dofs = np.arange(*local_range,dtype=np.int32)
 local_size = V.dofmap.index_map.size_local
 #hopefully the dof coordinates owned by the process
 local_dof_coords = dof_coords[0:local_size,:]
-print(dofs)
+#print(dofs)
 #try to set proper values
-uD.vector.setValues(dofs,  1 + local_dof_coords[:,0]**2 + 2*local_dof_coords[:,1]**2)
+#uD.vector.setValues(dofs,  1 + local_dof_coords[:,0]**2 + 2*local_dof_coords[:,1]**2)
 #also need to propagate ghost values
 #uD.vector.ghostUpdate()
 
 #the above should be same as these two commands combined
 # This call takes the values from the ghost regions and accumulates (adds) them to the owning process.
-uD.vector.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
+#uD.vector.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
 # Important point: The ghosts are still inconsistent!
 # This call takes the values from the owning processes and updates the ghosts.
-uD.vector.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+#uD.vector.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
 
 
 # Create facet to cell connectivity required to determine boundary facets
@@ -80,10 +86,11 @@ error_max = np.max(np.abs(uD.x.array-uh.x.array))
 if domain.comm.rank == 0:
     print(f"Error_L2 : {error_L2:.2e}")
     print(f"Error_max : {error_max:.2e}")
-
+'''
 from dolfinx import io
 with io.VTKFile(domain.comm, "output.pvd", "w") as vtk:
     vtk.write([uh._cpp_object])
 with io.XDMFFile(domain.comm, "output.xdmf", "w") as xdmf:
     xdmf.write_mesh(domain)
     xdmf.write_function(uh)
+'''

@@ -55,7 +55,7 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 100
 
-method = 'SUPG'
+method = 'SUPG_strong'
 
 ####################################################################
 #Subdomain 1
@@ -195,7 +195,7 @@ M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 #Loading A matrix routine
 CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method)
-if method == 'SUPG':
+if method == 'SUPG' or method == 'SUPG_strong':
     CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG)
 
 
@@ -204,10 +204,10 @@ time_2 = time.time()
 #if rank==0:
 #    print(local_dof_coords1)
 #    print(A.getValues(30,30))
-if method == 'SUPG':
+if method == 'SUPG' or method == 'SUPG_strong':
     M_SUPG = M+M_SUPG
     A=A+M_SUPG
-if method == 'CG':
+if method == 'CG' or method == 'CG_strong':
     M_SUPG = M
     A = A + M_SUPG
 
