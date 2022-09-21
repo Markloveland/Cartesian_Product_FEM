@@ -44,3 +44,33 @@ No action taken.
 TACC:  Starting up job 439976 
 TACC:  Starting parallel tasks... 
 nt 4000
+KSP Object: 250 MPI processes
+  type: gmres
+    restart=30, using Classical (unmodified) Gram-Schmidt Orthogonalization with no iterative refinement
+    happy breakdown tolerance 1e-30
+  maximum iterations=10000, nonzero initial guess
+  tolerances:  relative=1e-05, absolute=1e-50, divergence=10000.
+  left preconditioning
+  using PRECONDITIONED norm type for convergence test
+PC Object: 250 MPI processes
+  type: none
+  linear system matrix = precond matrix:
+  Mat Object: 250 MPI processes
+    type: mpiaij
+    rows=7905775, cols=7905775
+    total: nonzeros=342625236, allocated nonzeros=367337003
+    total number of mallocs used during MatSetValues calls=0
+      not using I-node (on process 0) routines
+Niter 0
+convergence code 2
+Final t 2000.0
+L2 error 6219.7599539819485
+L inf error 86.71824477004532
+min in error (1270043, -2.0655290439727416)
+max error (2159741, 86.71824477004532)
+h 0.01
+dof 104060401
+The build time is 936.4066948890686 seconds
+The solve time is 2011.6384036540985 seconds
+Final solution on boundary
+TACC:  Shutdown complete. Exiting. 
