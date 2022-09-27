@@ -58,3 +58,17 @@ def gather_station(comm,root,local_stats,local_vals):
     #PETSc.Sys.Print('station coords',coords)
     #PETSc.Sys.Print('station vals',vals)
 
+def fix_diag(A,local_start,rank):
+    diag = A.getDiagonal()
+    dry_dofs = np.where(diag.getArray()==0)[0]
+    dry_dofs = np.array(dry_dofs,dtype=np.int32) + local_start
+    #print('number of 0s found on diag on rank',rank)
+    #print(dry_dofs.shape)
+    #print(dry_dofs)
+    
+    #fill in and reset
+    #diag.setValues(dry_dofs,np.ones(dry_dofs.shape))
+    
+    #fill in matrix
+    #A.setDiagonal(diag)
+    return dry_dofs

@@ -278,7 +278,7 @@ def assemble_subdomain2(domain2,K21,len1,fy,dofs2,vals):
     return B1_I,B1_J,dat1
 
 
-def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet= 0,method='CG'):
+def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,method='CG'):
     #given a method, pulls in fenics weak form and
     #generates an assembled PETSc matrix
     #which is the stiffness matrix for the action balance equation
@@ -288,7 +288,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet= 0,m
 
     if method == 'CG':
         #first pull the proper weak form:
-        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,is_wet=is_wet)
+        c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2)
         SUPG = 0
         tau = 0
     if method == 'SUPG':
@@ -299,7 +299,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet= 0,m
         update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
         SUPG = 1
     if method == 'CG_strong':
-        c_func,K_vec,fy,K2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_strong_form(domain1,domain2,V1,V2,is_wet=is_wet,SUPG='off')
+        c_func,K_vec,fy,K2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_strong_form(domain1,domain2,V1,V2,SUPG='off')
         tau = 0
         tau2 = 0
         SUPG = 0

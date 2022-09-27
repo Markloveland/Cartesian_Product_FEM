@@ -64,7 +64,7 @@ def SUPG_weak_form(V1,u1,v1,c_func,K_vol,V2,u2,v2,K_vol_y,fy,c2_func,K2_vol,fx,K
 
     return tau,K_vol,fy,K_vol_y,tau2,c2_func,K2_vol,fx,K2_vol_x
 
-def CG_weak_form(domain1,domain2,V1,V2,is_wet = 0,SUPG='off'):
+def CG_weak_form(domain1,domain2,V1,V2,SUPG='off'):
     #gives the weak form for the CG formulation
     #using 1 integration by parts
     n1 = ufl.FacetNormal(domain1)
@@ -80,11 +80,12 @@ def CG_weak_form(domain1,domain2,V1,V2,is_wet = 0,SUPG='off'):
 
 
     c_func = [cx_func,cy_func,csig_func,cthet_func]
-
+   
+   
     #create expressions and assemble linear forms which start in domain 1
     #need to separate boundary and volume integrals
-    K_vol = [is_wet*cx_func*u1*v1.dx(0)*ufl.dx + is_wet*cy_func*u1*v1.dx(1)*ufl.dx,  is_wet*csig_func*u1*v1*ufl.dx, is_wet*cthet_func*u1*v1*ufl.dx]
-    K_bound = [is_wet*ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds]  
+    K_vol = [cx_func*u1*v1.dx(0)*ufl.dx + cy_func*u1*v1.dx(1)*ufl.dx,  csig_func*u1*v1*ufl.dx, cthet_func*u1*v1*ufl.dx]
+    K_bound = [ufl.dot(ufl.as_vector((cx_func,cy_func)),n1)*u1*v1*ufl.ds]  
 
     u2 = ufl.TrialFunction(V2)
     v2 = ufl.TestFunction(V2)
@@ -162,7 +163,7 @@ def SUPG_RHS(domain1,domain2,V1,V2):
 
 
 
-def CG_strong_form(domain1,domain2,V1,V2,is_wet=1,SUPG='off'):
+def CG_strong_form(domain1,domain2,V1,V2,SUPG='off'):
     #gives the weak form for the CG formulation
     #using 1 integration by parts
     n1 = ufl.FacetNormal(domain1)
@@ -182,7 +183,7 @@ def CG_strong_form(domain1,domain2,V1,V2,is_wet=1,SUPG='off'):
    
     #create expressions and assemble linear forms which start in domain 1
     #in this case there are no boundary, just volume integrals
-    K_vol = [is_wet*cx_func*u1.dx(0)*v1*ufl.dx + is_wet*cy_func*u1.dx(1)*v1*ufl.dx +  is_wet*ufl.nabla_div(ufl.as_vector((cx_func,cy_func)))*u1*v1*ufl.dx,  is_wet*csig_func*u1*v1*ufl.dx, is_wet*cthet_func*u1*v1*ufl.dx]
+    K_vol = [cx_func*u1.dx(0)*v1*ufl.dx + cy_func*u1.dx(1)*v1*ufl.dx +  ufl.nabla_div(ufl.as_vector((cx_func,cy_func)))*u1*v1*ufl.dx,  csig_func*u1*v1*ufl.dx, cthet_func*u1*v1*ufl.dx]
 
 
     #corresponding terms in the second subdomain
@@ -215,7 +216,7 @@ def CG_strong_form(domain1,domain2,V1,V2,is_wet=1,SUPG='off'):
     
     fx = [fx1]
 
-    K_vol_x = is_wet*u1*v1*fx[0]*ufl.dx
+    K_vol_x = u1*v1*fx[0]*ufl.dx
     
     if  SUPG == 'off':
         #returns functions/vector of weak forms in first subdomain, corresponding functions and weak forms to be integrated in second,

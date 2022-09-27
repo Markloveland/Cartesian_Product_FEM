@@ -93,3 +93,26 @@ def calculate_HS(u_cart,V2,local_size1,local_size2,local_range2):
         HS_vec[i] = 4*np.sqrt(abs(local_intf))
 
     return HS_vec
+
+def calculate_wetdry(domain, V, depth_func,is_wet, min_depth=0.05):
+    #loop through elements
+    dim=domain.topology.dim
+    imap = domain.topology.index_map(dim)
+    ghost_cells = imap.num_ghosts
+    num_cells = imap.size_local + ghost_cells
+
+    dat_arr = np.zeros(num_cells)
+    for a in range(num_cells):
+        ind = V.dofmap.cell_dofs(a)
+        vals = depth_func.x.array[ind]
+        depth = np.min(vals)
+        #define proper values in the element
+        input_ind = is_wet._V.dofmap.cell_dofs(a)
+        if depth > min_depth:
+            out = 1
+        else:
+            out = 0
+        is_wet.x.array[input_ind] = out
+
+    return 0
+
