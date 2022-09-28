@@ -29,8 +29,8 @@ nprocs = comm.Get_size()
 #soecify domain size
 L = 10
 # Create cartesian mesh of two 2D and define function spaces
-nx = 32#16
-ny = 32#16
+nx = 16
+ny = 16
 #set initial time
 t = 0
 #set final time
@@ -261,6 +261,7 @@ u_cart.assemble()
 #set Dirichlet boundary as global boundary
 A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 
+u_dry = np.ones(dry_dofs.shape)
 #create a direct linear solver
 #pc2 = PETSc.PC().create()
 #this is a direct solve with lu
@@ -290,6 +291,7 @@ for i in range(nt):
     #B.setFromOptions()
     M_SUPG.mult(u_cart,B)
     B.setValues(global_boundary_dofs,u_d)
+    B.setValues(dry_dofs,u_dry)
     B.assemble()
     ksp2.solve(B, u_cart)
     #B.destroy()

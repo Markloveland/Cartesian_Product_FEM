@@ -65,6 +65,25 @@ domain1 = mesh.create_rectangle(comm, [np.array([x_min, y_min]), np.array([x_max
 V1 = fem.FunctionSpace(domain1, ("CG", 1))
 u1 = ufl.TrialFunction(V1)
 v1 = ufl.TestFunction(V1)
+elementwise = fem.FunctionSpace(domain1,("DG",0))
+is_wet = fem.Function(elementwise)
+depth_func = fem.Function(V1)
+#from the function spaces and ownership ranges, generate global degrees of freedom
+#this gives ghost and owned dof coords
+dof_coords1 = V1.tabulate_dof_coordinates()
+#suggested in forum, gives index of dofs I want
+local_range1 = V1.dofmap.index_map.local_range
+#vector of indexes that we want
+dofs1 = np.arange(*local_range1,dtype=np.int32)
+#gets number of dofs owned
+N_dof_1 = V1.dofmap.index_map.size_local
+#hopefully the dof coordinates owned by the process
+local_dof_coords1 = dof_coords1[0:N_dof_1,:domain1.topology.dim]
+#for now lets set depth as x coordinate itself
+depth_func.x.array[:] = 20 - dof_coords1[:,0]/200
+
+#need to include a wetting/drying variable in domain 1
+CFx.wave.calculate_wetdry(domain1, V1, depth_func,is_wet,min_depth=0.05)
 ####################################################################
 ####################################################################
 #Subdomain 2
@@ -78,7 +97,7 @@ v2 = ufl.TestFunction(V2)
 ###################################################################
 #need local mass matrices to build global mass matrix
 #mass of subdomain 1
-m1 = u1*v1*ufl.dx
+m1 = is_wet*u1*v1*ufl.dx
 m1_form = fem.form(m1)
 M1 = fem.petsc.assemble_matrix(m1_form)
 M1.assemble()
@@ -121,19 +140,14 @@ rows = np.arange(local_range[0],local_range[1],dtype=np.int32)
 ####################################################################
 #from the function spaces and ownership ranges, generate global degrees of freedom
 #this gives ghost and owned dof coords
-dof_coords1 = V1.tabulate_dof_coordinates()
 dof_coords2 = V2.tabulate_dof_coordinates()
 #suggested in forum, gives index of dofs I want
-local_range1 = V1.dofmap.index_map.local_range
 local_range2 = V2.dofmap.index_map.local_range
 #vector of indexes that we want
-dofs1 = np.arange(*local_range1,dtype=np.int32)
 dofs2 = np.arange(*local_range2,dtype=np.int32)
 #gets number of dofs owned
-N_dof_1 = V1.dofmap.index_map.size_local
 N_dof_2 = V2.dofmap.index_map.size_local
 #hopefully the dof coordinates owned by the process
-local_dof_coords1 = dof_coords1[0:N_dof_1,:domain1.topology.dim]
 local_dof_coords2 = dof_coords2[0:N_dof_2,:domain2.topology.dim]
 
 local_dof=CFx.transforms.cartesian_product_coords(local_dof_coords1,local_dof_coords2)
@@ -160,7 +174,6 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
 depth = 20 - x/200
-
 #zero rows and columns below a minumum depth
 min_depth = 0.05 
 dry_dofs_local = np.array(np.where(depth<min_depth)[0],dtype=np.int32)
@@ -204,9 +217,9 @@ M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method)
+CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet)
 if method == 'SUPG' or method == 'SUPG_strong':
-    CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG)
+    CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG,is_wet=is_wet)
 
 
 time_2 = time.time()
@@ -220,6 +233,10 @@ if method == 'SUPG' or method == 'SUPG_strong':
 if method == 'CG' or method == 'CG_strong':
     M_SUPG = M
     A = A + M_SUPG
+
+
+dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
+A.zeroRows(dry_dofs,diag=1)
 
 #just want to test answer
 #A.zeroRows(rows,diag=1)
@@ -293,7 +310,7 @@ ksp2.setType('gmres')
 ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
-fname = 'ActionBalance_Shoaling/solution'
+fname = 'ActionBalance_Shoaling_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 
@@ -365,7 +382,7 @@ HS = fem.Function(V1)
 HS_vec = CFx.wave.calculate_HS(u_cart,V2,N_dof_1,N_dof_2,local_range2)
 HS.vector.setValues(dofs1,np.array(HS_vec))
 HS.vector.ghostUpdate()
-fname = 'Shoaling_HS/solution'
+fname = 'Shoaling_HS_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 xdmf.write_function(HS)
