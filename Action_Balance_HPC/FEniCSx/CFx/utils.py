@@ -1,5 +1,7 @@
 import numpy as np
-from dolfinx import geometry
+from dolfinx import geometry,mesh
+import ufl
+
 
 def station_data(stations,domain,f):
     #takes in a numpy array of points in 2 dimensions
@@ -72,3 +74,49 @@ def fix_diag(A,local_start,rank):
     #fill in matrix
     #A.setDiagonal(diag)
     return dry_dofs
+
+#read in an adcirc mesh and give a fenicsx mesh
+def ADCIRC_mesh_gen(comm,file_path):
+    #specify file path as a string, either absolute or relative to where script is run
+    #only compatible for adcirc fort.14 format
+    adcirc_mesh=open(file_path,'r')
+    title=adcirc_mesh.readline()
+
+    #NE number of elements, NP number of grid points
+    NE,NP=adcirc_mesh.readline().split()
+    NE=int(NE)
+    NP=int(NP)
+
+    #initiate data structures
+    NODENUM=np.zeros(NP)
+    LONS=np.zeros(NP)
+    LATS=np.zeros(NP)
+    DPS=np.zeros(NP)
+    ELEMNUM=np.zeros(NE)
+    NM = np.zeros((NE,3)) #stores connectivity at each element
+
+    #read node information line by line
+    for i in range(NP):
+        NODENUM[i], LONS[i], LATS[i], DPS[i] = adcirc_mesh.readline().split()
+    #read in connectivity
+    for i in range(NE):
+        ELEMNUM[i], DUM, NM[i,0],NM[i,1], NM[i,2]=adcirc_mesh.readline().split()
+
+    #(we need to shift nodenum down by 1)
+    ELEMNUM=ELEMNUM-1
+    NM=NM-1
+    NODENUM=NODENUM-1
+
+    #close file
+    adcirc_mesh.close()
+
+    gdim, shape, degree = 2, "triangle", 1
+    cell = ufl.Cell(shape, geometric_dimension=gdim)
+    element = ufl.VectorElement("Lagrange", cell, degree)
+    domain = ufl.Mesh(element)
+    coords = np.array(list(zip(LONS,LATS)))
+    
+    domain1 = mesh.create_mesh(comm, NM, coords, domain)
+    return domain1
+
+

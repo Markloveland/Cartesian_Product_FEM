@@ -45,7 +45,7 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 100
 
-method = 'CG_strong'
+method = 'CG'
 PETSc.Sys.Print('Method chosen:', method)
 ####################################################################
 #Subdomain 1
@@ -201,13 +201,15 @@ F_dof.create(comm=comm)
 F_dof.setSizes((local_rows,global_rows),bsize=1)
 F_dof.setFromOptions()
 
-
+Temp = F_dof.duplicate()
 B = F_dof.duplicate()
 E = F_dof.duplicate()
 L2_E = F_dof.duplicate()
 u_cart = F_dof.duplicate()
 u_exact = F_dof.duplicate()
 
+
+Temp.setFromOptions()
 E.setFromOptions()
 B.setFromOptions()
 L2_E.setFromOptions()
@@ -238,13 +240,46 @@ u_exact.setFromOptions()
 #Time step
 #u_cart will hold solution
 u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
+u_exact.setValues(rows,u_func(x,y,sigma,theta,c,t+dt))
+u_exact.assemble()
 #u_cart.ghostUpdate()
 u_cart.assemble()
 
 
 #set Dirichlet boundary as global boundary
-A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
+#need to subtract dirichlet columns to RHS stored in b
 
+F_dof.setValues(rows,np.zeros(rows.shape))
+Temp.setValues(rows,np.zeros(rows.shape))
+F_dof.assemble()
+Temp.assemble()
+C = A.duplicate()
+
+
+M_SUPG.mult(u_cart,B)
+
+dum = np.zeros(rows.shape)
+
+
+
+all_global_boundary_dofs = np.concatenate(MPI.COMM_WORLD.allgather(global_boundary_dofs))
+
+u_2 = u_func(x,y,sigma,theta,c,t+dt)
+u_d = u_2[local_boundary_dofs]
+
+all_u_d = np.concatenate(MPI.COMM_WORLD.allgather(u_d))
+i=0
+for a in all_global_boundary_dofs:
+    A.getColumnVector(a,Temp)
+    dum = dum + all_u_d[i]*Temp.getValues(rows)
+    i=i+1
+Temp.setValues(rows,dum)
+#F_dof = F_dof + Temp
+
+B = B - Temp
+
+A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
+#A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 #create a direct linear solver
 #pc2 = PETSc.PC().create()
 #this is a direct solve with lu
@@ -272,11 +307,14 @@ for i in range(nt):
     u_d = u_2[local_boundary_dofs]
     #B = F_dof.duplicate()
     #B.setFromOptions()
-    M_SUPG.mult(u_cart,B)
+    #M_SUPG.mult(u_cart,B)
+
+    
     B.setValues(global_boundary_dofs,u_d)
     B.assemble()
     ksp2.solve(B, u_cart)
     #B.destroy()
+    F_dof.zeroEntries()
     B.zeroEntries()
     # Save solution to file in VTK format
     if (i%nplot==0):

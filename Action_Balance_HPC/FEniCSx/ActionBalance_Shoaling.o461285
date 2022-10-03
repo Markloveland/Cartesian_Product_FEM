@@ -1,0 +1,2037 @@
+no change     /home1/04637/mdl2665/anaconda3/condabin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda-env
+no change     /home1/04637/mdl2665/anaconda3/bin/activate
+no change     /home1/04637/mdl2665/anaconda3/bin/deactivate
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.sh
+no change     /home1/04637/mdl2665/anaconda3/etc/fish/conf.d/conda.fish
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/Conda.psm1
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/conda-hook.ps1
+no change     /home1/04637/mdl2665/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.csh
+no change     /home1/04637/mdl2665/.bashrc
+No action taken.
+
+     active environment : fenicsx-env
+    active env location : /home1/04637/mdl2665/anaconda3/envs/fenicsx-env
+            shell level : 2
+       user config file : /home1/04637/mdl2665/.condarc
+ populated config files : 
+          conda version : 4.12.0
+    conda-build version : 3.21.8
+         python version : 3.9.12.final.0
+       virtual packages : __linux=4.18.0=0
+                          __glibc=2.28=0
+                          __unix=0=0
+                          __archspec=1=x86_64
+       base environment : /home1/04637/mdl2665/anaconda3  (writable)
+      conda av data dir : /home1/04637/mdl2665/anaconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home1/04637/mdl2665/anaconda3/pkgs
+                          /home1/04637/mdl2665/.conda/pkgs
+       envs directories : /home1/04637/mdl2665/anaconda3/envs
+                          /home1/04637/mdl2665/.conda/envs
+               platform : linux-64
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/4.18.0-305.12.1.el8_4.x86_64 rocky/8.4 glibc/2.28
+                UID:GID : 839365:819760
+             netrc file : None
+           offline mode : False
+
+TACC:  Starting up job 461285 
+TACC:  Starting parallel tasks... 
+nt 4000
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: got SIGCONT
+[125]PETSC ERROR: ------------------------------------------------------------------------
+[125]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[125]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[125]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[125]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[125]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[125]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 125
+[126]PETSC ERROR: ------------------------------------------------------------------------
+[126]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[126]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[126]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[126]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[126]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[126]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 126
+[127]PETSC ERROR: ------------------------------------------------------------------------
+[127]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[127]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[127]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[127]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[127]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[127]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 127
+[128]PETSC ERROR: ------------------------------------------------------------------------
+[128]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[128]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[128]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[128]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[128]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[128]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 128
+[129]PETSC ERROR: ------------------------------------------------------------------------
+[129]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[129]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[129]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[129]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[129]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[129]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 129
+[130]PETSC ERROR: ------------------------------------------------------------------------
+[130]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[130]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[130]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[130]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[130]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[130]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 130
+[131]PETSC ERROR: ------------------------------------------------------------------------
+[131]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[131]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[131]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[131]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[131]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[131]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 131
+[132]PETSC ERROR: ------------------------------------------------------------------------
+[132]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[132]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[132]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[132]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[132]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[132]PETSC ERROR: to get more information on the crash.
+[133]PETSC ERROR: ------------------------------------------------------------------------
+[133]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[133]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[133]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[133]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[133]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[133]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 133
+[134]PETSC ERROR: ------------------------------------------------------------------------
+[134]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[134]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[134]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[134]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[134]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[134]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 134
+[135]PETSC ERROR: ------------------------------------------------------------------------
+[135]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[135]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[135]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[135]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[135]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[135]PETSC ERROR: to get more information on the crash.
+[136]PETSC ERROR: ------------------------------------------------------------------------
+[136]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[136]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[136]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[136]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[136]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[136]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 136
+[137]PETSC ERROR: ------------------------------------------------------------------------
+[137]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[137]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[137]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[137]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[137]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[137]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 137
+[138]PETSC ERROR: ------------------------------------------------------------------------
+[138]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[138]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[138]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[138]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[138]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[138]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 138
+[139]PETSC ERROR: ------------------------------------------------------------------------
+[139]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[139]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[139]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[139]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[139]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[139]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 139
+[140]PETSC ERROR: ------------------------------------------------------------------------
+[140]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[140]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[140]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[140]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[140]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[140]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 140
+slurmstepd: error: *** JOB 461285 ON c313-163 CANCELLED AT 2022-09-28T17:32:12 ***
+[141]PETSC ERROR: ------------------------------------------------------------------------
+[141]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[141]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[141]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[141]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[141]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[141]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 141
+[142]PETSC ERROR: ------------------------------------------------------------------------
+[142]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[142]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[142]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[142]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[142]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[142]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 142
+[143]PETSC ERROR: ------------------------------------------------------------------------
+[143]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[143]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[143]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[143]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[143]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[143]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 143
+[144]PETSC ERROR: ------------------------------------------------------------------------
+[144]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[144]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[144]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[144]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[144]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[144]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 144
+[145]PETSC ERROR: ------------------------------------------------------------------------
+[145]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[145]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[145]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[145]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[145]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[145]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 145
+[146]PETSC ERROR: ------------------------------------------------------------------------
+[146]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[146]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[146]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[146]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[146]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[146]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 146
+[147]PETSC ERROR: ------------------------------------------------------------------------
+[147]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[147]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[147]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[147]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[147]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[147]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 147
+[148]PETSC ERROR: ------------------------------------------------------------------------
+[148]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[148]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[148]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[148]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[148]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[148]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 148
+[149]PETSC ERROR: ------------------------------------------------------------------------
+[149]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[149]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[149]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[149]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[149]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[149]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 149
+[150]PETSC ERROR: ------------------------------------------------------------------------
+[150]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[150]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[150]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[150]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[150]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[150]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 150
+[151]PETSC ERROR: ------------------------------------------------------------------------
+[151]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[151]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[151]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[151]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[151]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[151]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 151
+[152]PETSC ERROR: ------------------------------------------------------------------------
+[152]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[152]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[152]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[152]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[152]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[152]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 152
+[153]PETSC ERROR: ------------------------------------------------------------------------
+[153]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[153]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[153]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[153]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[153]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[153]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 153
+[154]PETSC ERROR: ------------------------------------------------------------------------
+[154]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[154]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[154]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[154]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[154]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[154]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 154
+[155]PETSC ERROR: ------------------------------------------------------------------------
+[155]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[155]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[155]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[155]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[155]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[155]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 155
+[156]PETSC ERROR: ------------------------------------------------------------------------
+[156]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[156]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[156]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[156]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[156]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[156]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 156
+[157]PETSC ERROR: ------------------------------------------------------------------------
+[157]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[157]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[157]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[157]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[157]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[157]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 157
+[158]PETSC ERROR: ------------------------------------------------------------------------
+[158]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[158]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[158]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[158]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[158]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[158]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 158
+[159]PETSC ERROR: ------------------------------------------------------------------------
+[159]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[159]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[159]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[159]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[159]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[159]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 159
+[160]PETSC ERROR: ------------------------------------------------------------------------
+[160]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[160]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[160]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[160]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[160]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[160]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 160
+[161]PETSC ERROR: ------------------------------------------------------------------------
+[161]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[161]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[161]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[161]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[161]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[161]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 161
+[162]PETSC ERROR: ------------------------------------------------------------------------
+[162]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[162]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[162]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[162]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[162]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[162]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 162
+[163]PETSC ERROR: ------------------------------------------------------------------------
+[163]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[163]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[163]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[163]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[163]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[163]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 163
+[164]PETSC ERROR: ------------------------------------------------------------------------
+[164]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[164]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[164]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[164]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[164]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[164]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 164
+[165]PETSC ERROR: ------------------------------------------------------------------------
+[165]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[165]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[165]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[165]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[165]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[165]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 165
+[167]PETSC ERROR: ------------------------------------------------------------------------
+[167]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[167]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[167]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[167]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[167]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[167]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 167
+srun: forcing job termination
+slurmstepd: error: *** STEP 461285.0 ON c313-163 CANCELLED AT 2022-09-28T17:32:12 ***
+[168]PETSC ERROR: ------------------------------------------------------------------------
+[168]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[168]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[168]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[168]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[168]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[168]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 168
+[169]PETSC ERROR: ------------------------------------------------------------------------
+[169]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[169]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[169]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[169]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[169]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[169]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 169
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[0]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[0]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[0]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[0]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[0]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 0
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[2]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[2]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[2]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[2]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[2]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 2
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[3]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[3]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[3]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[3]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[3]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 3
+[4]PETSC ERROR: ------------------------------------------------------------------------
+[4]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[4]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[4]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[4]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[4]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[4]PETSC ERROR: to get more information on the crash.
+[5]PETSC ERROR: ------------------------------------------------------------------------
+[5]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[5]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[5]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[5]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[5]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[5]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 5
+[6]PETSC ERROR: ------------------------------------------------------------------------
+[6]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[6]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[6]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[6]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[6]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[6]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 6
+[7]PETSC ERROR: ------------------------------------------------------------------------
+[7]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[7]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[7]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[7]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[7]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[7]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 7
+[8]PETSC ERROR: ------------------------------------------------------------------------
+[8]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[8]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[8]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[8]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[8]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[8]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 8
+[9]PETSC ERROR: ------------------------------------------------------------------------
+[9]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[9]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[9]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[9]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[9]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[9]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 9
+[10]PETSC ERROR: ------------------------------------------------------------------------
+[10]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[10]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[10]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[10]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[10]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[10]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 10
+[11]PETSC ERROR: ------------------------------------------------------------------------
+[11]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[11]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[11]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[11]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[11]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[11]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 11
+[12]PETSC ERROR: ------------------------------------------------------------------------
+[12]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[12]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[12]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[12]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[12]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[12]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 12
+[13]PETSC ERROR: ------------------------------------------------------------------------
+[13]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[13]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[13]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[13]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[13]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[13]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 13
+[14]PETSC ERROR: ------------------------------------------------------------------------
+[14]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[14]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[14]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[14]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[14]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[14]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 14
+[15]PETSC ERROR: ------------------------------------------------------------------------
+[15]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[15]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[15]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[15]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[15]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[15]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 15
+[16]PETSC ERROR: ------------------------------------------------------------------------
+[16]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[16]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[16]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[16]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[16]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[16]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 16
+[17]PETSC ERROR: ------------------------------------------------------------------------
+[17]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[17]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[17]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[17]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[17]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[17]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 17
+[18]PETSC ERROR: ------------------------------------------------------------------------
+[18]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[18]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[18]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[18]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[18]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[18]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 18
+[19]PETSC ERROR: ------------------------------------------------------------------------
+[19]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[19]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[19]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[19]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[19]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[19]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 19
+[20]PETSC ERROR: ------------------------------------------------------------------------
+[20]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[20]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[20]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[20]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[20]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[20]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 20
+[21]PETSC ERROR: ------------------------------------------------------------------------
+[21]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[21]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[21]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[21]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[21]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[21]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 21
+[22]PETSC ERROR: ------------------------------------------------------------------------
+[22]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[22]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[22]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[22]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[22]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[22]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 22
+[23]PETSC ERROR: ------------------------------------------------------------------------
+[23]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[23]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[23]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[23]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[23]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[23]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 23
+[24]PETSC ERROR: ------------------------------------------------------------------------
+[24]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[24]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[24]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[24]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[24]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[24]PETSC ERROR: to get more information on the crash.
+[25]PETSC ERROR: ------------------------------------------------------------------------
+[25]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[25]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[25]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[25]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[25]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[25]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 25
+[26]PETSC ERROR: ------------------------------------------------------------------------
+[26]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[26]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[26]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[26]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[26]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[26]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 26
+[27]PETSC ERROR: ------------------------------------------------------------------------
+[27]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[27]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[27]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[27]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[27]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[27]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 27
+[28]PETSC ERROR: ------------------------------------------------------------------------
+[28]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[28]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[28]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[28]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[28]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[28]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 28
+[29]PETSC ERROR: ------------------------------------------------------------------------
+[29]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[29]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[29]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[29]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[29]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[29]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 29
+[30]PETSC ERROR: ------------------------------------------------------------------------
+[30]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[30]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[30]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[30]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[30]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[30]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 30
+[31]PETSC ERROR: ------------------------------------------------------------------------
+[31]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[31]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[31]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[31]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[31]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[31]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 31
+[32]PETSC ERROR: ------------------------------------------------------------------------
+[32]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[32]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[32]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[32]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[32]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[32]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 32
+[33]PETSC ERROR: ------------------------------------------------------------------------
+[33]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[33]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[33]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[33]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[33]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[33]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 33
+[34]PETSC ERROR: ------------------------------------------------------------------------
+[34]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[34]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[34]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[34]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[34]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[34]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 34
+[35]PETSC ERROR: ------------------------------------------------------------------------
+[35]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[35]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[35]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[35]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[35]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[35]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 35
+[36]PETSC ERROR: ------------------------------------------------------------------------
+[36]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[36]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[36]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[36]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[36]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[36]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 36
+[37]PETSC ERROR: ------------------------------------------------------------------------
+[37]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[37]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[37]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[37]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[37]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[37]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 37
+[38]PETSC ERROR: ------------------------------------------------------------------------
+[38]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[38]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[38]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[38]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[38]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[38]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 38
+[39]PETSC ERROR: ------------------------------------------------------------------------
+[39]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[39]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[39]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[39]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[39]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[39]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 39
+[40]PETSC ERROR: ------------------------------------------------------------------------
+[40]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[40]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[40]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[40]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[40]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[40]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 40
+[41]PETSC ERROR: ------------------------------------------------------------------------
+[41]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[41]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[41]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[41]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[41]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[41]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 41
+[42]PETSC ERROR: ------------------------------------------------------------------------
+[42]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[42]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[42]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[42]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[42]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[42]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 42
+[43]PETSC ERROR: ------------------------------------------------------------------------
+[43]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[43]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[43]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[43]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[43]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[43]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 43
+[44]PETSC ERROR: ------------------------------------------------------------------------
+[44]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[44]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[44]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[44]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[44]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[44]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 44
+[45]PETSC ERROR: ------------------------------------------------------------------------
+[45]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[45]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[45]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[45]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[45]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[45]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 45
+[46]PETSC ERROR: ------------------------------------------------------------------------
+[46]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[46]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[46]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[46]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[46]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[46]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 46
+[47]PETSC ERROR: ------------------------------------------------------------------------
+[47]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[47]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[47]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[47]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[47]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[47]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 47
+[48]PETSC ERROR: ------------------------------------------------------------------------
+[48]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[48]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[48]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[48]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[48]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[48]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 48
+[49]PETSC ERROR: ------------------------------------------------------------------------
+[49]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[49]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[49]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[49]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[49]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[49]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 49
+[50]PETSC ERROR: ------------------------------------------------------------------------
+[50]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[50]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[50]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[50]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[50]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[50]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 50
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 132
+[51]PETSC ERROR: ------------------------------------------------------------------------
+[51]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[51]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[51]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[51]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[51]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[51]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 51
+[166]PETSC ERROR: ------------------------------------------------------------------------
+[166]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[166]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[166]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[166]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[166]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[166]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 166
+[52]PETSC ERROR: ------------------------------------------------------------------------
+[52]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[52]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[52]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[52]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[52]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[52]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 52
+[170]PETSC ERROR: ------------------------------------------------------------------------
+[170]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[170]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[170]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[170]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[170]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[170]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 170
+[53]PETSC ERROR: ------------------------------------------------------------------------
+[53]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[53]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[53]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[53]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[53]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[53]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 53
+[171]PETSC ERROR: ------------------------------------------------------------------------
+[171]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[171]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[171]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[171]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[171]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[171]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 171
+[54]PETSC ERROR: ------------------------------------------------------------------------
+[54]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[54]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[54]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[54]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[54]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[54]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 54
+[172]PETSC ERROR: ------------------------------------------------------------------------
+[172]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[172]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[172]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[172]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[172]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[172]PETSC ERROR: to get more information on the crash.
+[55]PETSC ERROR: ------------------------------------------------------------------------
+[55]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[55]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[55]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[55]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[55]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[55]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 55
+[173]PETSC ERROR: ------------------------------------------------------------------------
+[173]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[173]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[173]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[173]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[173]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[173]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 173
+[56]PETSC ERROR: ------------------------------------------------------------------------
+[56]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[56]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[56]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[56]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[56]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[56]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 56
+[174]PETSC ERROR: ------------------------------------------------------------------------
+[174]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[174]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[174]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[174]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[174]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[174]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 174
+[57]PETSC ERROR: ------------------------------------------------------------------------
+[57]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[57]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[57]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[57]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[57]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[57]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 57
+[175]PETSC ERROR: ------------------------------------------------------------------------
+[175]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[175]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[175]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[175]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[175]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[175]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 175
+[58]PETSC ERROR: ------------------------------------------------------------------------
+[58]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[58]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[58]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[58]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[58]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[58]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 58
+[176]PETSC ERROR: ------------------------------------------------------------------------
+[176]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[176]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[176]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[176]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[176]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[176]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 176
+[59]PETSC ERROR: ------------------------------------------------------------------------
+[59]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[59]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[59]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[59]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[59]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[59]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 59
+[177]PETSC ERROR: ------------------------------------------------------------------------
+[177]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[177]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[177]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[177]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[177]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[177]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 177
+[60]PETSC ERROR: ------------------------------------------------------------------------
+[60]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[60]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[60]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[60]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[60]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[60]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 60
+[178]PETSC ERROR: ------------------------------------------------------------------------
+[178]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[178]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[178]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[178]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[178]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[178]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 178
+[61]PETSC ERROR: ------------------------------------------------------------------------
+[61]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[61]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[61]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[61]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[61]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[61]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 61
+[179]PETSC ERROR: ------------------------------------------------------------------------
+[179]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[179]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[179]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[179]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[179]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[179]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 179
+[62]PETSC ERROR: ------------------------------------------------------------------------
+[62]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[62]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[62]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[62]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[62]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[62]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 62
+[180]PETSC ERROR: ------------------------------------------------------------------------
+[180]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[180]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[180]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[180]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[180]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[180]PETSC ERROR: to get more information on the crash.
+[63]PETSC ERROR: ------------------------------------------------------------------------
+[63]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[63]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[63]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[63]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[63]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[63]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 63
+[181]PETSC ERROR: ------------------------------------------------------------------------
+[181]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[181]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[181]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[181]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[181]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[181]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 181
+[64]PETSC ERROR: ------------------------------------------------------------------------
+[64]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[64]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[64]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[64]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[64]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[64]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 64
+[182]PETSC ERROR: ------------------------------------------------------------------------
+[182]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[182]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[182]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[182]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[182]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[182]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 182
+[65]PETSC ERROR: ------------------------------------------------------------------------
+[65]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[65]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[65]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[65]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[65]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[65]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 65
+[183]PETSC ERROR: ------------------------------------------------------------------------
+[183]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[183]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[183]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[183]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[183]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[183]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 183
+[66]PETSC ERROR: ------------------------------------------------------------------------
+[66]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[66]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[66]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[66]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[66]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[66]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 66
+[184]PETSC ERROR: ------------------------------------------------------------------------
+[184]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[184]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[184]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[184]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[184]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[184]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 184
+[67]PETSC ERROR: ------------------------------------------------------------------------
+[67]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[67]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[67]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[67]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[67]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[67]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 67
+[185]PETSC ERROR: ------------------------------------------------------------------------
+[185]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[185]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[185]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[185]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[185]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[185]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 185
+[68]PETSC ERROR: ------------------------------------------------------------------------
+[68]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[68]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[68]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[68]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[68]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[68]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 68
+[186]PETSC ERROR: ------------------------------------------------------------------------
+[186]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[186]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[186]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[186]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[186]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[186]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 186
+[69]PETSC ERROR: ------------------------------------------------------------------------
+[69]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[69]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[69]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[69]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[69]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[69]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 69
+[187]PETSC ERROR: ------------------------------------------------------------------------
+[187]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[187]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[187]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[187]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[187]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[187]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 187
+[70]PETSC ERROR: ------------------------------------------------------------------------
+[70]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[70]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[70]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[70]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[70]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[70]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 70
+[188]PETSC ERROR: ------------------------------------------------------------------------
+[188]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[188]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[188]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[188]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[188]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[188]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 188
+[71]PETSC ERROR: ------------------------------------------------------------------------
+[71]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[71]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[71]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[71]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[71]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[71]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 71
+[189]PETSC ERROR: ------------------------------------------------------------------------
+[189]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[189]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[189]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[189]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[189]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[189]PETSC ERROR: to get more information on the crash.
+[72]PETSC ERROR: ------------------------------------------------------------------------
+[72]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[72]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[72]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[72]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[72]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[72]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 72
+[190]PETSC ERROR: ------------------------------------------------------------------------
+[190]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[190]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[190]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[190]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[190]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[190]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 190
+[73]PETSC ERROR: ------------------------------------------------------------------------
+[73]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[73]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[73]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[73]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[73]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[73]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 73
+[191]PETSC ERROR: ------------------------------------------------------------------------
+[191]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[191]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[191]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[191]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[191]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[191]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 191
+[74]PETSC ERROR: ------------------------------------------------------------------------
+[74]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[74]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[74]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[74]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[74]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[74]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 74
+[192]PETSC ERROR: ------------------------------------------------------------------------
+[192]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[192]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[192]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[192]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[192]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[192]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 192
+[75]PETSC ERROR: ------------------------------------------------------------------------
+[75]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[75]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[75]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[75]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[75]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[75]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 75
+[193]PETSC ERROR: ------------------------------------------------------------------------
+[193]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[193]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[193]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[193]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[193]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[193]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 193
+[76]PETSC ERROR: ------------------------------------------------------------------------
+[76]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[76]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[76]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[76]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[76]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[76]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 76
+[194]PETSC ERROR: ------------------------------------------------------------------------
+[194]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[194]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[194]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[194]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[194]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[194]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 194
+[77]PETSC ERROR: ------------------------------------------------------------------------
+[77]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[77]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[77]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[77]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[77]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[77]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 77
+[195]PETSC ERROR: ------------------------------------------------------------------------
+[195]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[195]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[195]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[195]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[195]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[195]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 195
+[78]PETSC ERROR: ------------------------------------------------------------------------
+[78]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[78]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[78]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[78]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[78]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[78]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 78
+[196]PETSC ERROR: ------------------------------------------------------------------------
+[196]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[196]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[196]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[196]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[196]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[196]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 196
+[79]PETSC ERROR: ------------------------------------------------------------------------
+[79]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[79]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[79]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[79]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[79]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[79]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 79
+[197]PETSC ERROR: ------------------------------------------------------------------------
+[197]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[197]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[197]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[197]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[197]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[197]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 197
+[80]PETSC ERROR: ------------------------------------------------------------------------
+[80]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[80]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[80]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[80]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[80]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[80]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 80
+[198]PETSC ERROR: ------------------------------------------------------------------------
+[198]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[198]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[198]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[198]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[198]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[198]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 198
+[81]PETSC ERROR: ------------------------------------------------------------------------
+[81]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[81]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[81]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[81]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[81]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[81]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 81
+[199]PETSC ERROR: ------------------------------------------------------------------------
+[199]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[199]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[199]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[199]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[199]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[199]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 199
+[82]PETSC ERROR: ------------------------------------------------------------------------
+[82]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[82]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[82]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[82]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[82]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[82]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 82
+[200]PETSC ERROR: ------------------------------------------------------------------------
+[200]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[200]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[200]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[200]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[200]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[200]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 200
+[83]PETSC ERROR: ------------------------------------------------------------------------
+[83]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[83]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[83]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[83]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[83]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[83]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 83
+[201]PETSC ERROR: ------------------------------------------------------------------------
+[201]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[201]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[201]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[201]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[201]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[201]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 201
+[84]PETSC ERROR: ------------------------------------------------------------------------
+[84]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[84]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[84]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[84]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[84]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[84]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 84
+[202]PETSC ERROR: ------------------------------------------------------------------------
+[202]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[202]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[202]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[202]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[202]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[202]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 202
+[85]PETSC ERROR: ------------------------------------------------------------------------
+[85]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[85]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[85]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[85]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[85]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[85]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 85
+[203]PETSC ERROR: ------------------------------------------------------------------------
+[203]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[203]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[203]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[203]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[203]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[203]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 203
+[86]PETSC ERROR: ------------------------------------------------------------------------
+[86]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[86]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[86]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[86]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[86]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[86]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 86
+[204]PETSC ERROR: ------------------------------------------------------------------------
+[204]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[204]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[204]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[204]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[204]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[204]PETSC ERROR: to get more information on the crash.
+[87]PETSC ERROR: ------------------------------------------------------------------------
+[87]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[87]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[87]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[87]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[87]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[87]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 87
+[205]PETSC ERROR: ------------------------------------------------------------------------
+[205]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[205]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[205]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[205]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[205]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[205]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 205
+[88]PETSC ERROR: ------------------------------------------------------------------------
+[88]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[88]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[88]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[88]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[88]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[88]PETSC ERROR: to get more information on the crash.
+[206]PETSC ERROR: ------------------------------------------------------------------------
+[206]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[206]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[206]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[206]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[206]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[206]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 206
+[89]PETSC ERROR: ------------------------------------------------------------------------
+[89]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[89]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[89]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[89]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[89]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[89]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 89
+[207]PETSC ERROR: ------------------------------------------------------------------------
+[207]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[207]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[207]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[207]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[207]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[207]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 207
+[90]PETSC ERROR: ------------------------------------------------------------------------
+[90]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[90]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[90]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[90]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[90]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[90]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 90
+[208]PETSC ERROR: ------------------------------------------------------------------------
+[208]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[208]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[208]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[208]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[208]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[208]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 208
+[91]PETSC ERROR: ------------------------------------------------------------------------
+[91]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[91]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[91]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[91]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[91]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[91]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 91
+[210]PETSC ERROR: ------------------------------------------------------------------------
+[210]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[210]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[210]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[210]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[210]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[210]PETSC ERROR: to get more information on the crash.
+[92]PETSC ERROR: ------------------------------------------------------------------------
+[92]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[92]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[92]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[92]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[92]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[92]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 92
+[211]PETSC ERROR: ------------------------------------------------------------------------
+[211]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[211]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[211]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[211]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[211]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[211]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 211
+[93]PETSC ERROR: ------------------------------------------------------------------------
+[93]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[93]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[93]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[93]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[93]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[93]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 93
+[212]PETSC ERROR: ------------------------------------------------------------------------
+[212]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[212]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[212]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[212]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[212]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[212]PETSC ERROR: to get more information on the crash.
+[94]PETSC ERROR: ------------------------------------------------------------------------
+[94]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[94]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[94]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[94]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[94]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[94]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 94
+[95]PETSC ERROR: ------------------------------------------------------------------------
+[95]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[95]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[95]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[95]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[95]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[95]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 95
+[96]PETSC ERROR: ------------------------------------------------------------------------
+[96]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[96]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[96]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[96]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[96]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[96]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 96
+[97]PETSC ERROR: ------------------------------------------------------------------------
+[97]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[97]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[97]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[97]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[97]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[97]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 97
+[98]PETSC ERROR: ------------------------------------------------------------------------
+[98]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[98]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[98]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[98]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[98]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[98]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 98
+[99]PETSC ERROR: ------------------------------------------------------------------------
+[99]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[99]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[99]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[99]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[99]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[99]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 99
+[100]PETSC ERROR: ------------------------------------------------------------------------
+[100]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[100]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[100]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[100]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[100]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[100]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 100
+[101]PETSC ERROR: ------------------------------------------------------------------------
+[101]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[101]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[101]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[101]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[101]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[101]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 101
+[102]PETSC ERROR: ------------------------------------------------------------------------
+[102]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[102]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[102]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[102]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[102]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[102]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 102
+[103]PETSC ERROR: ------------------------------------------------------------------------
+[103]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[103]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[103]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[103]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[103]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[103]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 103
+[104]PETSC ERROR: ------------------------------------------------------------------------
+[104]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[104]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[104]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[104]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[104]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[104]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 104
+[105]PETSC ERROR: ------------------------------------------------------------------------
+[105]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[105]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[105]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[105]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[105]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[105]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 105
+[106]PETSC ERROR: ------------------------------------------------------------------------
+[106]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[106]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[106]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[106]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[106]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[106]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 106
+[107]PETSC ERROR: ------------------------------------------------------------------------
+[107]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[107]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[107]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[107]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[107]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[107]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 107
+[108]PETSC ERROR: ------------------------------------------------------------------------
+[108]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[108]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[108]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[108]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[108]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[108]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 108
+[109]PETSC ERROR: ------------------------------------------------------------------------
+[109]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[109]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[109]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[109]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[109]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[109]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 109
+[110]PETSC ERROR: ------------------------------------------------------------------------
+[110]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[110]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[110]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[110]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[110]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[110]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 110
+[111]PETSC ERROR: ------------------------------------------------------------------------
+[111]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[111]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[111]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[111]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[111]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[111]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 111
+[112]PETSC ERROR: ------------------------------------------------------------------------
+[112]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[112]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[112]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[112]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[112]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[112]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 112
+[113]PETSC ERROR: ------------------------------------------------------------------------
+[113]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[113]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[113]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[113]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[113]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[113]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 113
+[114]PETSC ERROR: ------------------------------------------------------------------------
+[114]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[114]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[114]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[114]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[114]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[114]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 114
+[115]PETSC ERROR: ------------------------------------------------------------------------
+[115]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[115]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[115]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[115]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[115]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[115]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 115
+[116]PETSC ERROR: ------------------------------------------------------------------------
+[116]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[116]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[116]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[116]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[116]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[116]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 116
+[117]PETSC ERROR: ------------------------------------------------------------------------
+[117]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[117]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[117]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[117]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[117]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[117]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 117
+[118]PETSC ERROR: ------------------------------------------------------------------------
+[118]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[118]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[118]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[118]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[118]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[118]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 118
+[119]PETSC ERROR: ------------------------------------------------------------------------
+[119]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[119]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[119]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[119]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[119]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[119]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 119
+[120]PETSC ERROR: ------------------------------------------------------------------------
+[120]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[120]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[120]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[120]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[120]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[120]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 120
+[121]PETSC ERROR: ------------------------------------------------------------------------
+[121]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[121]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[121]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[121]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[121]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[121]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 121
+[122]PETSC ERROR: ------------------------------------------------------------------------
+[122]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[122]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[122]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[122]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[122]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[122]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 122
+[123]PETSC ERROR: ------------------------------------------------------------------------
+[123]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[123]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[123]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[123]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[123]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[123]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 123
+[124]PETSC ERROR: ------------------------------------------------------------------------
+[124]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[124]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[124]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[124]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[124]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[124]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 124
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[1]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[1]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[1]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[1]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[1]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 1
+[209]PETSC ERROR: ------------------------------------------------------------------------
+[209]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[209]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[209]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[209]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[209]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[209]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 209
+[213]PETSC ERROR: ------------------------------------------------------------------------
+[213]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[213]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[213]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[213]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[213]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[213]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 213
+[214]PETSC ERROR: ------------------------------------------------------------------------
+[214]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[214]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[214]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[214]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[214]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[214]PETSC ERROR: to get more information on the crash.
+[215]PETSC ERROR: ------------------------------------------------------------------------
+[215]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[215]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[215]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[215]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[215]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[215]PETSC ERROR: to get more information on the crash.
+[216]PETSC ERROR: ------------------------------------------------------------------------
+[216]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[216]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[216]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[216]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[216]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[216]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 216
+[217]PETSC ERROR: ------------------------------------------------------------------------
+[217]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[217]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[217]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[217]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[217]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[217]PETSC ERROR: to get more information on the crash.
+[218]PETSC ERROR: ------------------------------------------------------------------------
+[218]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[218]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[218]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[218]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[218]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[218]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 218
+[219]PETSC ERROR: ------------------------------------------------------------------------
+[219]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[219]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[219]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[219]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[219]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[219]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 219
+[220]PETSC ERROR: ------------------------------------------------------------------------
+[220]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[220]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[220]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[220]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[220]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[220]PETSC ERROR: to get more information on the crash.
+[221]PETSC ERROR: ------------------------------------------------------------------------
+[221]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[221]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[221]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[221]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[221]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[221]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 221
+[222]PETSC ERROR: ------------------------------------------------------------------------
+[222]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[222]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[222]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[222]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[222]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[222]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 222
+[223]PETSC ERROR: ------------------------------------------------------------------------
+[223]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[223]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[223]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[223]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[223]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[223]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 223
+[224]PETSC ERROR: ------------------------------------------------------------------------
+[224]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[224]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[224]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[224]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[224]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[224]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 224
+[225]PETSC ERROR: ------------------------------------------------------------------------
+[225]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[225]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[225]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[225]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[225]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[225]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 225
+[226]PETSC ERROR: ------------------------------------------------------------------------
+[226]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[226]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[226]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[226]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[226]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[226]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 226
+[227]PETSC ERROR: ------------------------------------------------------------------------
+[227]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[227]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[227]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[227]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[227]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[227]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 227
+[228]PETSC ERROR: ------------------------------------------------------------------------
+[228]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[228]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[228]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[228]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[228]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[228]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 228
+[229]PETSC ERROR: ------------------------------------------------------------------------
+[229]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[229]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[229]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[229]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[229]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[229]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 229
+[230]PETSC ERROR: ------------------------------------------------------------------------
+[230]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[230]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[230]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[230]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[230]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[230]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 230
+[231]PETSC ERROR: ------------------------------------------------------------------------
+[231]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[231]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[231]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[231]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[231]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[231]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 231
+[232]PETSC ERROR: ------------------------------------------------------------------------
+[232]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[232]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[232]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[232]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[232]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[232]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 232
+[233]PETSC ERROR: ------------------------------------------------------------------------
+[233]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[233]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[233]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[233]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[233]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[233]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 233
+[234]PETSC ERROR: ------------------------------------------------------------------------
+[234]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[234]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[234]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[234]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[234]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[234]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 234
+[235]PETSC ERROR: ------------------------------------------------------------------------
+[235]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[235]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[235]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[235]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[235]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[235]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 235
+[236]PETSC ERROR: ------------------------------------------------------------------------
+[236]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[236]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[236]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[236]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[236]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[236]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 236
+[237]PETSC ERROR: ------------------------------------------------------------------------
+[237]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[237]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[237]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[237]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[237]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[237]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 237
+[238]PETSC ERROR: ------------------------------------------------------------------------
+[238]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[238]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[238]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[238]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[238]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[238]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 238
+[239]PETSC ERROR: ------------------------------------------------------------------------
+[239]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[239]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[239]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[239]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[239]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[239]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 239
+[240]PETSC ERROR: ------------------------------------------------------------------------
+[240]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[240]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[240]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[240]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[240]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[240]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 240
+[241]PETSC ERROR: ------------------------------------------------------------------------
+[241]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[241]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[241]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[241]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[241]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[241]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 241
+[242]PETSC ERROR: ------------------------------------------------------------------------
+[242]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[242]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[242]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[242]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[242]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[242]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 242
+[243]PETSC ERROR: ------------------------------------------------------------------------
+[243]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[243]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[243]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[243]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[243]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[243]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 243
+[244]PETSC ERROR: ------------------------------------------------------------------------
+[244]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[244]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[244]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[244]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[244]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[244]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 244
+[245]PETSC ERROR: ------------------------------------------------------------------------
+[245]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[245]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[245]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[245]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[245]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[245]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 245
+[246]PETSC ERROR: ------------------------------------------------------------------------
+[246]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[246]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[246]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[246]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[246]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[246]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 246
+[247]PETSC ERROR: ------------------------------------------------------------------------
+[247]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[247]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[247]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[247]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[247]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[247]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 247
+[248]PETSC ERROR: ------------------------------------------------------------------------
+[248]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[248]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[248]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[248]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[248]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[248]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 248
+[249]PETSC ERROR: ------------------------------------------------------------------------
+[249]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[249]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[249]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[249]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[249]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[249]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 249

@@ -51,7 +51,7 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
     #for now assuming H is constant in time but can fix this later
     #need to use FEniCS to calculate this!
     dHdt=0.0
-    dHdy = 0.0
+    dHdy = -1.0/200#0.0
     dudy = 0.0
     dvdx = 0.0  #might not have to be 0, well see
     dvdy = 0.0
@@ -59,7 +59,7 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
     #calc gradient of H w.r.t. x
     #this is just forward euler but only works for fixed geometry
     #instead we'll hard code for this case
-    dHdx=-1.0/200.0
+    dHdx=0.0#-1.0/200.0
     dudx=0.0
 
     #now calculate velocity vectors

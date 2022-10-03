@@ -3,19 +3,19 @@
 <Xdmf Version="3.0" xmlns:xi="http://www.w3.org/2001/XInclude">
   <Domain>
     <Grid Name="mesh" GridType="Uniform">
-      <Topology TopologyType="Triangle" NumberOfElements="512" NodesPerElement="3">
-        <DataItem Dimensions="512 3" NumberType="Int" Format="HDF">solution.h5:/Mesh/mesh/topology</DataItem>
+      <Topology TopologyType="Triangle" NumberOfElements="13841" NodesPerElement="3">
+        <DataItem Dimensions="13841 3" NumberType="Int" Format="HDF">solution.h5:/Mesh/mesh/topology</DataItem>
       </Topology>
       <Geometry GeometryType="XY">
-        <DataItem Dimensions="289 2" Format="HDF">solution.h5:/Mesh/mesh/geometry</DataItem>
+        <DataItem Dimensions="7458 2" Format="HDF">solution.h5:/Mesh/mesh/geometry</DataItem>
       </Geometry>
     </Grid>
     <Grid Name="f" GridType="Collection" CollectionType="Temporal">
       <Grid Name="f" GridType="Uniform">
         <xi:include xpointer="xpointer(/Xdmf/Domain/Grid[@GridType='Uniform'][1]/*[self::Topology or self::Geometry])" />
-        <Time Value="0.0050000000000000001" />
+        <Time Value="0.5" />
         <Attribute Name="f" AttributeType="Scalar" Center="Node">
-          <DataItem Dimensions="289 1" Format="HDF">solution.h5:/Function/f/0_0050000000000000001</DataItem>
+          <DataItem Dimensions="7458 1" Format="HDF">solution.h5:/Function/f/0_5</DataItem>
         </Attribute>
       </Grid>
     </Grid>
