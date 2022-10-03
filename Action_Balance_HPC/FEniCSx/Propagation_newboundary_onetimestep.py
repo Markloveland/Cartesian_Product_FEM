@@ -34,7 +34,7 @@ ny = 16
 #set initial time
 t = 0
 #set final time
-t_f = 5
+t_f = 5/1000
 #set time step
 #dt = 1.0
 dt = 0.005
@@ -263,9 +263,16 @@ C.zeroRows(global_non_boundary,diag=0)
 C.transpose()
 
 
-A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_exact,b=u_exact)
+M_SUPG.mult(u_cart,B)
+
+u_2 = u_func(x,y,sigma,theta,c,t+dt)
+u_d = u_2[local_boundary_dofs]
+F_dof.setValues(global_boundary_dofs,u_d)
+
+C.mult(F_dof,Temp)
 
 
+B = B - Temp
 
 
 #all_global_boundary_dofs = np.concatenate(MPI.COMM_WORLD.allgather(global_boundary_dofs))
@@ -273,6 +280,7 @@ A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_exact,b=u_exact)
 i=0
 
 
+A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 #A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 #create a direct linear solver
 #pc2 = PETSc.PC().create()
@@ -302,16 +310,6 @@ for i in range(nt):
     #B = F_dof.duplicate()
     #B.setFromOptions()
 
-    M_SUPG.mult(u_cart,B)
-
-    u_2 = u_func(x,y,sigma,theta,c,t)
-    u_d = u_2[local_boundary_dofs]
-    F_dof.setValues(global_boundary_dofs,u_d)
-
-    C.mult(F_dof,Temp)
-
-
-    B = B - Temp
     
     B.setValues(global_boundary_dofs,u_d)
     B.assemble()
