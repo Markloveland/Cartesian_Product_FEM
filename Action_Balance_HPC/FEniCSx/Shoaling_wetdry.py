@@ -65,6 +65,9 @@ domain1 = mesh.create_rectangle(comm, [np.array([x_min, y_min]), np.array([x_max
 V1 = fem.FunctionSpace(domain1, ("CG", 1))
 u1 = ufl.TrialFunction(V1)
 v1 = ufl.TestFunction(V1)
+####################################################################
+####################################################################
+#wetting drying portion
 elementwise = fem.FunctionSpace(domain1,("DG",0))
 is_wet = fem.Function(elementwise)
 depth_func = fem.Function(V1)
@@ -81,7 +84,6 @@ N_dof_1 = V1.dofmap.index_map.size_local
 local_dof_coords1 = dof_coords1[0:N_dof_1,:domain1.topology.dim]
 #for now lets set depth as x coordinate itself
 depth_func.x.array[:] = 20 - dof_coords1[:,0]/200
-
 #need to include a wetting/drying variable in domain 1
 CFx.wave.calculate_wetdry(domain1, V1, depth_func,is_wet,min_depth=0.05)
 ####################################################################
@@ -131,7 +133,6 @@ M=CFx.assemble.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,gl
 A = M.duplicate()
 #Adjust RHS for SUPG
 M_SUPG = M.duplicate()
-
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -236,68 +237,60 @@ if method == 'CG' or method == 'CG_strong':
 
 
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
-A.zeroRows(dry_dofs,diag=1)
-
-#just want to test answer
-#A.zeroRows(rows,diag=1)
-#correction to RHS for SUPG
-
-
+#A.zeroRows(dry_dofs,diag=1)
+#A.zeroRowsColumns(dry_dofs,diag=1)
 ##################################################################
 ##################################################################
-##################################################################
-#assmble RHS
-#now evaluate RHS at all d.o.f and set that as the F vector	
-F_dof = PETSc.Vec()
-F_dof.create(comm=comm)
-F_dof.setSizes((local_rows,global_rows),bsize=1)
-F_dof.setFromOptions()
+#initialize vectors
+#holds dirichlet boundary values
+u_D = PETSc.Vec()
+u_D.create(comm=comm)
+u_D.setSizes((local_rows,global_rows),bsize=1)
+u_D.setFromOptions()
+
+#holds temporary values to contribute to RHS
+Temp = u_D.duplicate()
+#RHS of linear system of equations
+B = u_D.duplicate()
+#Post Processiong
+E = u_D.duplicate()
+L2_E = u_D.duplicate()
+u_exact = u_D.duplicate()
+#solution vector
+u_cart = u_D.duplicate()
 
 
-B = F_dof.duplicate()
-E = F_dof.duplicate()
-L2_E = F_dof.duplicate()
-u_cart = F_dof.duplicate()
-u_exact = F_dof.duplicate()
-
+Temp.setFromOptions()
 E.setFromOptions()
 B.setFromOptions()
 L2_E.setFromOptions()
 u_cart.setFromOptions()
 u_exact.setFromOptions()
-
-#if rank==0:
-#    print('dof # ',str(30))
-#    print(M.getValues(30,range(81)))
-#    print(global_boundary_dofs)
-#    print(local_dof[30,:])
-#calculate pointwise values of RHS and put them in F_dof
-#temp = u_true
-#F_dof.setValues(rows,u_true)
-
-#multiply F by Mass matrix to get B
-#M.mult(F_dof,B)
-#set Dirichlet boundary conditions
-#B.setValues(global_boundary_dofs,u_d)
-#print('local range')
-#print(local_range)
-#print('global boundary #')
-#print(global_boundary_dofs)
-#just want to test answer
-#B.setValues(rows,u_2)
 ###################################################################
 ###################################################################
-#Time step
-#u_cart will hold solution
+#Set initial condition and set solution for dirichlet
+#u_cart will hold solution in time loop, this is also the initial condition
 u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
-#u_cart.ghostUpdate()
 u_cart.assemble()
 
-#set dry nodes
-A.zeroRowsColumns(dry_dofs,diag=1)
-#set dirichlet
-A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
+#this matrix will help apply b.c. efficiently
+C = A.duplicate(copy=True)
+#need C to be A but 0 when columns are not dirichlet
+C.transpose()
+mask = np.ones(rows.size, dtype=bool)
+mask[local_boundary_dofs] = False
+global_non_boundary = rows[mask]
+C.zeroRows(global_non_boundary,diag=0)
+C.transpose()
+#now zero out rows/cols containing boundary
+#set solution as the boundary condition, helps initial guess
+#all_global_boundary_dofs = np.concatenate(MPI.COMM_WORLD.allgather(global_boundary_dofs))
+#all_u_d = np.concatenate(MPI.COMM_WORLD.allgather(u_d))
 
+A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
+###################################################################
+###################################################################
+#Define solver/preconditioner
 #create a direct linear solver
 pc2 = PETSc.PC().create()
 #this is a direct solve with lu
@@ -313,22 +306,26 @@ ksp2.setInitialGuessNonzero(True)
 fname = 'ActionBalance_Shoaling_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
-
-
+#########################################################
+#######################################################
+#Time Step
 u = fem.Function(V1)
 for i in range(nt):
     t+=dt
-    u_2 = u_func(x,y,sigma,theta,c,t)
-    u_d = u_2[local_boundary_dofs]
-    #B = F_dof.duplicate()
-    #B.setFromOptions()
+    #B will hold RHS of system of equations
     M_SUPG.mult(u_cart,B)
-    B.setValues(global_boundary_dofs,u_d)
-    B.assemble()
-    ksp2.solve(B, u_cart)
-    #B.destroy()
-    B.zeroEntries()
 
+    #setting dirichlet BC
+    u_2 = u_func(x,y,sigma,theta,c,t)
+    u_d_vals = u_2[local_boundary_dofs]
+    u_D.setValues(global_boundary_dofs,u_d_vals)
+    C.mult(u_D,Temp)
+    B = B - Temp
+    B.setValues(global_boundary_dofs,u_d_vals)
+    B.assemble()
+    #solve for time t
+    ksp2.solve(B, u_cart)
+    B.zeroEntries()
     # Save solution to file in VTK format
     if (i%nplot==0):
         u.vector.setValues(dofs1, np.array(u_cart.getArray()[4::N_dof_2]))

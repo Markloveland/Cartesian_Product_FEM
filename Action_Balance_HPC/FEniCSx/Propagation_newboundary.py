@@ -3,7 +3,6 @@ Action Balance Equation Solver
 This algorithm for loading will be same required of Action Balance Equation
     du/dt + \/.cu = f
 """
-
 import numpy as np
 #import matplotlib.pyplot as plt
 from mpi4py import MPI
@@ -45,7 +44,7 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 100
 
-method = 'CG'
+method = 'SUPG_strong'
 PETSc.Sys.Print('Method chosen:', method)
 ####################################################################
 #Subdomain 1
@@ -102,7 +101,6 @@ M=CFx.assemble.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,gl
 A = M.duplicate()
 #Adjust RHS for SUPG
 M_SUPG = M.duplicate()
-
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -174,39 +172,32 @@ if method == 'SUPG' or method == 'SUPG_strong':
 
 time_2 = time.time()
 
-#if rank==0:
-#    print(local_dof_coords1)
-#    print(A.getValues(30,30))
 if method == 'SUPG' or method == 'SUPG_strong':
     M_SUPG = M+M_SUPG
     A=A+M_SUPG
 if method == 'CG' or method == 'CG_strong':
     M_SUPG = M
     A = A + M_SUPG
-
-
-#A.zeroRowsLocal(local_boundary_dofs,diag=1)
-#just want to test answer
-#A.zeroRows(rows,diag=1)
-#correction to RHS for SUPG
-
-
 ##################################################################
 ##################################################################
 ##################################################################
-#assmble RHS
-#now evaluate RHS at all d.o.f and set that as the F vector	
-F_dof = PETSc.Vec()
-F_dof.create(comm=comm)
-F_dof.setSizes((local_rows,global_rows),bsize=1)
-F_dof.setFromOptions()
+#initialize vectors
+#holds dirichlet boundary values
+u_D = PETSc.Vec()
+u_D.create(comm=comm)
+u_D.setSizes((local_rows,global_rows),bsize=1)
+u_D.setFromOptions()
 
-Temp = F_dof.duplicate()
-B = F_dof.duplicate()
-E = F_dof.duplicate()
-L2_E = F_dof.duplicate()
-u_cart = F_dof.duplicate()
-u_exact = F_dof.duplicate()
+#holds temporary values to contribute to RHS
+Temp = u_D.duplicate()
+#RHS of linear system of equations
+B = u_D.duplicate()
+#Post Processiong
+E = u_D.duplicate()
+L2_E = u_D.duplicate()
+u_exact = u_D.duplicate()
+#solution vector
+u_cart = u_D.duplicate()
 
 
 Temp.setFromOptions()
@@ -215,44 +206,13 @@ B.setFromOptions()
 L2_E.setFromOptions()
 u_cart.setFromOptions()
 u_exact.setFromOptions()
-
-#if rank==0:
-#    print('dof # ',str(30))
-#    print(M.getValues(30,range(81)))
-#    print(global_boundary_dofs)
-#    print(local_dof[30,:])
-#calculate pointwise values of RHS and put them in F_dof
-#temp = u_true
-#F_dof.setValues(rows,u_true)
-
-#multiply F by Mass matrix to get B
-#M.mult(F_dof,B)
-#set Dirichlet boundary conditions
-#B.setValues(global_boundary_dofs,u_d)
-#print('local range')
-#print(local_range)
-#print('global boundary #')
-#print(global_boundary_dofs)
-#just want to test answer
-#B.setValues(rows,u_2)
 ###################################################################
 ###################################################################
-#Time step
-#u_cart will hold solution
+#Set initial condition and set solution for dirichlet
+#u_cart will hold solution in time loop, this is also the initial condition
 u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
-u_exact.setValues(rows,u_func(x,y,sigma,theta,c,t+dt))
-u_exact.assemble()
-#u_cart.ghostUpdate()
 u_cart.assemble()
-
-
-#set Dirichlet boundary as global boundary
-#need to subtract dirichlet columns to RHS stored in b
-
-F_dof.setValues(rows,np.zeros(rows.shape))
-Temp.setValues(rows,np.zeros(rows.shape))
-F_dof.assemble()
-Temp.assemble()
+#this matrix will help apply b.c. efficiently
 C = A.duplicate(copy=True)
 #need C to be A but 0 when columns are not dirichlet
 C.transpose()
@@ -262,61 +222,43 @@ global_non_boundary = rows[mask]
 C.zeroRows(global_non_boundary,diag=0)
 C.transpose()
 
-
-A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_exact,b=u_exact)
-
-
-
-
+#now zero out rows/cols containing boundary
+#set solution as the boundary condition, helps initial guess
+A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 #all_global_boundary_dofs = np.concatenate(MPI.COMM_WORLD.allgather(global_boundary_dofs))
 #all_u_d = np.concatenate(MPI.COMM_WORLD.allgather(u_d))
-i=0
-
-
-#A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
-#create a direct linear solver
-#pc2 = PETSc.PC().create()
-#this is a direct solve with lu
-#pc2.setType('none')
-#pc2.setOperators(A)
-
+####################################################################
+###################################################################
+#create PETSc solver
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setType('gmres')
 #options are cgne(worked well), gmres, cgs, bcgs, bicg
 #ksp2.setPC(pc2)
 #ksp2.setUp()
-
 ksp2.setInitialGuessNonzero(True)
-
+####################################################################
+####################################################################
+#time loop
 fname = 'ActionBalance_Propagation_CG/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
-
-
 u = fem.Function(V1)
 for i in range(nt):
     t+=dt
-    #u_2 = u_func(x,y,sigma,theta,c,t)
-    #u_d = u_2[local_boundary_dofs]
-    #B = F_dof.duplicate()
-    #B.setFromOptions()
-
+    #B will hold RHS of system of equations
     M_SUPG.mult(u_cart,B)
 
+    #setting dirichlet BC
     u_2 = u_func(x,y,sigma,theta,c,t)
-    u_d = u_2[local_boundary_dofs]
-    F_dof.setValues(global_boundary_dofs,u_d)
-
-    C.mult(F_dof,Temp)
-
-
+    u_d_vals = u_2[local_boundary_dofs]
+    u_D.setValues(global_boundary_dofs,u_d_vals)
+    C.mult(u_D,Temp)
     B = B - Temp
-    
-    B.setValues(global_boundary_dofs,u_d)
+    B.setValues(global_boundary_dofs,u_d_vals)
     B.assemble()
+    #solve for time t
     ksp2.solve(B, u_cart)
-    #B.destroy()
     B.zeroEntries()
     # Save solution to file in VTK format
     if (i%nplot==0):

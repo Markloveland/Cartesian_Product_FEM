@@ -6,7 +6,7 @@
 #SBATCH -p normal
 #SBATCH -N 2
 #SBATCH -n 240
-#SBATCH -t 01:45:00
+#SBATCH -t 00:45:00
 
 #SBATCH --mail-user=markloveland@utexas.edu
 #SBATCH --mail-type=begin        # email me when the job starts
@@ -18,6 +18,6 @@ eval "$(/home1/04637/mdl2665/anaconda3/bin/conda shell.bash hook)"
 conda init
 conda activate fenicsx-env
 conda info
-ibrun python3 Propagation_wetdry_2.py
+ibrun python3 Propagation_newboundary.py
 date >> run.timing
 

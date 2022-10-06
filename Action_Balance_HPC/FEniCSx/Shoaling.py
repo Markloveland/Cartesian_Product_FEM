@@ -55,7 +55,7 @@ PETSc.Sys.Print('nt',nt)
 #nplot = 1
 nplot = 100
 
-method = 'SUPG_strong'
+method = 'SUPG'
 
 ####################################################################
 #Subdomain 1
@@ -280,10 +280,11 @@ ksp2.setType('gmres')
 ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
-fname = 'ActionBalance_Shoaling/solution'
+fname = 'Shoaling_HS_animation/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 
+HS = fem.Function(V1)
 
 u = fem.Function(V1)
 for i in range(nt):
@@ -301,8 +302,11 @@ for i in range(nt):
 
     # Save solution to file in VTK format
     if (i%nplot==0):
-        u.vector.setValues(dofs1, np.array(u_cart.getArray()[4::N_dof_2]))
-        xdmf.write_function(u, t)
+        #compute significant wave height
+        HS_vec = CFx.wave.calculate_HS(u_cart,V2,N_dof_1,N_dof_2,local_range2)
+        HS.vector.setValues(dofs1,np.array(HS_vec))
+        HS.vector.ghostUpdate()
+        xdmf.write_function(HS, t)
         #hdf5_file.write(u,"solution",t)
 #print final iterations
 ksp2.view()
@@ -348,6 +352,7 @@ PETSc.Sys.Print('Final solution on boundary')
 #print(u_cart.getValues(global_boundary_dofs))
 
 #compute significant wave height
+'''
 HS = fem.Function(V1)
 HS_vec = CFx.wave.calculate_HS(u_cart,V2,N_dof_1,N_dof_2,local_range2)
 HS.vector.setValues(dofs1,np.array(HS_vec))
@@ -357,7 +362,7 @@ xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 xdmf.write_function(HS)
 xdmf.close()
-
+'''
 #try to extract HS at stations
 numpoints = 150
 x_stats = np.linspace(x_min,x_max,numpoints)

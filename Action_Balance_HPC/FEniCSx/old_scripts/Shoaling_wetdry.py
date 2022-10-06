@@ -29,17 +29,17 @@ nprocs = comm.Get_size()
 
 #specify bouns in geographic mesh
 x_min = 0.0
-x_max = 20000
+x_max = 4000
 y_min = 0.0
-y_max = 4000
+y_max = 20000
 # Create cartesian mesh of two 2D and define function spaces
 nx = 100
 ny = 100
 # define spectral domain
 omega_min = 0.25
 omega_max = 2.0
-theta_min = -10/180*np.pi + np.pi/2
-theta_max = 10/180*np.pi + np.pi/2
+theta_min = -10/180*np.pi
+theta_max = 10/180*np.pi
 n_sigma = 30
 n_theta = 24
 #set initial time
@@ -61,17 +61,13 @@ method = 'SUPG_strong'
 #Subdomain 1
 #the first subdomain will be split amongst processors
 # this is set up ideally for subdomain 1 > subdomain 2
-filename = 'meshes/shoaling_unstructured.xdmf'
-encoding= io.XDMFFile.Encoding.HDF5
-with io.XDMFFile(MPI.COMM_WORLD, filename, "r", encoding=encoding) as file:
-    domain1 = file.read_mesh()
-
-#specify file path as a string, either absolute or relative to where script is run
-#domain1 = CFx.utils.ADCIRC_mesh_gen(comm,'meshes/depth2.grd')
-#domain1 = mesh.create_rectangle(comm, [np.array([x_min, y_min]), np.array([x_max, y_max])], [nx, ny], mesh.CellType.triangle)
+domain1 = mesh.create_rectangle(comm, [np.array([x_min, y_min]), np.array([x_max, y_max])], [nx, ny], mesh.CellType.triangle)
 V1 = fem.FunctionSpace(domain1, ("CG", 1))
 u1 = ufl.TrialFunction(V1)
 v1 = ufl.TestFunction(V1)
+####################################################################
+####################################################################
+#wetting drying portion
 elementwise = fem.FunctionSpace(domain1,("DG",0))
 is_wet = fem.Function(elementwise)
 depth_func = fem.Function(V1)
@@ -86,9 +82,8 @@ dofs1 = np.arange(*local_range1,dtype=np.int32)
 N_dof_1 = V1.dofmap.index_map.size_local
 #hopefully the dof coordinates owned by the process
 local_dof_coords1 = dof_coords1[0:N_dof_1,:domain1.topology.dim]
-#for now lets set depth as y coordinate itself
-depth_func.x.array[:] = 20 - dof_coords1[:,1]/200
-
+#for now lets set depth as x coordinate itself
+depth_func.x.array[:] = 20 - dof_coords1[:,0]/200
 #need to include a wetting/drying variable in domain 1
 CFx.wave.calculate_wetdry(domain1, V1, depth_func,is_wet,min_depth=0.05)
 ####################################################################
@@ -168,9 +163,9 @@ theta = local_dof[:,3]
 local_boundary_dofs = CFx.boundary.fetch_boundary_dofs(domain1,domain2,V1,V2,N_dof_1,N_dof_2)
 
 #now only want subset that is the inflow, need to automate later
-dum1 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
-dum2 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]>=(x_max-1e-14),theta[local_boundary_dofs]>np.pi/2)]
-dum3 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]<=(x_min+1e-14),theta[local_boundary_dofs]<np.pi/2)]
+dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
+dum2 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]>=(y_max-1e-14),theta[local_boundary_dofs]<0)]
+dum3 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]<=(y_min+1e-14),theta[local_boundary_dofs]>0)]
 dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
 dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
@@ -180,7 +175,7 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
-depth = 20 - y/200
+depth = 20 - x/200
 #zero rows and columns below a minumum depth
 min_depth = 0.05 
 dry_dofs_local = np.array(np.where(depth<min_depth)[0],dtype=np.int32)
@@ -197,7 +192,7 @@ def u_func(x,y,sigma,theta,c,t):
     HS = 1
     F_std = 0.1
     F_peak = 0.1
-    Dir_mean = 90.0 #mean direction in degrees
+    Dir_mean = 0.0 #mean direction in degrees
     Dir_rad = Dir_mean*np.pi/(180)
     Dir_exp = 500
     #returns vector with initial condition values at global DOF
@@ -205,7 +200,7 @@ def u_func(x,y,sigma,theta,c,t):
     aux3 = 2*F_std**2
     tol=1e-14
     aux2 = (sigma - ( np.pi*2*F_peak ) )**2
-    E = (y<tol)*aux1*np.exp(-aux2/aux3)
+    E = (x<tol)*aux1*np.exp(-aux2/aux3)
     CTOT = np.sqrt(0.5*Dir_exp/np.pi)/(1.0 - 0.25/Dir_exp)
     A_COS = np.cos(theta - Dir_rad)
     CDIR = (A_COS>0)*CTOT*np.maximum(A_COS**Dir_exp, 1.0e-10)
@@ -273,22 +268,25 @@ L2_E.setFromOptions()
 u_cart.setFromOptions()
 u_exact.setFromOptions()
 
+#if rank==0:
+#    print('dof # ',str(30))
+#    print(M.getValues(30,range(81)))
+#    print(global_boundary_dofs)
+#    print(local_dof[30,:])
+#calculate pointwise values of RHS and put them in F_dof
+#temp = u_true
+#F_dof.setValues(rows,u_true)
 
-
-#set Dirichlet boundary as global boundary
-#need to subtract dirichlet columns to RHS stored in b
-F_dof.setValues(rows,np.zeros(rows.shape))
-Temp.setValues(rows,np.zeros(rows.shape))
-F_dof.assemble()
-Temp.assemble()
-C = A.duplicate(copy=True)
-#need C to be A but 0 when columns are not dirichlet
-C.transpose()
-mask = np.ones(rows.size, dtype=bool)
-mask[local_boundary_dofs] = False
-global_non_boundary = rows[mask]
-C.zeroRows(global_non_boundary,diag=0)
-C.transpose()
+#multiply F by Mass matrix to get B
+#M.mult(F_dof,B)
+#set Dirichlet boundary conditions
+#B.setValues(global_boundary_dofs,u_d)
+#print('local range')
+#print(local_range)
+#print('global boundary #')
+#print(global_boundary_dofs)
+#just want to test answer
+#B.setValues(rows,u_2)
 ###################################################################
 ###################################################################
 #Time step
@@ -314,7 +312,7 @@ ksp2.setType('gmres')
 ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
-fname = 'ActionBalance_Shoaling_unstructured_mesh/solution'
+fname = 'ActionBalance_Shoaling_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 
@@ -386,7 +384,7 @@ HS = fem.Function(V1)
 HS_vec = CFx.wave.calculate_HS(u_cart,V2,N_dof_1,N_dof_2,local_range2)
 HS.vector.setValues(dofs1,np.array(HS_vec))
 HS.vector.ghostUpdate()
-fname = 'Shoaling_HS_unstructured/solution'
+fname = 'Shoaling_HS_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 xdmf.write_function(HS)
@@ -398,7 +396,7 @@ x_stats = np.linspace(x_min,x_max-41,numpoints)
 
 y_coord = 10000
 stations = y_coord*np.ones((numpoints,2))
-stations[:,1] = x_stats
+stations[:,0] = x_stats
 
 
 points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
@@ -411,5 +409,5 @@ if rank ==0:
     #PETSc.Sys.Print('Station vals:')
     #PETSc.Sys.Print(vals)
     #PETSc.Sys.Print(vals.shape)
-    np.savetxt("HS_stations_SUPG_unstructured_wetdry.csv", np.append(stats, vals, axis=1), delimiter=",")
+    np.savetxt("HS_stations_SUPG_wetdry.csv", np.append(stats, vals, axis=1), delimiter=",")
 
