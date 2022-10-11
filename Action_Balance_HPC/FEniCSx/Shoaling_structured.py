@@ -45,7 +45,7 @@ n_theta = 24
 #set initial time
 t = 0
 #set final time
-t_f = 2000
+t_f = 2000/2
 #set time step
 dt = 0.5
 #calculate nt
@@ -303,7 +303,7 @@ ksp2.setType('gmres')
 ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
-fname = 'ActionBalance_Shoaling_wetdry/solution'
+fname = 'ActionBalance_Shoaling_structured/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 #########################################################
@@ -379,7 +379,7 @@ HS = fem.Function(V1)
 HS_vec = CFx.wave.calculate_HS(u_cart,V2,N_dof_1,N_dof_2,local_range2)
 HS.vector.setValues(dofs1,np.array(HS_vec))
 HS.vector.ghostUpdate()
-fname = 'Shoaling_HS_wetdry/solution'
+fname = 'Shoaling_HS_structured/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 xdmf.write_function(HS)
@@ -404,5 +404,5 @@ if rank ==0:
     #PETSc.Sys.Print('Station vals:')
     #PETSc.Sys.Print(vals)
     #PETSc.Sys.Print(vals.shape)
-    np.savetxt("HS_stations_SUPG_wetdry.csv", np.append(stats, vals, axis=1), delimiter=",")
+    np.savetxt("HS_stations_SUPG_structured.csv", np.append(stats, vals, axis=1), delimiter=",")
 

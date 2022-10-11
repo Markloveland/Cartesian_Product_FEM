@@ -45,7 +45,7 @@ n_theta = 24
 #set initial time
 t = 0
 #set final time
-t_f = 2000/2
+t_f = 2000
 #set time step
 dt = 0.5
 #calculate nt
