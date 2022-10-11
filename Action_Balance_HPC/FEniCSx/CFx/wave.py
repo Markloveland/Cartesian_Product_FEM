@@ -3,8 +3,25 @@ from dolfinx import fem
 import ufl
 
 
+def interpolate_gradients(f):
+    #takes in bathymetry assuming P1, currents as dolfinx functions and interpolates
+    #derivatives back to P1
+    #see if we can finesse using L2 projection
+    V = f._V
+    u = ufl.TrialFunction(V)
+    v = ufl.TestFunction(V) 
+    a = u*v* ufl.dx
+    L = f.dx(0)*v*ufl.dx
+    problem = fem.petsc.LinearProblem(a, L, petsc_options={"ksp_type": "gmres"})
+    ux = problem.solve()
+
+    L2 = f.dx(1)*v*ufl.dx
+    problem = fem.petsc.LinearProblem(a,L2,petsc_options={"ksp_type":"gmres"})
+    uy = problem.solve()
+    return ux,uy
+
 #computation of any wave params/sources will take place here
-def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
+def compute_wave_speeds_pointwise(x,y,sigma,theta,depth,u,v,dHdx=-1.0/200,dHdy=0.0,g=9.81):
     #need a function to calculate wave speed (phase and group) and wavenumber
     #takes in degrees of freedom and computes wave speeds pointwise
     N_dof = len(sigma)
@@ -51,7 +68,7 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
     #for now assuming H is constant in time but can fix this later
     #need to use FEniCS to calculate this!
     dHdt=0.0
-    dHdy = 0#-1.0/200#0.0
+    #dHdy = 0#-1.0/200#0.0
     dudy = 0.0
     dvdx = 0.0  #might not have to be 0, well see
     dvdy = 0.0
@@ -59,7 +76,7 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
     #calc gradient of H w.r.t. x
     #this is just forward euler but only works for fixed geometry
     #instead we'll hard code for this case
-    dHdx=-1.0/200.0#0
+    #dHdx=-1.0/200.0#0
     dudx=0.0
 
     #now calculate velocity vectors
@@ -70,6 +87,98 @@ def compute_wave_speeds(x,y,sigma,theta,depth,u,v,g=9.81):
         dudx*np.cos(theta)*np.sin(theta) - dudy*(np.cos(theta)**2) + dvdx*(np.sin(theta)**2) \
         -dvdy*np.cos(theta)*np.sin(theta)
     return c_out
+
+
+
+#computation of any wave params/sources will take place here
+def compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2,g=9.81, min_depth = 0.05):
+    dHdx_func,dHdy_func = interpolate_gradients(depth_func)    
+
+    #compute depth at all dof
+    depth = np.kron(depth_func.vector.getArray(),np.ones(N_dof_2))
+    u = np.kron(u_func.vector.getArray(),np.ones(N_dof_2))
+    v = np.kron(v_func.vector.getArray(),np.ones(N_dof_2))
+    dHdx = np.kron(dHdx_func.vector.getArray(),np.ones(N_dof_2))
+    dHdy = np.kron(dHdy_func.vector.getArray(),np.ones(N_dof_2))
+
+    #need a function to calculate wave speed (phase and group) and wavenumber
+    #takes in degrees of freedom and computes wave speeds pointwise
+    N_dof = len(sigma)
+    c_out = np.ones((N_dof,4))
+    
+
+    dry_dofs_local = np.array(np.where(depth<min_depth)[0],dtype=np.int32)
+    ##dry_dofs = dry_dofs_local + local_range[0]
+    wet_dofs_local = np.where(depth>=min_depth)[0] 
+    
+
+    temp = np.zeros(wet_dofs_local.shape)
+    k = np.zeros(wet_dofs_local.shape)
+
+
+    c_out[wet_dofs_local,:] = compute_wave_speeds_pointwise(x[wet_dofs_local],y[wet_dofs_local],sigma[wet_dofs_local],theta[wet_dofs_local],depth[wet_dofs_local],
+            u[wet_dofs_local],v[wet_dofs_local],dHdx=dHdx[wet_dofs_local],dHdy=dHdy[wet_dofs_local])
+    '''
+    #employ 3 different approximations depending on water depth
+    WGD=np.sqrt(depth_wet/g)*g
+    SND=sigma_wet*np.sqrt(depth_wet/g)
+
+    shallow_range=np.argwhere(SND<1e-6)
+    mid_range=np.argwhere((SND<2.5)&(SND>=1e-6))
+    deep_range=np.argwhere(SND>=2.5)
+
+    def cg_mid(SND,g,depths,sigmas):
+        SND2=SND*SND
+        C=np.sqrt(g*depths/(SND2 +1/(1+0.666*SND2+.445*SND2**2
+                                     - 0.105*SND2**3 + 0.272*SND2**4)))
+        KND=sigmas*depths/C
+
+        FAC1=2*KND/np.sinh(2*KND)
+        N=0.5*(1+FAC1)
+        return N*C,sigmas/C
+    def cg_deep(g,sigmas):
+        return 0.5*g/sigmas
+    def cg_shallow(WGD):
+        return WGD
+
+    #store the c_g (group velocity) as temporary variables
+    temp[shallow_range]=cg_shallow(WGD[shallow_range])
+    temp[mid_range],k[mid_range]=cg_mid(SND[mid_range],g,depth_wet[mid_range],sigma_wet[mid_range])
+    temp[deep_range]=cg_deep(g,sigma_wet[deep_range])
+    #save these values in c_out and multiply by appropriate angles
+    c_out[wet_dofs_local,0] = temp*np.cos(theta_wet)
+    c_out[wet_dofs_local,1] = temp*np.sin(theta_wet)
+
+
+    #now calculate wavenumber k and store temporarily
+    k[shallow_range]=SND[shallow_range]/depth_wet[shallow_range]
+    k[deep_range]=sigma_wet[deep_range]**2/g
+
+    #now calculate c_sigma and c_theta, these are a bit more tricky
+
+    #for now assuming H is constant in time but can fix this later
+    #need to use FEniCS to calculate this!
+    dHdt=0.0
+    #dHdy = 0#-1.0/200#0.0
+    dudy = 0.0
+    dvdx = 0.0  #might not have to be 0, well see
+    dvdy = 0.0
+
+    #calc gradient of H w.r.t. x
+    #this is just forward euler but only works for fixed geometry
+    #instead we'll hard code for this case
+    #dHdx=-1.0/200.0#0
+    dudx=0.0
+
+    #now calculate velocity vectors
+    #c_sigma
+    c_out[wet_dofs_local,2] = k*sigma_wet/(np.sinh(2*k*depth_wet)) *(dHdt + u_wet*dHdx_wet + v_wet*dHdy_wet) - temp*k*(dudx)
+    #c theta
+    c_out[wet_dofs_local,3] = sigma_wet/(np.sinh(2*k*depth_wet))*(dHdx_wet*np.sin(theta_wet)- dHdy_wet*np.cos(theta_wet)) + \
+        dudx*np.cos(theta_wet)*np.sin(theta_wet) - dudy*(np.cos(theta_wet)**2) + dvdx*(np.sin(theta_wet)**2) \
+        -dvdy*np.cos(theta_wet)*np.sin(theta_wet)
+    '''
+    return c_out,dry_dofs_local
 
 
 

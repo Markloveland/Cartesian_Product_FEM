@@ -18,6 +18,9 @@ domain = mesh.create_unit_square(MPI.COMM_WORLD, 8, 8, mesh.CellType.triangle)
 V = FunctionSpace(domain, ("CG", 1))
 uD = fem.Function(V)
 uD.interpolate(lambda x: 1 + x[0]**2 + 2 * x[1]**2)
+
+print('uD.x',len(uD.x.array[:]))
+print('uD.vector',len(uD.vector.getArray()))
 # Create facet to cell connectivity required to determine boundary facets
 tdim = domain.topology.dim
 fdim = tdim - 1
@@ -100,7 +103,6 @@ i=0
 
 #original boundary from fenics
 #print(boundary_dofs)
-
 print('ghosted nodes',rank,boundary_dofs[boundary_dofs>=local_size1])
 #need to eliminate ghost nodes
 boundary_dofs = boundary_dofs[boundary_dofs<local_size1]
@@ -127,7 +129,7 @@ for col in all_boundary_dofs:
 
 temp.setValues(range(rows[0],rows[1]),dum)
 
-
+print('ownership range rank,',rank,A.getOwnershipRange())
 
 #something is wrong with RHS
 dum = problem_no_bc.b.getValues(dofs1)

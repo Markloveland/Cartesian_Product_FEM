@@ -41,16 +41,36 @@ No action taken.
              netrc file : None
            offline mode : False
 
-TACC:  Starting up job 366288 
+TACC:  Starting up job 494146 
 TACC:  Starting parallel tasks... 
-nt 1000
-Final t 4.999999999999916
-L2 error 2.6956953329607316
-L inf error 0.19149308797267617
-min in error (950168, -0.16768313903358423)
-max error (924960, 0.19149308797267617)
-h 0.03125
-dof 1185921
-The build time is 97.23252630233765 seconds
-The solve time is 535.0623426437378 seconds
+nt 2000
+KSP Object: 250 MPI processes
+  type: gmres
+    restart=30, using Classical (unmodified) Gram-Schmidt Orthogonalization with no iterative refinement
+    happy breakdown tolerance 1e-30
+  maximum iterations=10000, nonzero initial guess
+  tolerances:  relative=1e-05, absolute=1e-50, divergence=10000.
+  left preconditioning
+  using PRECONDITIONED norm type for convergence test
+PC Object: 250 MPI processes
+  type: none
+  linear system matrix = precond matrix:
+  Mat Object: 250 MPI processes
+    type: mpiaij
+    rows=7905775, cols=7905775
+    total: nonzeros=364803372, allocated nonzeros=367337003
+    total number of mallocs used during MatSetValues calls=0
+      not using I-node (on process 0) routines
+Niter 0
+convergence code 2
+Final t 1000.0
+L2 error 6482.960351241936
+L inf error 98.44463952549033
+min in error (1266164, -2.1202265708842822)
+max error (2156641, 98.44463952549033)
+h 0.01
+dof 104060401
+The build time is 926.895512342453 seconds
+The solve time is 3292.4253718852997 seconds
+Final solution on boundary
 TACC:  Shutdown complete. Exiting. 
