@@ -1,0 +1,2048 @@
+no change     /home1/04637/mdl2665/anaconda3/condabin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda-env
+no change     /home1/04637/mdl2665/anaconda3/bin/activate
+no change     /home1/04637/mdl2665/anaconda3/bin/deactivate
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.sh
+no change     /home1/04637/mdl2665/anaconda3/etc/fish/conf.d/conda.fish
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/Conda.psm1
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/conda-hook.ps1
+no change     /home1/04637/mdl2665/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.csh
+no change     /home1/04637/mdl2665/.bashrc
+No action taken.
+
+     active environment : fenicsx-env
+    active env location : /home1/04637/mdl2665/anaconda3/envs/fenicsx-env
+            shell level : 2
+       user config file : /home1/04637/mdl2665/.condarc
+ populated config files : 
+          conda version : 4.12.0
+    conda-build version : 3.21.8
+         python version : 3.9.12.final.0
+       virtual packages : __linux=4.18.0=0
+                          __glibc=2.28=0
+                          __unix=0=0
+                          __archspec=1=x86_64
+       base environment : /home1/04637/mdl2665/anaconda3  (writable)
+      conda av data dir : /home1/04637/mdl2665/anaconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home1/04637/mdl2665/anaconda3/pkgs
+                          /home1/04637/mdl2665/.conda/pkgs
+       envs directories : /home1/04637/mdl2665/anaconda3/envs
+                          /home1/04637/mdl2665/.conda/envs
+               platform : linux-64
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/4.18.0-305.12.1.el8_4.x86_64 rocky/8.4 glibc/2.28
+                UID:GID : 839365:819760
+             netrc file : None
+           offline mode : False
+
+TACC:  Starting up job 499186 
+TACC:  Starting parallel tasks... 
+nt 4000
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Shoaling_newvel.py", line 195, in <module>
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 137, in compute_wave_speeds
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 17, in interpolate_L2
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+    ux.ghostUpdate()
+AttributeError: 'Function' object has no attribute 'ghostUpdate'
+TACC:  MPI job exited with code: 1 
+TACC:  Shutdown complete. Exiting. 

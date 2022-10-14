@@ -128,7 +128,7 @@ def init_array2(B1,len1):
     dat1[:,0] = temp
     return B1_I,B1_J,dat1
 
-
+'''
 def update_tau(tau,c_vals,mesh1,mesh2,local_size2,dofs,node_num,subdomain=0):
     #hardcoded for uniform mesh this time
     tdim = mesh1.topology.dim
@@ -148,6 +148,20 @@ def update_tau(tau,c_vals,mesh1,mesh2,local_size2,dofs,node_num,subdomain=0):
     #tau = h / /|c/|
     tau.vector.setValues(dofs,np.array(h/c_mag))
     tau.vector.ghostUpdate()
+    return 0
+'''
+
+def update_tau(c,c_vals,dofs1,local_size2,node_num,subdomain=0):
+    if subdomain == 0:
+        #print(c_vals.shape)
+        #need value at a specific dof_coordinate in second domain
+        c.vector.setValues(dofs1, np.array(c_vals[node_num::local_size2]))
+        #also need to propagate ghost values
+        c.vector.ghostUpdate()
+    if subdomain == 1:
+        c.vector.setValues(dofs1,np.array(c_vals[node_num*local_size2:(node_num+1)*local_size2]))
+        c.vector.ghostUpdate()
+
     return 0
 
 
@@ -169,7 +183,7 @@ def update_c(c_func,c_vals,dofs1,local_size2,node_num,subdomain=0):
 
     return 0
 
-def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,j=0,SUPG=0,tau=0,mesh2=0): 
+def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,j=0,SUPG=0,tau=0,mesh2=0,tau_vals=0): 
     if j == 0:
         local_size = local_size2
     if j ==1:
@@ -218,7 +232,8 @@ def assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs
     
         for a in range(1,local_size):
             update_c(c_func,c_vals,dofs1,local_size2,a,subdomain=j)
-            update_tau(tau,c_vals,domain1,mesh2,local_size2,dofs1,a,subdomain=j)
+            update_tau(tau,tau_vals,dofs1,local_size2,a,subdomain=j)
+            #update_tau(tau,c_vals,domain1,mesh2,local_size2,dofs1,a,subdomain=j)
             ctr = 0
         
             for K in form_K:
@@ -278,7 +293,7 @@ def assemble_subdomain2(domain2,K21,len1,fy,dofs2,vals):
     return B1_I,B1_J,dat1
 
 
-def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet=1,method='CG'):
+def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet=1,method='CG',tau_vals=0):
     #given a method, pulls in fenics weak form and
     #generates an assembled PETSc matrix
     #which is the stiffness matrix for the action balance equation
@@ -290,28 +305,32 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet=1,me
         #first pull the proper weak form:
         c_func,K_vec,fy,K2,K_bound,fy4,K3 = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,is_wet=is_wet)
         SUPG = 0
-        tau = 0
+        tau = tau_vals
     if method == 'SUPG':
         c_func,K_vec,fy,K2,K_bound,fy4,K3,tau,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_weak_form(domain1,domain2,V1,V2,is_wet=is_wet,SUPG='on')
         #(still need to update tau)
         #update_c([tau] ...
-        update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
-        update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
+        update_tau(tau,tau_vals,dofs1,local_size2,0)
+        update_tau(tau2,tau_vals,dofs2,local_size2,0,subdomain=1)
+        #update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
         SUPG = 1
     if method == 'CG_strong':
         c_func,K_vec,fy,K2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_strong_form(domain1,domain2,V1,V2,is_wet=is_wet,SUPG='off')
-        tau = 0
+        tau = tau_vals
         tau2 = 0
         SUPG = 0
     if method == 'SUPG_strong':
         c_func,K_vec,fy,K2,tau,tau2,c2,K2_vol,fx,K2_vol_x = CFx.forms.CG_strong_form(domain1,domain2,V1,V2,is_wet=is_wet,SUPG='on') 
-        update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
-        update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
+        
+        update_tau(tau,tau_vals,dofs1,local_size2,0)
+        update_tau(tau2,tau_vals,dofs2,local_size2,0,subdomain=1)
+        #update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+        #update_tau(tau2,c_vals,domain1,domain2,local_size2,dofs2,0,subdomain=1)
         SUPG = 1
     #integrate volume terms in first subdomain
     update_c(c_func,c_vals,dofs1,local_size2,0)
     #assemble volume terms with first subdomain    
-    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=SUPG,tau=tau,mesh2=domain2)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(K_vec,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=SUPG,tau=tau,mesh2=domain2,tau_vals=tau_vals)
     #integrate resulting terms in second subdomain
     update_f(fy,dofs2,vals,0)
     B1_I,B1_J,dat1 = assemble_subdomain2(domain2,K2,lens1[0],fy,dofs2,vals)
@@ -325,7 +344,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet=1,me
     if method == 'CG' or method == 'SUPG':
         #now integrate boundary terms in first subdomain
         update_c(c_func,c_vals,dofs1,local_size2,0)
-        A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size1,local_size2,c_func,c_vals,dofs1)
+        A_I,A_J,vals,lens1 = assemble_subdomain1(K_bound,domain1,local_size1,local_size2,c_func,c_vals,dofs1,tau_vals=tau_vals)
         #some partitions in the first subdomain dont contain any global boundary so check
         if len(vals[0][:,0]) != 0:
             #integrate resulting  terms in second subdomain
@@ -341,7 +360,7 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet=1,me
     if method == 'SUPG' or method == 'CG_strong' or method =='SUPG_strong':
         update_c(c2,c_vals,dofs2,local_size2,0,subdomain=1)
         
-        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1,SUPG=SUPG,tau=tau2,mesh2=domain1)
+        B_I,B_J,vals,lens1 = assemble_subdomain1(K2_vol,domain2,local_size1,local_size2,c2,c_vals,dofs2,j=1,SUPG=SUPG,tau=tau2,mesh2=domain1,tau_vals=tau_vals)
         update_f(fx,dofs1,vals,0)
         A1_I,A1_J,dat3 = assemble_subdomain2(domain1,K2_vol_x,lens1[0],fx,dofs1,vals)
         
@@ -356,13 +375,15 @@ def build_action_balance_stiffness(domain1,domain2,V1,V2,c_vals,dt,A,is_wet=1,me
     A.assemble()
     return 0
 
-def build_RHS(domain1,domain2,V1,V2,c_vals,A,is_wet=1):
+def build_RHS(domain1,domain2,V1,V2,c_vals,A,is_wet=1,tau_vals=0):
     A_global_size,A_local_size,dofs1,local_size1,dofs2,local_size2 = fetch_params(A,V1,V2)
     L,g,L_y,tau,c_func = CFx.forms.SUPG_RHS(domain1,domain2,V1,V2,is_wet=is_wet)
-    update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
+    #update_tau(tau,c_vals,domain1,domain2,local_size2,dofs1,0,subdomain=0)
     #integrate volume terms in first subdomain
+    #update_tau(tau,tau_vals,dofs1,local_size2,0)
     update_c(c_func,c_vals,dofs1,local_size2,0)
-    A_I,A_J,vals,lens1 = assemble_subdomain1(L,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=1,tau=tau,mesh2=domain2)
+    update_tau(tau,tau_vals,dofs1,local_size2,0)
+    A_I,A_J,vals,lens1 = assemble_subdomain1(L,domain1,local_size1,local_size2,c_func,c_vals,dofs1,SUPG=1,tau=tau,mesh2=domain2,tau_vals=tau_vals)
     #integrate resulting terms in second subdomain
     update_f(g,dofs2,vals,0)
     B1_I,B1_J,dat1 = assemble_subdomain2(domain2,L_y,lens1[0],g,dofs2,vals)

@@ -1,0 +1,1506 @@
+no change     /home1/04637/mdl2665/anaconda3/condabin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda-env
+no change     /home1/04637/mdl2665/anaconda3/bin/activate
+no change     /home1/04637/mdl2665/anaconda3/bin/deactivate
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.sh
+no change     /home1/04637/mdl2665/anaconda3/etc/fish/conf.d/conda.fish
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/Conda.psm1
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/conda-hook.ps1
+no change     /home1/04637/mdl2665/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.csh
+no change     /home1/04637/mdl2665/.bashrc
+No action taken.
+
+     active environment : fenicsx-env
+    active env location : /home1/04637/mdl2665/anaconda3/envs/fenicsx-env
+            shell level : 2
+       user config file : /home1/04637/mdl2665/.condarc
+ populated config files : 
+          conda version : 4.12.0
+    conda-build version : 3.21.8
+         python version : 3.9.12.final.0
+       virtual packages : __linux=4.18.0=0
+                          __glibc=2.28=0
+                          __unix=0=0
+                          __archspec=1=x86_64
+       base environment : /home1/04637/mdl2665/anaconda3  (writable)
+      conda av data dir : /home1/04637/mdl2665/anaconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home1/04637/mdl2665/anaconda3/pkgs
+                          /home1/04637/mdl2665/.conda/pkgs
+       envs directories : /home1/04637/mdl2665/anaconda3/envs
+                          /home1/04637/mdl2665/.conda/envs
+               platform : linux-64
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/4.18.0-305.12.1.el8_4.x86_64 rocky/8.4 glibc/2.28
+                UID:GID : 839365:819760
+             netrc file : None
+           offline mode : False
+
+TACC:  Starting up job 500363 
+TACC:  Starting parallel tasks... 
+nt 1000
+Method chosen: SUPG_strong
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+ValueError: need at least one array to concatenate
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+ValueError: need at least one array to concatenate
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+ValueError: need at least one array to concatenate
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+ValueError: need at least one array to concatenate
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+ValueError: need at least one array to concatenate
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+ValueError: need at least one array to concatenate
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+Traceback (most recent call last):
+  File "/home1/04637/mdl2665/FENICSx/Propagation_newtau.py", line 186, in <module>
+    tau_vals = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+  File "/home1/04637/mdl2665/FENICSx/CFx/wave.py", line 53, in compute_tau
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+  File "<__array_function__ internals>", line 180, in kron
+  File "/home1/04637/mdl2665/anaconda3/envs/fenicsx-env/lib/python3.10/site-packages/numpy/lib/shape_base.py", line 1157, in kron
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+    result = concatenate(result, axis=axis)
+  File "<__array_function__ internals>", line 180, in concatenate
+ValueError: need at least one array to concatenate
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: got SIGCONT
+[120]PETSC ERROR: ------------------------------------------------------------------------
+[120]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[120]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[120]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[120]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[120]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[120]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 120
+[121]PETSC ERROR: ------------------------------------------------------------------------
+[121]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[121]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[121]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[121]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[121]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[121]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 121
+[122]PETSC ERROR: ------------------------------------------------------------------------
+[122]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[122]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[122]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[122]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[122]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[122]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 122
+[124]PETSC ERROR: ------------------------------------------------------------------------
+[124]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[124]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[124]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[124]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[124]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[124]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 124
+[125]PETSC ERROR: ------------------------------------------------------------------------
+[125]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[125]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[125]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[125]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[125]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[125]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 125
+[128]PETSC ERROR: ------------------------------------------------------------------------
+[128]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[128]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[128]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[128]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[128]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[128]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 128
+[129]PETSC ERROR: ------------------------------------------------------------------------
+[129]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[129]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[129]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[129]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[129]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[129]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 129
+[130]PETSC ERROR: ------------------------------------------------------------------------
+[130]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[130]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[130]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[130]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[130]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[130]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 130
+[131]PETSC ERROR: ------------------------------------------------------------------------
+[131]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[131]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[131]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[131]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[131]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[131]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 131
+[132]PETSC ERROR: ------------------------------------------------------------------------
+[132]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[132]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[132]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[132]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[132]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[132]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 132
+[134]PETSC ERROR: ------------------------------------------------------------------------
+[134]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[134]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[134]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[134]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[134]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[134]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 134
+[135]PETSC ERROR: ------------------------------------------------------------------------
+[135]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[135]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[135]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[135]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[135]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[135]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 135
+[137]PETSC ERROR: ------------------------------------------------------------------------
+[137]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[137]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[137]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[137]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[137]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[137]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 137
+[139]PETSC ERROR: ------------------------------------------------------------------------
+[139]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[139]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[139]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[139]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[139]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[139]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 139
+[140]PETSC ERROR: ------------------------------------------------------------------------
+[140]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[140]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[140]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[140]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[140]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[140]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 140
+[141]PETSC ERROR: ------------------------------------------------------------------------
+[141]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[141]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[141]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[141]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[141]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[141]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 141
+[142]PETSC ERROR: ------------------------------------------------------------------------
+[142]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[142]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[142]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[142]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[142]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[142]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 142
+[144]PETSC ERROR: ------------------------------------------------------------------------
+[144]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[144]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[144]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[144]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[144]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[144]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 144
+[146]PETSC ERROR: ------------------------------------------------------------------------
+[146]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[146]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[146]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[146]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[146]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[146]PETSC ERROR: to get more information on the crash.
+[148]PETSC ERROR: ------------------------------------------------------------------------
+[148]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[148]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[148]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[148]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[148]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[148]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 148
+[153]PETSC ERROR: ------------------------------------------------------------------------
+[153]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[153]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[153]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[153]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[153]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[153]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 153
+[143]PETSC ERROR: ------------------------------------------------------------------------
+[143]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[143]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[143]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[143]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[143]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[143]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 143
+[147]PETSC ERROR: ------------------------------------------------------------------------
+[147]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[147]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[147]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[147]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[147]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[147]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 147
+[151]PETSC ERROR: ------------------------------------------------------------------------
+[151]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[151]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[151]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[151]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[151]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[151]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 151
+[155]PETSC ERROR: ------------------------------------------------------------------------
+[155]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[155]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[155]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[155]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[155]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[155]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 155
+[157]PETSC ERROR: ------------------------------------------------------------------------
+[157]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[157]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[157]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[157]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[157]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[157]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 157
+[160]PETSC ERROR: ------------------------------------------------------------------------
+[160]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[160]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[160]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[160]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[160]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[160]PETSC ERROR: to get more information on the crash.
+[161]PETSC ERROR: ------------------------------------------------------------------------
+[161]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[161]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[161]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[161]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[161]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[161]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 161
+[162]PETSC ERROR: ------------------------------------------------------------------------
+[162]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[162]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[162]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[162]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[162]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[162]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 162
+[164]PETSC ERROR: ------------------------------------------------------------------------
+[164]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[164]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[164]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[164]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[164]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[164]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 164
+[165]PETSC ERROR: ------------------------------------------------------------------------
+[165]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[165]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[165]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[165]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[165]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[165]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 165
+[166]PETSC ERROR: ------------------------------------------------------------------------
+[166]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[166]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[166]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[166]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[166]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[166]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 166
+[167]PETSC ERROR: ------------------------------------------------------------------------
+[167]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[167]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[167]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[167]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[167]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[167]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 167
+[168]PETSC ERROR: ------------------------------------------------------------------------
+[168]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[168]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[168]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[168]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[168]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[168]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 168
+[170]PETSC ERROR: ------------------------------------------------------------------------
+[170]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[170]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[170]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[170]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[170]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[170]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 170
+[171]PETSC ERROR: ------------------------------------------------------------------------
+[171]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[171]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[171]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[171]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[171]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[171]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 171
+[172]PETSC ERROR: ------------------------------------------------------------------------
+[172]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[172]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[172]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[172]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[172]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[172]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 172
+[173]PETSC ERROR: ------------------------------------------------------------------------
+[173]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[173]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[173]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[173]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[173]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[173]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 173
+[174]PETSC ERROR: ------------------------------------------------------------------------
+[174]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[174]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[174]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[174]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[174]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[174]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 174
+[175]PETSC ERROR: ------------------------------------------------------------------------
+[175]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[175]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[175]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[175]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[175]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[175]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 175
+[176]PETSC ERROR: ------------------------------------------------------------------------
+[176]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[176]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[176]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[176]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[176]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[176]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 176
+[177]PETSC ERROR: ------------------------------------------------------------------------
+[177]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[177]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[177]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[177]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[177]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[177]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 177
+[178]PETSC ERROR: ------------------------------------------------------------------------
+[178]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[178]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[178]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[178]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[178]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[178]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 178
+[179]PETSC ERROR: ------------------------------------------------------------------------
+[179]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[179]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[179]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[179]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[179]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[179]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 179
+[181]PETSC ERROR: ------------------------------------------------------------------------
+[181]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[181]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[181]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[181]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[181]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[181]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 181
+[182]PETSC ERROR: ------------------------------------------------------------------------
+[182]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[182]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[182]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[182]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[182]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[182]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 182
+[185]PETSC ERROR: ------------------------------------------------------------------------
+[185]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[185]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[185]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[185]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[185]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[185]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 185
+[186]PETSC ERROR: ------------------------------------------------------------------------
+[186]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[186]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[186]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[186]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[186]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[186]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 186
+[187]PETSC ERROR: ------------------------------------------------------------------------
+[187]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[187]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[187]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[187]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[187]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[187]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 187
+[188]PETSC ERROR: ------------------------------------------------------------------------
+[188]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[188]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[188]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[188]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[188]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[188]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 188
+[189]PETSC ERROR: ------------------------------------------------------------------------
+[189]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[189]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[189]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[189]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[189]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[189]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 189
+[190]PETSC ERROR: ------------------------------------------------------------------------
+[190]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[190]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[190]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[190]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[190]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[190]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 190
+[191]PETSC ERROR: ------------------------------------------------------------------------
+[191]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[191]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[191]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[191]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[191]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[191]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 191
+[193]PETSC ERROR: ------------------------------------------------------------------------
+[193]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[193]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[193]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[193]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[193]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[193]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 193
+[195]PETSC ERROR: ------------------------------------------------------------------------
+[195]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[195]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[195]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[195]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[195]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[195]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 195
+[196]PETSC ERROR: ------------------------------------------------------------------------
+[196]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[196]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[196]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[196]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[196]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[196]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 196
+[197]PETSC ERROR: ------------------------------------------------------------------------
+[197]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[197]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[197]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[197]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[197]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[197]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 197
+[198]PETSC ERROR: ------------------------------------------------------------------------
+[198]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[198]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[198]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[198]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[198]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[198]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 198
+[201]PETSC ERROR: ------------------------------------------------------------------------
+[201]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[201]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[201]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[201]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[201]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[201]PETSC ERROR: to get more information on the crash.
+[203]PETSC ERROR: ------------------------------------------------------------------------
+[203]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[203]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[203]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[203]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[203]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[203]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 203
+[204]PETSC ERROR: ------------------------------------------------------------------------
+[204]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[204]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[204]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[204]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[204]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[204]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 204
+[205]PETSC ERROR: ------------------------------------------------------------------------
+[205]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[205]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[205]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[205]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[205]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[205]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 205
+[207]PETSC ERROR: ------------------------------------------------------------------------
+[207]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[207]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[207]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[207]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[207]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[207]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 207
+[208]PETSC ERROR: ------------------------------------------------------------------------
+[208]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[208]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[208]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[208]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[208]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[208]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 208
+[211]PETSC ERROR: ------------------------------------------------------------------------
+[211]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[211]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[211]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[211]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[211]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[211]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 211
+[213]PETSC ERROR: ------------------------------------------------------------------------
+[213]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[213]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[213]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[213]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[213]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[213]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 213
+[215]PETSC ERROR: ------------------------------------------------------------------------
+[215]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[215]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[215]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[215]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[215]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[215]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 215
+[217]PETSC ERROR: ------------------------------------------------------------------------
+[217]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[217]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[217]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[217]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[217]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[217]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 217
+[218]PETSC ERROR: ------------------------------------------------------------------------
+[218]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[218]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[218]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[218]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[218]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[218]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 218
+[219]PETSC ERROR: ------------------------------------------------------------------------
+[219]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[219]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[219]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[219]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[219]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[219]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 219
+[220]PETSC ERROR: ------------------------------------------------------------------------
+[220]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[220]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[220]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[220]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[220]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[220]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 220
+[221]PETSC ERROR: ------------------------------------------------------------------------
+[221]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[221]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[221]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[221]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[221]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[221]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 221
+[222]PETSC ERROR: ------------------------------------------------------------------------
+[222]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[222]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[222]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[222]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[222]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[222]PETSC ERROR: to get more information on the crash.
+[226]PETSC ERROR: ------------------------------------------------------------------------
+[226]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[226]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[226]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[226]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[226]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[226]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 226
+[223]PETSC ERROR: ------------------------------------------------------------------------
+[223]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[223]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[223]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[223]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[223]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[223]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 223
+[225]PETSC ERROR: ------------------------------------------------------------------------
+[225]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[225]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[225]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[225]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[225]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[225]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 225
+[227]PETSC ERROR: ------------------------------------------------------------------------
+[227]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[227]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[227]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[227]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[227]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[227]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 227
+[229]PETSC ERROR: ------------------------------------------------------------------------
+[229]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[229]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[229]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[229]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[229]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[229]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 229
+[230]PETSC ERROR: ------------------------------------------------------------------------
+[230]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[230]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[230]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[230]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[230]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[230]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 230
+[231]PETSC ERROR: ------------------------------------------------------------------------
+[231]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[231]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[231]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[231]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[231]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[231]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 231
+[232]PETSC ERROR: ------------------------------------------------------------------------
+[232]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[232]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[232]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[232]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[232]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[232]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 232
+[233]PETSC ERROR: ------------------------------------------------------------------------
+[233]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[233]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[233]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[233]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[233]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[233]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 233
+[234]PETSC ERROR: ------------------------------------------------------------------------
+[234]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[234]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[234]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[234]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[234]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[234]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 234
+[236]PETSC ERROR: ------------------------------------------------------------------------
+[236]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[236]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[236]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[236]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[236]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[236]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 236
+[237]PETSC ERROR: ------------------------------------------------------------------------
+[237]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[237]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[237]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind
+[237]PETSC ERROR: or try http://valgrind.org on GNU/linux and Apple MacOS to find memory corruption errors
+[237]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[237]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 237
+slurmstepd: error: *** JOB 500363 ON c312-164 CANCELLED AT 2022-10-13T10:39:54 ***

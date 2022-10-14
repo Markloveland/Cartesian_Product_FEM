@@ -1,24 +1,82 @@
 import numpy as np
-from dolfinx import fem
+from dolfinx import fem,cpp
 import ufl
 
 
-def interpolate_gradients(f):
+def interpolate_L2(f,V):
     #takes in bathymetry assuming P1, currents as dolfinx functions and interpolates
     #derivatives back to P1
     #see if we can finesse using L2 projection
-    V = f._V
+    #V = f._V
     u = ufl.TrialFunction(V)
     v = ufl.TestFunction(V) 
     a = u*v* ufl.dx
-    L = f.dx(0)*v*ufl.dx
+    L = f*v*ufl.dx
     problem = fem.petsc.LinearProblem(a, L, petsc_options={"ksp_type": "gmres"})
     ux = problem.solve()
+    ux.vector.ghostUpdate()
+    #L2 = f.dx(1)*v*ufl.dx
+    #problem = fem.petsc.LinearProblem(a,L2,petsc_options={"ksp_type":"gmres"})
+    #uy = problem.solve()
+    return ux
 
-    L2 = f.dx(1)*v*ufl.dx
-    problem = fem.petsc.LinearProblem(a,L2,petsc_options={"ksp_type":"gmres"})
-    uy = problem.solve()
-    return ux,uy
+def compute_tau(domain1,domain2,c,N_dof_1,N_dof_2):
+    #need to do this for domain1 and domain2
+
+    #get h as elementwise
+    tdim = domain1.topology.dim
+    num_cells1 = domain1.topology.index_map(tdim).size_local
+    h1 = cpp.mesh.h(domain1, tdim, range(num_cells1))
+    #save as a DG function
+    cellwise = fem.FunctionSpace(domain1, ("DG", 0))
+    V1 = fem.FunctionSpace(domain1,("CG",1))
+    height1 = fem.Function(cellwise)
+    height1.x.array[:num_cells1] = h1
+    height1.vector.ghostUpdate()
+    h_p1 = interpolate_L2(height1,V1)
+    #print('h_p1',height1.vector.getArray())
+    #get h as elementwise
+    tdim = domain2.topology.dim
+    num_cells2 = domain2.topology.index_map(tdim).size_local
+    h2 = cpp.mesh.h(domain2, tdim, range(num_cells2))
+    #save as a DG function
+    cellwise2 = fem.FunctionSpace(domain2, ("DG", 0))
+    V2 = fem.FunctionSpace(domain2,("CG",1))
+    height2 = fem.Function(cellwise2)
+    height2.x.array[:num_cells2] = h2
+    height2.vector.ghostUpdate()
+    h_p2 = interpolate_L2(height2,V2)
+
+    #using the 2 vectors of h, generate an estimate for h in global domain
+    #get N_dof some how
+
+    h_1 = np.kron(h_p1.vector.getArray(),np.ones(N_dof_2))
+    h_2 = np.kron(np.ones(N_dof_1),h_p2.vector.getArray())
+
+    h = np.sqrt(h_1**2+h_2**2)
+
+    #now using pointwise c get a pointwise tau =h / |/c|/
+    tau_pointwise = h/np.sqrt((c**2).sum(axis=1))
+
+    return tau_pointwise
+
+def compute_tau_old(mesh1,mesh2,c_vals,subdomain=0):
+    #hardcoded for uniform mesh this time
+    tdim = mesh1.topology.dim
+    num_cells = mesh1.topology.index_map(tdim).size_local
+    h1 = cpp.mesh.h(mesh1, tdim, range(num_cells)).max()
+    #print('h1max',h1)
+    tdim = mesh2.topology.dim
+    num_cells = mesh2.topology.index_map(tdim).size_local
+    h2 = cpp.mesh.h(mesh2, tdim, range(num_cells)).max()
+
+    h = np.sqrt(h1**2+h2**2)
+    temp = c_vals**2
+    c_mag = np.sqrt(temp.sum(axis=1))
+    #tau = h / /|c/|
+    tau_points = np.array(h/c_mag)
+    return tau_points
+
 
 #computation of any wave params/sources will take place here
 def compute_wave_speeds_pointwise(x,y,sigma,theta,depth,u,v,dHdx=-1.0/200,dHdy=0.0,g=9.81):
@@ -92,7 +150,10 @@ def compute_wave_speeds_pointwise(x,y,sigma,theta,depth,u,v,dHdx=-1.0/200,dHdy=0
 
 #computation of any wave params/sources will take place here
 def compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2,g=9.81, min_depth = 0.05):
-    dHdx_func,dHdy_func = interpolate_gradients(depth_func)    
+    dHdx_func = interpolate_L2(depth_func.dx(0),depth_func._V)
+    dHdy_func = interpolate_L2(depth_func.dx(1),depth_func._V)
+    
+    #dHdx_func,dHdy_func = interpolate_gradients(depth_func)    
 
     #compute depth at all dof
     depth = np.kron(depth_func.vector.getArray(),np.ones(N_dof_2))
