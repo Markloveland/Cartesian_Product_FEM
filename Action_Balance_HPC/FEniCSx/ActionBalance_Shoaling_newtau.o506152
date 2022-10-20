@@ -1,0 +1,76 @@
+no change     /home1/04637/mdl2665/anaconda3/condabin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda
+no change     /home1/04637/mdl2665/anaconda3/bin/conda-env
+no change     /home1/04637/mdl2665/anaconda3/bin/activate
+no change     /home1/04637/mdl2665/anaconda3/bin/deactivate
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.sh
+no change     /home1/04637/mdl2665/anaconda3/etc/fish/conf.d/conda.fish
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/Conda.psm1
+no change     /home1/04637/mdl2665/anaconda3/shell/condabin/conda-hook.ps1
+no change     /home1/04637/mdl2665/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /home1/04637/mdl2665/anaconda3/etc/profile.d/conda.csh
+no change     /home1/04637/mdl2665/.bashrc
+No action taken.
+
+     active environment : fenicsx-env
+    active env location : /home1/04637/mdl2665/anaconda3/envs/fenicsx-env
+            shell level : 2
+       user config file : /home1/04637/mdl2665/.condarc
+ populated config files : 
+          conda version : 4.12.0
+    conda-build version : 3.21.8
+         python version : 3.9.12.final.0
+       virtual packages : __linux=4.18.0=0
+                          __glibc=2.28=0
+                          __unix=0=0
+                          __archspec=1=x86_64
+       base environment : /home1/04637/mdl2665/anaconda3  (writable)
+      conda av data dir : /home1/04637/mdl2665/anaconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home1/04637/mdl2665/anaconda3/pkgs
+                          /home1/04637/mdl2665/.conda/pkgs
+       envs directories : /home1/04637/mdl2665/anaconda3/envs
+                          /home1/04637/mdl2665/.conda/envs
+               platform : linux-64
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/4.18.0-305.12.1.el8_4.x86_64 rocky/8.4 glibc/2.28
+                UID:GID : 839365:819760
+             netrc file : None
+           offline mode : False
+
+TACC:  Starting up job 506152 
+TACC:  Starting parallel tasks... 
+nt 2000
+KSP Object: 250 MPI processes
+  type: gmres
+    restart=30, using Classical (unmodified) Gram-Schmidt Orthogonalization with no iterative refinement
+    happy breakdown tolerance 1e-30
+  maximum iterations=10000, nonzero initial guess
+  tolerances:  relative=1e-05, absolute=1e-50, divergence=10000.
+  left preconditioning
+  using PRECONDITIONED norm type for convergence test
+PC Object: 250 MPI processes
+  type: none
+  linear system matrix = precond matrix:
+  Mat Object: 250 MPI processes
+    type: mpiaij
+    rows=7905775, cols=7905775
+    total: nonzeros=367337003, allocated nonzeros=367337003
+    total number of mallocs used during MatSetValues calls=0
+      not using I-node (on process 0) routines
+Niter 0
+convergence code 2
+Final t 1000.0
+L2 error 6482.959947549725
+L inf error 98.44460456928388
+min in error (1266164, -2.1202231026270963)
+max error (2156641, 98.44460456928388)
+h 0.01
+dof 104060401
+The build time is 920.4591488838196 seconds
+The solve time is 3339.5108828544617 seconds
+Final solution on boundary
+TACC:  Shutdown complete. Exiting. 

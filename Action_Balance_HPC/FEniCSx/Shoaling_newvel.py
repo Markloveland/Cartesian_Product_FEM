@@ -251,8 +251,8 @@ if method == 'CG' or method == 'CG_strong':
 
 
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
-A.zeroRows(dry_dofs,diag=1)
-#A.zeroRowsColumns(dry_dofs,diag=1)
+#A.zeroRows(dry_dofs,diag=1)
+A.zeroRowsColumns(dry_dofs,diag=1)
 ##################################################################
 ##################################################################
 #initialize vectors

@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH -J ActionBalance_Shoal
 #SBATCH -A ADCIRC
-#SBATCH -o ActionBalance_Shoaling.o%j
-#SBATCH -e ActionBalance_Shoaling.o%j
+#SBATCH -o ActionBalance_Shoaling_structured.o%j
+#SBATCH -e ActionBalance_Shoaling_structured.o%j
 #SBATCH -p normal
 #SBATCH -N 2
 #SBATCH -n 250
-#SBATCH -t 01:45:00
+#SBATCH -t 02:45:00
 
 #SBATCH --mail-user=markloveland@utexas.edu
 #SBATCH --mail-type=begin        # email me when the job starts

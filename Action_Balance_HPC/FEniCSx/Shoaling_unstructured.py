@@ -38,14 +38,14 @@ ny = 100
 # define spectral domain
 omega_min = 0.25
 omega_max = 2.0
-theta_min = -10/180*np.pi + np.pi/2
-theta_max = 10/180*np.pi + np.pi/2
+theta_min = np.pi/2 - 10/180*np.pi
+theta_max = np.pi/2 + 10/180*np.pi
 n_sigma = 30
 n_theta = 24
 #set initial time
 t = 0
 #set final time
-t_f = 2000
+t_f = 2000/2
 #set time step
 dt = 0.5
 #calculate nt
@@ -53,28 +53,32 @@ nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
 #nplot = 1
-nplot = 100
-
+nplot = 500
+#note, wetting/drying only works with "strong" forms
 method = 'SUPG_strong'
 
 ####################################################################
 #Subdomain 1
 #the first subdomain will be split amongst processors
 # this is set up ideally for subdomain 1 > subdomain 2
+#domain1 = mesh.create_rectangle(comm, [np.array([x_min, y_min]), np.array([x_max, y_max])], [nx, ny], mesh.CellType.triangle)
 filename = 'meshes/shoaling_unstructured.xdmf'
 encoding= io.XDMFFile.Encoding.HDF5
 with io.XDMFFile(MPI.COMM_WORLD, filename, "r", encoding=encoding) as file:
     domain1 = file.read_mesh()
 
-#specify file path as a string, either absolute or relative to where script is run
-#domain1 = CFx.utils.ADCIRC_mesh_gen(comm,'meshes/depth2.grd')
-#domain1 = mesh.create_rectangle(comm, [np.array([x_min, y_min]), np.array([x_max, y_max])], [nx, ny], mesh.CellType.triangle)
+
 V1 = fem.FunctionSpace(domain1, ("CG", 1))
 u1 = ufl.TrialFunction(V1)
 v1 = ufl.TestFunction(V1)
+####################################################################
+####################################################################
+#wetting drying portion
 elementwise = fem.FunctionSpace(domain1,("DG",0))
 is_wet = fem.Function(elementwise)
 depth_func = fem.Function(V1)
+u_func = fem.Function(V1)
+v_func = fem.Function(V1)
 #from the function spaces and ownership ranges, generate global degrees of freedom
 #this gives ghost and owned dof coords
 dof_coords1 = V1.tabulate_dof_coordinates()
@@ -86,9 +90,9 @@ dofs1 = np.arange(*local_range1,dtype=np.int32)
 N_dof_1 = V1.dofmap.index_map.size_local
 #hopefully the dof coordinates owned by the process
 local_dof_coords1 = dof_coords1[0:N_dof_1,:domain1.topology.dim]
-#for now lets set depth as y coordinate itself
+#for now lets set depth as x coordinate itself
+#eventually this maybe read in from txt file or shallow water model
 depth_func.x.array[:] = 20 - dof_coords1[:,1]/200
-
 #need to include a wetting/drying variable in domain 1
 CFx.wave.calculate_wetdry(domain1, V1, depth_func,is_wet,min_depth=0.05)
 ####################################################################
@@ -132,13 +136,14 @@ global_cols = int(M1_global_size[1]*M2_sizes[1])
 #Allocate global mass matrix
 #need to generate global mass matrix to get global matrix layout and sparsity patterns
 #global matrices are product of each subdomain
+
 M=CFx.assemble.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols)
+
 #also need global stiffness matrix
 #same exact structure as M
 A = M.duplicate()
 #Adjust RHS for SUPG
 M_SUPG = M.duplicate()
-
 #get ownership range
 local_range = M.getOwnershipRange()
 #vector of row numbers
@@ -180,18 +185,27 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 ####################################################################
 #generate any coefficients that depend on the degrees of freedom
-depth = 20 - y/200
+depth = 20 - x/200
 #zero rows and columns below a minumum depth
 min_depth = 0.05 
+min_depth = 0.05
 dry_dofs_local = np.array(np.where(depth<min_depth)[0],dtype=np.int32)
 dry_dofs = dry_dofs_local + local_range[0]
 wet_dofs_local = np.where(depth>=min_depth)[0]
 
-u = np.zeros(local_dof.shape[0])
-v = np.zeros(local_dof.shape[0])
-c = np.ones(local_dof.shape)
-c[wet_dofs_local] = CFx.wave.compute_wave_speeds(x[wet_dofs_local],y[wet_dofs_local],sigma[wet_dofs_local],theta[wet_dofs_local],depth[wet_dofs_local],u[wet_dofs_local],v[wet_dofs_local])
+#u = np.zeros(local_dof.shape[0])
+#v = np.zeros(local_dof.shape[0])
+#c1 = np.ones(local_dof.shape)
+#c2 = np.ones(local_dof.shape)
+#c1[wet_dofs_local,:] = CFx.wave.compute_wave_speeds_pointwise(x[wet_dofs_local],y[wet_dofs_local],sigma[wet_dofs_local],theta[wet_dofs_local],depth[wet_dofs_local],u[wet_dofs_local],v[wet_dofs_local])
+c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+#print('difference in velocities at rank',rank,np.sum(np.absolute(c-c1)))
+
 #exact solution and dirichlet boundary
+dry_dofs = dry_dofs_local+local_range[0]
+
+
+
 def u_func(x,y,sigma,theta,c,t):
     #takes in dof and paramters
     HS = 1
@@ -224,10 +238,13 @@ M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet)
 if method == 'SUPG' or method == 'SUPG_strong':
+    tau_pointwise = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+    CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet,tau_vals=tau_pointwise)
+    CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG,is_wet=is_wet,tau_vals=tau_pointwise)
+if method == 'CG' or method == 'CG_strong':
+    CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet)
     CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG,is_wet=is_wet)
-
 
 time_2 = time.time()
 
@@ -243,44 +260,43 @@ if method == 'CG' or method == 'CG_strong':
 
 
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
-A.zeroRows(dry_dofs,diag=1)
-
-#just want to test answer
-#A.zeroRows(rows,diag=1)
-#correction to RHS for SUPG
-
-
+#A.zeroRows(dry_dofs,diag=1)
+A.zeroRowsColumns(dry_dofs,diag=1)
 ##################################################################
 ##################################################################
-##################################################################
-#assmble RHS
-#now evaluate RHS at all d.o.f and set that as the F vector	
-F_dof = PETSc.Vec()
-F_dof.create(comm=comm)
-F_dof.setSizes((local_rows,global_rows),bsize=1)
-F_dof.setFromOptions()
+#initialize vectors
+#holds dirichlet boundary values
+u_D = PETSc.Vec()
+u_D.create(comm=comm)
+u_D.setSizes((local_rows,global_rows),bsize=1)
+u_D.setFromOptions()
+
+#holds temporary values to contribute to RHS
+Temp = u_D.duplicate()
+#RHS of linear system of equations
+B = u_D.duplicate()
+#Post Processiong
+E = u_D.duplicate()
+L2_E = u_D.duplicate()
+u_exact = u_D.duplicate()
+#solution vector
+u_cart = u_D.duplicate()
 
 
-B = F_dof.duplicate()
-E = F_dof.duplicate()
-L2_E = F_dof.duplicate()
-u_cart = F_dof.duplicate()
-u_exact = F_dof.duplicate()
-
+Temp.setFromOptions()
 E.setFromOptions()
 B.setFromOptions()
 L2_E.setFromOptions()
 u_cart.setFromOptions()
 u_exact.setFromOptions()
+###################################################################
+###################################################################
+#Set initial condition and set solution for dirichlet
+#u_cart will hold solution in time loop, this is also the initial condition
+u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
+u_cart.assemble()
 
-
-
-#set Dirichlet boundary as global boundary
-#need to subtract dirichlet columns to RHS stored in b
-F_dof.setValues(rows,np.zeros(rows.shape))
-Temp.setValues(rows,np.zeros(rows.shape))
-F_dof.assemble()
-Temp.assemble()
+#this matrix will help apply b.c. efficiently
 C = A.duplicate(copy=True)
 #need C to be A but 0 when columns are not dirichlet
 C.transpose()
@@ -289,50 +305,50 @@ mask[local_boundary_dofs] = False
 global_non_boundary = rows[mask]
 C.zeroRows(global_non_boundary,diag=0)
 C.transpose()
+#now zero out rows/cols containing boundary
+#set solution as the boundary condition, helps initial guess
+#all_global_boundary_dofs = np.concatenate(MPI.COMM_WORLD.allgather(global_boundary_dofs))
+#all_u_d = np.concatenate(MPI.COMM_WORLD.allgather(u_d))
+
+A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 ###################################################################
 ###################################################################
-#Time step
-#u_cart will hold solution
-u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
-#u_cart.ghostUpdate()
-u_cart.assemble()
-
-#set dry nodes
-A.zeroRowsColumns(dry_dofs,diag=1)
-#set dirichlet
-A.zeroRows(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
-
+#Define solver/preconditioner
 #create a direct linear solver
-pc2 = PETSc.PC().create()
+#pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-pc2.setType('none')
-pc2.setOperators(A)
+#pc2.setType('none')
+#pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setType('gmres')
-ksp2.setPC(pc2)
+#ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
-fname = 'ActionBalance_Shoaling_unstructured_mesh/solution'
+fname = 'ActionBalance_Shoaling_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
-
-
+#########################################################
+#######################################################
+#Time Step
 u = fem.Function(V1)
 for i in range(nt):
     t+=dt
-    u_2 = u_func(x,y,sigma,theta,c,t)
-    u_d = u_2[local_boundary_dofs]
-    #B = F_dof.duplicate()
-    #B.setFromOptions()
+    #B will hold RHS of system of equations
     M_SUPG.mult(u_cart,B)
-    B.setValues(global_boundary_dofs,u_d)
-    B.assemble()
-    ksp2.solve(B, u_cart)
-    #B.destroy()
-    B.zeroEntries()
 
+    #setting dirichlet BC
+    u_2 = u_func(x,y,sigma,theta,c,t)
+    u_d_vals = u_2[local_boundary_dofs]
+    u_D.setValues(global_boundary_dofs,u_d_vals)
+    C.mult(u_D,Temp)
+    B = B - Temp
+    B.setValues(global_boundary_dofs,u_d_vals)
+    B.assemble()
+    #solve for time t
+    ksp2.solve(B, u_cart)
+    B.zeroEntries()
     # Save solution to file in VTK format
     if (i%nplot==0):
         u.vector.setValues(dofs1, np.array(u_cart.getArray()[4::N_dof_2]))
@@ -394,11 +410,11 @@ xdmf.close()
 
 #try to extract HS at stations
 numpoints = 150
-x_stats = np.linspace(x_min,x_max-41,numpoints)
+y_stats = np.linspace(y_min,y_max-41,numpoints)
 
-y_coord = 10000
-stations = y_coord*np.ones((numpoints,2))
-stations[:,1] = x_stats
+x_coord = 10000
+stations = x_coord*np.ones((numpoints,2))
+stations[:,1] = y_stats
 
 
 points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
@@ -411,5 +427,5 @@ if rank ==0:
     #PETSc.Sys.Print('Station vals:')
     #PETSc.Sys.Print(vals)
     #PETSc.Sys.Print(vals.shape)
-    np.savetxt("HS_stations_SUPG_unstructured_wetdry.csv", np.append(stats, vals, axis=1), delimiter=",")
+    np.savetxt("HS_stations_SUPG_unstructured.csv", np.append(stats, vals, axis=1), delimiter=",")
 

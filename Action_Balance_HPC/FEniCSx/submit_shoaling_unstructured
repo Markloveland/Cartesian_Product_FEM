@@ -6,7 +6,7 @@
 #SBATCH -p normal
 #SBATCH -N 2
 #SBATCH -n 250
-#SBATCH -t 01:45:00
+#SBATCH -t 03:45:00
 
 #SBATCH --mail-user=markloveland@utexas.edu
 #SBATCH --mail-type=begin        # email me when the job starts

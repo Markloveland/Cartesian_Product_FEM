@@ -45,7 +45,7 @@ n_theta = 24
 #set initial time
 t = 0
 #set final time
-t_f = 2000/2
+t_f = 2000/4000
 #set time step
 dt = 0.5
 #calculate nt
@@ -254,8 +254,8 @@ if method == 'CG' or method == 'CG_strong':
 
 
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
-A.zeroRows(dry_dofs,diag=1)
-#A.zeroRowsColumns(dry_dofs,diag=1)
+#A.zeroRows(dry_dofs,diag=1)
+A.zeroRowsColumns(dry_dofs,diag=1)
 ##################################################################
 ##################################################################
 #initialize vectors

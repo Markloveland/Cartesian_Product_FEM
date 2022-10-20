@@ -29,23 +29,23 @@ nprocs = comm.Get_size()
 
 #specify bouns in geographic mesh
 x_min = 0.0
-x_max = 4000
+x_max = 20000
 y_min = 0.0
-y_max = 20000
+y_max = 4000
 # Create cartesian mesh of two 2D and define function spaces
 nx = 100
 ny = 100
 # define spectral domain
 omega_min = 0.25
 omega_max = 2.0
-theta_min = -10/180*np.pi
-theta_max = 10/180*np.pi
+theta_min = np.pi/2 - 10/180*np.pi
+theta_max = np.pi/2 + 10/180*np.pi
 n_sigma = 30
 n_theta = 24
 #set initial time
 t = 0
 #set final time
-t_f = 2000/2
+t_f = 2000/4000
 #set time step
 dt = 0.5
 #calculate nt
@@ -53,8 +53,8 @@ nt = int(np.ceil(t_f/dt))
 PETSc.Sys.Print('nt',nt)
 #plot every n time steps
 #nplot = 1
-nplot = 1000
-
+nplot = 500
+#note, wetting/drying only works with "strong" forms
 method = 'SUPG_strong'
 
 ####################################################################
@@ -71,6 +71,8 @@ v1 = ufl.TestFunction(V1)
 elementwise = fem.FunctionSpace(domain1,("DG",0))
 is_wet = fem.Function(elementwise)
 depth_func = fem.Function(V1)
+u_func = fem.Function(V1)
+v_func = fem.Function(V1)
 #from the function spaces and ownership ranges, generate global degrees of freedom
 #this gives ghost and owned dof coords
 dof_coords1 = V1.tabulate_dof_coordinates()
@@ -83,7 +85,8 @@ N_dof_1 = V1.dofmap.index_map.size_local
 #hopefully the dof coordinates owned by the process
 local_dof_coords1 = dof_coords1[0:N_dof_1,:domain1.topology.dim]
 #for now lets set depth as x coordinate itself
-depth_func.x.array[:] = 20 - dof_coords1[:,0]/200
+#eventually this maybe read in from txt file or shallow water model
+depth_func.x.array[:] = 20 - dof_coords1[:,1]/200
 #need to include a wetting/drying variable in domain 1
 CFx.wave.calculate_wetdry(domain1, V1, depth_func,is_wet,min_depth=0.05)
 ####################################################################
@@ -127,7 +130,9 @@ global_cols = int(M1_global_size[1]*M2_sizes[1])
 #Allocate global mass matrix
 #need to generate global mass matrix to get global matrix layout and sparsity patterns
 #global matrices are product of each subdomain
+
 M=CFx.assemble.create_cartesian_mass_matrix(local_rows,global_rows,local_cols,global_cols)
+
 #also need global stiffness matrix
 #same exact structure as M
 A = M.duplicate()
@@ -162,9 +167,9 @@ theta = local_dof[:,3]
 local_boundary_dofs = CFx.boundary.fetch_boundary_dofs(domain1,domain2,V1,V2,N_dof_1,N_dof_2)
 
 #now only want subset that is the inflow, need to automate later
-dum1 = local_boundary_dofs[x[local_boundary_dofs]<=(x_min+1e-14)]
-dum2 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]>=(y_max-1e-14),theta[local_boundary_dofs]<0)]
-dum3 = local_boundary_dofs[np.logical_and(y[local_boundary_dofs]<=(y_min+1e-14),theta[local_boundary_dofs]>0)]
+dum1 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
+dum2 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]>=(x_max-1e-14),theta[local_boundary_dofs]>np.pi/2)]
+dum3 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]<=(x_min+1e-14),theta[local_boundary_dofs]<np.pi/2)]
 dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
 dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
@@ -177,21 +182,30 @@ global_boundary_dofs = local_boundary_dofs + local_range[0]
 depth = 20 - x/200
 #zero rows and columns below a minumum depth
 min_depth = 0.05 
+min_depth = 0.05
 dry_dofs_local = np.array(np.where(depth<min_depth)[0],dtype=np.int32)
 dry_dofs = dry_dofs_local + local_range[0]
 wet_dofs_local = np.where(depth>=min_depth)[0]
 
-u = np.zeros(local_dof.shape[0])
-v = np.zeros(local_dof.shape[0])
-c = np.ones(local_dof.shape)
-c[wet_dofs_local] = CFx.wave.compute_wave_speeds_pointwise(x[wet_dofs_local],y[wet_dofs_local],sigma[wet_dofs_local],theta[wet_dofs_local],depth[wet_dofs_local],u[wet_dofs_local],v[wet_dofs_local])
+#u = np.zeros(local_dof.shape[0])
+#v = np.zeros(local_dof.shape[0])
+#c1 = np.ones(local_dof.shape)
+#c2 = np.ones(local_dof.shape)
+#c1[wet_dofs_local,:] = CFx.wave.compute_wave_speeds_pointwise(x[wet_dofs_local],y[wet_dofs_local],sigma[wet_dofs_local],theta[wet_dofs_local],depth[wet_dofs_local],u[wet_dofs_local],v[wet_dofs_local])
+c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_func,v_func,N_dof_2)
+#print('difference in velocities at rank',rank,np.sum(np.absolute(c-c1)))
+
 #exact solution and dirichlet boundary
+dry_dofs = dry_dofs_local+local_range[0]
+
+
+
 def u_func(x,y,sigma,theta,c,t):
     #takes in dof and paramters
     HS = 1
     F_std = 0.1
     F_peak = 0.1
-    Dir_mean = 0.0 #mean direction in degrees
+    Dir_mean = 90.0 #mean direction in degrees
     Dir_rad = Dir_mean*np.pi/(180)
     Dir_exp = 500
     #returns vector with initial condition values at global DOF
@@ -199,7 +213,7 @@ def u_func(x,y,sigma,theta,c,t):
     aux3 = 2*F_std**2
     tol=1e-14
     aux2 = (sigma - ( np.pi*2*F_peak ) )**2
-    E = (x<tol)*aux1*np.exp(-aux2/aux3)
+    E = (y<tol)*aux1*np.exp(-aux2/aux3)
     CTOT = np.sqrt(0.5*Dir_exp/np.pi)/(1.0 - 0.25/Dir_exp)
     A_COS = np.cos(theta - Dir_rad)
     CDIR = (A_COS>0)*CTOT*np.maximum(A_COS**Dir_exp, 1.0e-10)
@@ -218,10 +232,13 @@ M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet)
 if method == 'SUPG' or method == 'SUPG_strong':
+    tau_pointwise = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
+    CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet,tau_vals=tau_pointwise)
+    CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG,is_wet=is_wet,tau_vals=tau_pointwise)
+if method == 'CG' or method == 'CG_strong':
+    CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet)
     CFx.assemble.build_RHS(domain1,domain2,V1,V2,c,M_SUPG,is_wet=is_wet)
-
 
 time_2 = time.time()
 
@@ -238,7 +255,7 @@ if method == 'CG' or method == 'CG_strong':
 
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
 #A.zeroRows(dry_dofs,diag=1)
-#A.zeroRowsColumns(dry_dofs,diag=1)
+A.zeroRowsColumns(dry_dofs,diag=1)
 ##################################################################
 ##################################################################
 #initialize vectors
@@ -292,18 +309,18 @@ A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 ###################################################################
 #Define solver/preconditioner
 #create a direct linear solver
-pc2 = PETSc.PC().create()
+#pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-pc2.setType('none')
-pc2.setOperators(A)
+#pc2.setType('none')
+#pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setType('gmres')
-ksp2.setPC(pc2)
+#ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
-fname = 'ActionBalance_Shoaling_structured/solution'
+fname = 'ActionBalance_Shoaling_wetdry/solution'
 xdmf = io.XDMFFile(domain1.comm, fname+".xdmf", "w")
 xdmf.write_mesh(domain1)
 #########################################################
@@ -387,11 +404,11 @@ xdmf.close()
 
 #try to extract HS at stations
 numpoints = 150
-x_stats = np.linspace(x_min,x_max-41,numpoints)
+y_stats = np.linspace(y_min,y_max-41,numpoints)
 
-y_coord = 10000
-stations = y_coord*np.ones((numpoints,2))
-stations[:,0] = x_stats
+x_coord = 10000
+stations = x_coord*np.ones((numpoints,2))
+stations[:,1] = y_stats
 
 
 points_on_proc, vals_on_proc = CFx.utils.station_data(stations,domain1,HS)
