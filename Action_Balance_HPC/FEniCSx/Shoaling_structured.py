@@ -254,6 +254,7 @@ if method == 'CG' or method == 'CG_strong':
 
 
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
+print('global rows with 0 in diagonal',dry_dofs)
 #A.zeroRows(dry_dofs,diag=1)
 A.zeroRowsColumns(dry_dofs,diag=1)
 ##################################################################
@@ -309,15 +310,15 @@ A.zeroRowsColumns(global_boundary_dofs,diag=1,x=u_cart,b=u_cart)
 ###################################################################
 #Define solver/preconditioner
 #create a direct linear solver
-#pc2 = PETSc.PC().create()
+pc2 = PETSc.PC().create()
 #this is a direct solve with lu
-#pc2.setType('none')
-#pc2.setOperators(A)
+pc2.setType('none')
+pc2.setOperators(A)
 
 ksp2 = PETSc.KSP().create() # creating a KSP object named ksp
 ksp2.setOperators(A)
 ksp2.setType('gmres')
-#ksp2.setPC(pc2)
+ksp2.setPC(pc2)
 ksp2.setInitialGuessNonzero(True)
 
 fname = 'ActionBalance_Shoaling_wetdry/solution'

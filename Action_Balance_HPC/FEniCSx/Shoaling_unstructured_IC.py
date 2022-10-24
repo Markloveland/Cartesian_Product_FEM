@@ -171,19 +171,27 @@ theta = local_dof[:,3]
 
 #get global equation number of any node on entire global boundary
 local_boundary_dofs = CFx.boundary.fetch_boundary_dofs(domain1,domain2,V1,V2,N_dof_1,N_dof_2)
-tol= 1e-11
+
 #now only want subset that is the inflow, need to automate later
-dum1 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+tol)]
-dum2 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]>=(x_max-tol),theta[local_boundary_dofs]>np.pi/2)]
-dum3 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]<=(x_min+tol),theta[local_boundary_dofs]<np.pi/2)]
-dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+tol)]
-dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-tol)]
+dum1 = local_boundary_dofs[y[local_boundary_dofs]<=(y_min+1e-14)]
+dum2 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]>=(x_max-1e-14),theta[local_boundary_dofs]>np.pi/2)]
+dum3 = local_boundary_dofs[np.logical_and(x[local_boundary_dofs]<=(x_min+1e-14),theta[local_boundary_dofs]<np.pi/2)]
+dum4 = local_boundary_dofs[theta[local_boundary_dofs]<=(theta_min+1e-14)]
+dum5 = local_boundary_dofs[theta[local_boundary_dofs]>=(theta_max-1e-14)]
 
 local_boundary_dofs = np.unique(np.concatenate((dum1,dum2,dum3,dum4,dum5),0))
 #local_boundary_dofs = dum2
 global_boundary_dofs = local_boundary_dofs + local_range[0]
 ####################################################################
 ####################################################################
+#generate any coefficients that depend on the degrees of freedom
+depth = 20 - x/200
+#zero rows and columns below a minumum depth
+min_depth = 0.05 
+min_depth = 0.05
+dry_dofs_local = np.array(np.where(depth<min_depth)[0],dtype=np.int32)
+dry_dofs = dry_dofs_local + local_range[0]
+wet_dofs_local = np.where(depth>=min_depth)[0]
 
 #u = np.zeros(local_dof.shape[0])
 #v = np.zeros(local_dof.shape[0])
@@ -196,7 +204,7 @@ c,dry_dofs_local = CFx.wave.compute_wave_speeds(x,y,sigma,theta,depth_func,u_fun
 #exact solution and dirichlet boundary
 dry_dofs = dry_dofs_local+local_range[0]
 
-print('global rows with 0 in diagonal',dry_dofs)
+
 
 def u_func(x,y,sigma,theta,c,t):
     #takes in dof and paramters
@@ -230,7 +238,7 @@ M_SUPG.setPreallocationNNZ(M_NNZ)
 ##################################################################
 ##################################################################
 #Loading A matrix routine
-
+'''
 if method == 'SUPG' or method == 'SUPG_strong':
     tau_pointwise = CFx.wave.compute_tau(domain1,domain2,c,N_dof_1,N_dof_2)
     CFx.assemble.build_action_balance_stiffness(domain1,domain2,V1,V2,c,dt,A,method=method,is_wet=is_wet,tau_vals=tau_pointwise)
@@ -255,7 +263,7 @@ if method == 'CG' or method == 'CG_strong':
 dry_dofs = CFx.utils.fix_diag(A,local_range[0],rank)
 #A.zeroRows(dry_dofs,diag=1)
 A.zeroRowsColumns(dry_dofs,diag=1)
-
+'''
 ##################################################################
 ##################################################################
 #initialize vectors
@@ -287,10 +295,6 @@ u_exact.setFromOptions()
 ###################################################################
 #Set initial condition and set solution for dirichlet
 #u_cart will hold solution in time loop, this is also the initial condition
-u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
-u_cart.assemble()
-
-'''
 u_cart.setValues(rows,u_func(x,y,sigma,theta,c,t))
 u_cart.assemble()
 HS = fem.Function(V1)
@@ -435,3 +439,4 @@ if rank ==0:
     #PETSc.Sys.Print(vals)
     #PETSc.Sys.Print(vals.shape)
     np.savetxt("HS_stations_SUPG_unstructured.csv", np.append(stats, vals, axis=1), delimiter=",")
+'''

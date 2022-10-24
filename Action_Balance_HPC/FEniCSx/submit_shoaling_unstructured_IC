@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -J ActionBalance_Shoal
+#SBATCH -J Unstructure_debug
 #SBATCH -A ADCIRC
-#SBATCH -o ActionBalance_Shoaling.o%j
-#SBATCH -e ActionBalance_Shoaling.o%j
-#SBATCH -p normal
+#SBATCH -o Unstructured_debug.o%j
+#SBATCH -e Unstructured_debug.o%j
+#SBATCH -p development
 #SBATCH -N 2
 #SBATCH -n 250
-#SBATCH -t 02:45:00
+#SBATCH -t 00:15:00
 
 #SBATCH --mail-user=markloveland@utexas.edu
 #SBATCH --mail-type=begin        # email me when the job starts
@@ -18,6 +18,6 @@ eval "$(/home1/04637/mdl2665/anaconda3/bin/conda shell.bash hook)"
 conda init
 conda activate fenicsx-env
 conda info
-ibrun python3 Shoaling_unstructured.py
+ibrun python3 Shoaling_unstructured_IC.py
 date >> run.timing
 
